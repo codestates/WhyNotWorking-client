@@ -1,6 +1,100 @@
-.container {
-  background-color: yellow;
+.container,
+.logo_container,
+.search_container,
+.product_container,
+.menu_container,
+.menu_avatar,
+.menu_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  width: 100%;
+.container {
+  /* background-color: yellow; */
+  background-color: rgb(250, 250, 251);
+
+  width: 1264px;
   height: 47px;
+}
+
+.logo_container {
+  width: 166px;
+  height: 100%;
+
+  /* background-color: darkblue; */
+}
+
+.logo {
+  padding-left: 8px;
+  padding-right: 8px;
+
+  width: 150px;
+  height: 30px;
+
+  background-image: url("../../assets/images/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* background-size: 100% 100%; */
+}
+
+.product_container {
+  width: 87px;
+  height: 100%;
+
+  color: rgb(83, 90, 96);
+}
+
+.search_container {
+  width: 746px;
+  height: 100%;
+
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.search {
+  width: 100%;
+  height: 60%;
+
+  border: 1px solid rgb(200, 206, 212);
+  border-radius: 3px;
+}
+
+.menu_container {
+  width: 240px;
+  height: 100%;
+
+  /* background-color: tomato; */
+}
+
+.menu_container > li:hover,
+.product_container:hover,
+.logo_container:hover {
+  background-color: rgb(228, 230, 232);
+}
+
+.menu_avatar {
+  width: 86px;
+  height: 100%;
+
+  /* background-color: chartreuse; */
+}
+
+.avatar {
+  width: 24px;
+  height: 24px;
+
+  background-image: url("../../assets/images/avatar.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.menu_item {
+  width: 40px;
+  height: 100%;
+
+  color: rgb(132, 141, 149);
 }
