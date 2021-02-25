@@ -23,7 +23,7 @@ yarn start
 
 ## Dot Env
 
-```javascript
+```bash
 USERNAME = <YOUR DATABASE USER>
 PASSWORD = <YOUR DATABASE PASSWORD>
 DATABASE = <YOUR DATABASE NAME>
