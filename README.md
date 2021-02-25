@@ -2,6 +2,8 @@
 
 WhyNotWorking is a Stackoverflow clone project.
 
+We thought that most people use the phrase "why not working" a lot when searching in a stackoverflow.
+
 frontend stack: React, React-Redux, Redux-Toolkit, Typescript
 
 backend stack: Express, Typescript
