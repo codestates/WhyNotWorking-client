@@ -4,7 +4,6 @@ WhyNotWorking is a Stackoverflow clone project.
 
 ## Installation
 
-Use the package manager yarn or npm to install WhyNotWorking.
 Use the package manager [yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/) to install foobar.
 
 ```bash
