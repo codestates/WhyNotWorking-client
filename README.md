@@ -3,6 +3,7 @@
 WhyNotWorking is a Stackoverflow clone project.
 
 frontend stack: React, React-Redux, Redux-Toolkit, Typescript
+
 backend stack: Express, Typescript
 
 ## Installation
