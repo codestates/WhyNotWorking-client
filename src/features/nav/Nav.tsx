@@ -7,9 +7,14 @@ import {
   faQuestionCircle,
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
+import { openNotification, selectNav } from "./navSlice";
 import styles from "./Nav.module.css";
+import { Notification } from "../notification/Notification";
 
 export function Nav() {
+  const notificationStatus = useSelector(selectNav);
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.container}>
       <div className={styles.logo_container}>
@@ -23,17 +28,45 @@ export function Nav() {
         <li className={styles.menu_avatar}>
           <a href="#" className={styles.avatar}></a>
         </li>
-        <li className={styles.menu_item}>
-          <FontAwesomeIcon icon={faInbox}></FontAwesomeIcon>
+        <li
+          className={styles.menu_item}
+          onClick={() => {
+            dispatch(openNotification("inbox"));
+          }}
+        >
+          <div className={styles.icon}>
+            <FontAwesomeIcon icon={faInbox}></FontAwesomeIcon>
+          </div>
+          {notificationStatus.inbox ? (
+            <Notification title={"Inbox"}></Notification>
+          ) : (
+            ""
+          )}
+        </li>
+        <li
+          className={styles.menu_item}
+          onClick={() => {
+            dispatch(openNotification("achivement"));
+          }}
+        >
+          <div className={styles.icon}>
+            <FontAwesomeIcon icon={faTrophy}></FontAwesomeIcon>
+          </div>
+          {notificationStatus.achivement ? (
+            <Notification title={"Achivement"}></Notification>
+          ) : (
+            ""
+          )}
         </li>
         <li className={styles.menu_item}>
-          <FontAwesomeIcon icon={faTrophy}></FontAwesomeIcon>
+          <div className={styles.icon}>
+            <FontAwesomeIcon icon={faQuestionCircle}></FontAwesomeIcon>
+          </div>
         </li>
         <li className={styles.menu_item}>
-          <FontAwesomeIcon icon={faQuestionCircle}></FontAwesomeIcon>
-        </li>
-        <li className={styles.menu_item}>
-          <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
+          <div className={styles.icon}>
+            <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
+          </div>
         </li>
       </ol>
     </div>
