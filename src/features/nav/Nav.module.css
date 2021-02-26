@@ -45,6 +45,7 @@
   height: 100%;
 
   color: rgb(83, 90, 96);
+  cursor: pointer;
 }
 
 .search_container {
@@ -69,12 +70,15 @@
   width: 240px;
   height: 100%;
 
+  cursor: pointer;
+
   /* background-color: tomato; */
 }
 
 .icon:hover,
 .product_container:hover,
-.logo_container:hover {
+.logo_container:hover,
+.menu_avatar:hover {
   background-color: rgb(228, 230, 232);
   color: rgb(60, 65, 70);
 }
