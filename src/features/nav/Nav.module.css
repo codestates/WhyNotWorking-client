@@ -58,6 +58,8 @@
   width: 100%;
   height: 60%;
 
+  padding-left: 10px;
+
   border: 1px solid rgb(200, 206, 212);
   border-radius: 3px;
 }
@@ -73,7 +75,12 @@
 .product_container:hover,
 .logo_container:hover {
   background-color: rgb(228, 230, 232);
+  color: rgb(60, 65, 70);
 }
+
+/* .product_container:hover > .product_container * {
+  color: rgb(60, 65, 70);
+} */
 
 .menu_avatar {
   width: 86px;

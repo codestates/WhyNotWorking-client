@@ -15,7 +15,7 @@ export function Nav() {
       <div className={styles.logo_container}>
         <a href="#" className={styles.logo}></a>
       </div>
-      <ul className={styles.product_container}>products</ul>
+      <ul className={styles.product_container}>Products</ul>
       <div className={styles.search_container}>
         <input type="text" className={styles.search} />
       </div>
