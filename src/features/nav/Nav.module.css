@@ -4,7 +4,8 @@
 .product_container,
 .menu_container,
 .menu_avatar,
-.menu_item {
+.menu_item,
+.icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +72,7 @@
   /* background-color: tomato; */
 }
 
-.menu_container > li:hover,
+.icon:hover,
 .product_container:hover,
 .logo_container:hover {
   background-color: rgb(228, 230, 232);
@@ -104,4 +105,11 @@
   height: 100%;
 
   color: rgb(132, 141, 149);
+
+  position: relative;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
 }
