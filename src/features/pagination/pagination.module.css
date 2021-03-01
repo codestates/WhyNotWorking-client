@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  padding: 24px;
+}
+.container > div {
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin: 0 3px;
+  border: 1px solid #d6d9dc;
+  font-size: 13px;
+  min-width: 7.3px;
+}
+
+.container > div:hover {
+  background-color: #d6d9dc;
+}
+.pageSelected {
+  border-color: transparent !important;
+  background-color: #f48024;
+  color: #ffffff;
+  margin-right: 6px;
+}
+.pageSelected:hover {
+  background-color: #f48024 !important;
+}
+
+.ellipsis {
+  border: transparent !important;
+}
+
+.ellipsis:hover {
+  background-color: transparent !important;
+}

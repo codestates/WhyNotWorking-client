@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./questionList.module.css";
 import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
+import { Pagination } from "../pagination/Pagination";
 
 export function QuestionList() {
   return (
@@ -44,7 +45,9 @@ export function QuestionList() {
           <Post />
           <Post />
         </div>
-        <div className={styles.paginationBox}></div>
+        <div className={styles.paginationBox}>
+          <Pagination />
+        </div>
       </div>
       <div className={styles.tagBox}></div>
     </div>
