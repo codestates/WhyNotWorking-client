@@ -15,15 +15,10 @@ export const navSlice = createSlice({
   reducers: {
     closeNotification: (state) => {
       state.notificationStatus = {};
-      console.log("1");
     },
     openNotification: (state, action: PayloadAction<string>) => {
-      //state.value += ;
       state.notificationStatus = {};
       state.notificationStatus[action.payload] = true;
-      console.log("2");
-
-      // state.notification[action.payload] = true;
     },
   },
 });
