@@ -1,9 +1,13 @@
 .container {
   display: flex;
   flex-direction: row;
-  /* width: 100%; */
+  width: 100%;
   height: 100%;
   border-left: 1px solid rgb(214, 217, 220);
+}
+
+.questionBox {
+  width: 100%;
 }
 .header {
   display: flex;
@@ -102,6 +106,6 @@
   background-color: #b3d3ea;
 }
 .postList {
-  width: 751px;
+  width: 100%;
   border-top: 1px solid #d6d9dc;
 }

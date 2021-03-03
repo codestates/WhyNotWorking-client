@@ -33,7 +33,7 @@
 
   cursor: pointer;
 
-  font-size: 14px;
+  font-size: 0.85rem;
   font-weight: 520;
 }
 
@@ -41,7 +41,7 @@
   color: black;
 }
 
-.inner_menu > .menu {
+.inner_menu .menu {
   padding: 4px 4px 4px 30px;
 }
 
