@@ -1,50 +1,78 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, RootState } from '../../app/store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
-interface CounterState {
-  value: number;
+interface PageState {
+  curPage: number;
+  pageList: Array<number>;
 }
 
-const initialState: CounterState = {
-  value: 0,
+const initialState: PageState = {
+  curPage: 1,
+  pageList: [1, 2, 3, 4, 5],
 };
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const pageSlice = createSlice({
+  name: "page",
   initialState,
   reducers: {
-    increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
+    next: (state) => {
+      state.curPage += 1;
     },
-    decrement: state => {
-      state.value -= 1;
+    prev: (state) => {
+      state.curPage -= 1;
     },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    moveToPage: (state, action: PayloadAction<number>) => {
+      state.curPage = action.payload;
+    },
+    setPageList: (state, action: PayloadAction<number>) => {
+      const lastPage = action.payload;
+      const curPage = state.curPage;
+
+      if (lastPage < 7) {
+        let list: Array<number> = [];
+        for (let i = 1; i <= lastPage; i++) {
+          list.push(i);
+        }
+        state.pageList = list;
+      } else {
+        if (curPage - 4 >= 1 && curPage + 4 <= lastPage) {
+          state.pageList = [
+            1,
+            0,
+            curPage - 2,
+            curPage - 1,
+            curPage,
+            curPage + 1,
+            curPage + 2,
+            -1,
+            lastPage,
+          ];
+          return;
+        }
+        if (curPage - 4 >= 1 || curPage + 4 > lastPage) {
+          state.pageList = [
+            1,
+            0,
+            lastPage - 4,
+            lastPage - 3,
+            lastPage - 2,
+            lastPage - 1,
+            lastPage,
+          ];
+          return;
+        }
+        if (curPage < 4 || curPage + 4 <= lastPage) {
+          state.pageList = [1, 2, 3, 4, 5, 0, lastPage];
+          return;
+        }
+      }
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { next, prev, moveToPage, setPageList } = pageSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-export const incrementAsync = (amount: number): AppThunk => dispatch => {
-  setTimeout(() => {
-    dispatch(incrementByAmount(amount));
-  }, 1000);
-};
+export const selectPage = (state: RootState) => state.page.curPage;
+export const selectPageList = (state: RootState) => state.page.pageList;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectCount = (state: RootState) => state.counter.value;
-
-export default counterSlice.reducer;
+export default pageSlice.reducer;

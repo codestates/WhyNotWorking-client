@@ -2,16 +2,20 @@
   display: flex;
   padding: 24px;
 }
-.container > div {
+.listWrapper {
+  display: flex;
+}
+.container > div > div {
   padding: 4px 8px;
   border-radius: 3px;
   margin: 0 3px;
   border: 1px solid #d6d9dc;
   font-size: 13px;
   min-width: 7.3px;
+  cursor: pointer;
 }
 
-.container > div:hover {
+.container > div > div:hover {
   background-color: #d6d9dc;
 }
 .pageSelected {
@@ -26,6 +30,7 @@
 
 .ellipsis {
   border: transparent !important;
+  cursor: unset !important;
 }
 
 .ellipsis:hover {
