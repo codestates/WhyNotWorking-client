@@ -1,71 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./pagination.module.css";
+import {
+  next,
+  prev,
+  moveToPage,
+  setPageList,
+  selectPage,
+  selectPageList,
+} from "./paginationSlice";
 
 export function Pagination() {
-  const posts = 20889999;
-  const lastPage = Math.ceil(posts / 15);
-  const [page, setPage] = useState(5);
-  let pageList = [];
-  if (lastPage < 5) {
-    for (let i = 1; i <= lastPage; i++) {
-      pageList.push(i);
+  const count = 20889999;
+  const posts = true;
+
+  const [lastPage, setLastPage] = useState<number>(0);
+  const curPage = useSelector(selectPage);
+  const pageList = useSelector(selectPageList);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (posts) {
+      dispatch(setPageList(Math.ceil(count / 15)));
+      setLastPage(Math.ceil(count / 15));
+    } else {
+      dispatch(setPageList(Math.ceil(count / 36)));
+      setLastPage(Math.ceil(count / 36));
     }
-  } else {
-    pageList = [1, 2, 3, 4, 5];
-  }
-  if (page > 1) {
+  }, [dispatch, posts]);
+
+  if (lastPage === 0) return <div>loading...</div>;
+  else
     return (
       <div className={styles.container}>
-        <div className={styles.prev}>Prev</div>
-        {pageList.length < 5 ? (
-          pageList.map((p) => {
-            if (p === page) {
-              return <div className={styles.pageSelected}>{p}</div>;
-            }
+        <div className={styles.prevBtnWrapper}>
+          {curPage > 1 ? (
+            <div
+              className={styles.prev}
+              onClick={() => {
+                dispatch(prev());
+                dispatch(setPageList(lastPage));
+              }}
+            >
+              Prev
+            </div>
+          ) : null}
+        </div>
+        <div className={styles.listWrapper}>
+          {pageList.map((p) => {
+            if (p === 0 || p === -1)
+              return (
+                <div key={pageList.indexOf(p)} className={styles.ellipsis}>
+                  ...
+                </div>
+              );
+            if (p === curPage)
+              return (
+                <div key={pageList.indexOf(p)} className={styles.pageSelected}>
+                  {p}
+                </div>
+              );
             return (
-              <div className={styles.page} onClick={() => setPage(p)}>
+              <div
+                key={pageList.indexOf(p)}
+                className={styles.page}
+                onClick={() => {
+                  dispatch(moveToPage(p));
+                  dispatch(setPageList(lastPage));
+                }}
+              >
                 {p}
               </div>
             );
-          })
-        ) : (
-          <>
-            {pageList.slice(0, 5).map((p) => {
-              if (p === page) {
-                return <div className={styles.pageSelected}>{p}</div>;
-              }
-              return <div className={styles.page}>{p}</div>;
-            })}
-            <div className={styles.ellipsis}>...</div>
-            <div>{lastPage}</div>
-          </>
-        )}
-        <div className={styles.next}>Next</div>
+          })}
+        </div>
+        <div className={styles.nextBtnWrapper}>
+          {curPage < lastPage ? (
+            <div
+              className={styles.next}
+              onClick={() => {
+                dispatch(next());
+                dispatch(setPageList(lastPage));
+              }}
+            >
+              Next
+            </div>
+          ) : null}
+        </div>
       </div>
     );
-  }
-  return (
-    <div className={styles.container}>
-      {pageList.length < 5 ? (
-        pageList.map((p) => {
-          if (p === page) {
-            return <div className={styles.pageSelected}>{p}</div>;
-          }
-          return <div className={styles.page}>{p}</div>;
-        })
-      ) : (
-        <>
-          {pageList.slice(0, 5).map((p) => {
-            if (p === page) {
-              return <div className={styles.pageSelected}>{p}</div>;
-            }
-            return <div className={styles.page}>{p}</div>;
-          })}
-          <div className={styles.ellipsis}>...</div>
-          <div>{lastPage}</div>
-        </>
-      )}
-      <div className={styles.next}>Next</div>
-    </div>
-  );
 }
