@@ -18,7 +18,7 @@ export function Nav() {
   return (
     <div className={styles.container}>
       <div className={styles.logo_container}>
-        <a href="#" className={styles.logo}></a>
+        <span className={styles.logo}></span>
       </div>
       <ul className={styles.product_container}>Products</ul>
       <div className={styles.search_container}>
@@ -26,7 +26,7 @@ export function Nav() {
       </div>
       <ol className={styles.menu_container}>
         <li className={styles.menu_avatar}>
-          <a href="#" className={styles.avatar}></a>
+          <span className={styles.avatar}></span>
         </li>
         <li
           className={styles.menu_item}

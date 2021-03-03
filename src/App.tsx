@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { TopQuestion } from "./features/topQuestions/TopQuestion";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -26,7 +27,9 @@ function App() {
         </header>
         <main className="main">
           <div className="main_content">
-            <Sidebar></Sidebar>
+            <div className="left_content">
+              <Sidebar></Sidebar>
+            </div>
             <div className="center_content">
               <Switch>
                 <Route exact path="/tags">
@@ -36,14 +39,21 @@ function App() {
                   <QuestionList />
                 </Route>
                 <Route exact path="/">
-                  <div className="temp">HOME</div>
+                  <TopQuestion />
                 </Route>
                 <Route path="*">
                   <div className="temp">404</div>
                 </Route>
               </Switch>
             </div>
-            <div className="right_sidebar"></div>
+            <Switch>
+              <Route exact path="/questions">
+                <div className="right_sidebar"></div>
+              </Route>
+              <Route exact path="/">
+                <div className="right_sidebar"></div>
+              </Route>
+            </Switch>
           </div>
         </main>
       </div>

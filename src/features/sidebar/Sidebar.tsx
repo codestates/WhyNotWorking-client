@@ -1,29 +1,34 @@
-import React, { useState } from "react";
 import styles from "./Sidebar.module.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectSidebar } from "./sidebarSlice";
+import React from "react";
 
 export function Sidebar() {
-  let match = useRouteMatch();
-
-  console.log(match);
+  const currentPage = useSelector(selectSidebar);
 
   return (
     <div className={styles.container}>
       <ul className={styles.content}>
         <Link to="/">
-          <li className={`${styles.menu} ${styles.clicked}`}>HOME</li>
+          <li
+            className={`${styles.menu} ${
+              currentPage === "/" ? styles.clicked : ""
+            }`}
+          >
+            Home
+          </li>
         </Link>
         <ul className={styles.inner_menu}>
           <li className={styles.title}>PUBLIC</li>
           <Link to="/questions">
-            <li className={styles.menu}>Stack Overflow</li>
+            <li
+              className={`${styles.menu} ${
+                currentPage === "/questions" ? styles.clicked : ""
+              }`}
+            >
+              Stack Overflow
+            </li>
           </Link>
           <Link to="/tags">
             <li className={styles.menu}>Tags</li>
