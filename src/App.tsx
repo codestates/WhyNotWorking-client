@@ -7,6 +7,7 @@ import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TopQuestion } from "./features/topQuestions/TopQuestion";
+import { Editor } from "./features/editor/Editor";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -39,7 +40,7 @@ function App() {
                   <QuestionList />
                 </Route>
                 <Route exact path="/">
-                  <TopQuestion />
+                  <Editor />
                 </Route>
                 <Route path="*">
                   <div className="temp">404</div>
