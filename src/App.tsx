@@ -7,13 +7,15 @@ import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TopQuestion } from "./features/topQuestions/TopQuestion";
+import { selectUserInfo } from "./features/signIn/signInSlice";
+import { SignIn } from "./features/signIn/SignIn";
 import { Editor } from "./features/editor/Editor";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
 import { Users } from "./features/users/UsersPage";
-
 function App() {
   const notificationStatus = useSelector(selectNav);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
   return (
@@ -31,6 +33,26 @@ function App() {
         </header>
         <main className="main">
           <div className="main_content">
+
+            <div className="left_content">
+              <Sidebar></Sidebar>
+            </div>
+            <div className="center_content">
+              <Switch>
+                <Route exact path="/tags">
+                  <div className="temp">TAG</div>
+                </Route>
+                <Route exact path="/questions">
+                  <QuestionList />
+                </Route>
+                <Route exact path="/">
+                  {userInfo ? <TopQuestion /> : <SignIn />}
+                </Route>
+                <Route path="*">
+                  <div className="temp">404</div>
+                </Route>
+              </Switch>
+            </div>
             <Switch>
               <Route exact path="/users">
                 <div className="left_content">
