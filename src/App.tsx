@@ -31,23 +31,29 @@ function App() {
           <Nav></Nav>
         </header>
         <main className="main">
-          <div className="main_content">
-            <Switch>
-              <Route exact path="/users">
+          <Switch>
+            <Route exact path="/users">
+              <div className="main_content">
                 <div className="left_content">
                   <Sidebar></Sidebar>
                 </div>
-                <Users />
-              </Route>
-              <Route exact path="/tags">
+                <div className="center_content">
+                  <Users />
+                </div>
+              </div>
+            </Route>
+            <Route exact path="/tags">
+              <div className="main_content">
                 <div className="left_content">
                   <Sidebar></Sidebar>
                 </div>
                 <div className="center_content">
                   <Tags />
                 </div>
-              </Route>
-              <Route exact path="/questions">
+              </div>
+            </Route>
+            <Route exact path="/questions">
+              <div className="main_content">
                 <div className="left_content">
                   <Sidebar></Sidebar>
                 </div>
@@ -55,26 +61,22 @@ function App() {
                   <QuestionList />
                 </div>
                 <div className="right_sidebar"></div>
-              </Route>
-              <Route exact path="/">
-                {userInfo ? (
-                  <>
-                    <div className="left_content">
-                      <Sidebar></Sidebar>
-                    </div>
-                    <div className="center_content">
-                      <QuestionDetail />
-                    </div>
-                    <div className="right_sidebar"></div>
-                  </>
-                ) : (
-                  <div className="center_content">
-                    <SignIn />
-                  </div>
-                )}
-              </Route>
-            </Switch>
-          </div>
+              </div>
+            </Route>
+            <Route exact path="/signin">
+              <SignIn />
+            </Route>
+            <Route exact path="/">
+              <div className="main_content">
+                <div className="left_content">
+                  <Sidebar></Sidebar>
+                </div>
+                <div className="center_content">
+                  <QuestionDetail />
+                </div>
+              </div>
+            </Route>
+          </Switch>
         </main>
       </div>
     </Router>

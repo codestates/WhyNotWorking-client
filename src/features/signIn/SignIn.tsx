@@ -72,8 +72,8 @@ export function SignIn() {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
         <svg
           className={styles.logo}
           aria-hidden="true"
