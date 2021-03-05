@@ -8,6 +8,7 @@ import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TopQuestion } from "./features/topQuestions/TopQuestion";
 import { Editor } from "./features/editor/Editor";
+import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -40,7 +41,7 @@ function App() {
                   <QuestionList />
                 </Route>
                 <Route exact path="/">
-                  <Editor />
+                  <QuestionDetail />
                 </Route>
                 <Route path="*">
                   <div className="temp">404</div>
@@ -52,7 +53,7 @@ function App() {
                 <div className="right_sidebar"></div>
               </Route>
               <Route exact path="/">
-                <div className="right_sidebar"></div>
+                {/* <div className="right_sidebar"></div> */}
               </Route>
             </Switch>
           </div>
