@@ -3,6 +3,7 @@ import counterReducer from "../features/counter/counterSlice";
 import navReducer from "../features/nav/navSlice";
 import pageReducer from "../features/pagination/paginationSlice";
 import sidebarReducer from "../features/sidebar/sidebarSlice";
+import signInReducer from "../features/signIn/signInSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     nav: navReducer,
     page: pageReducer,
     sidebar: sidebarReducer,
+    signIn: signInReducer,
   },
 });
 

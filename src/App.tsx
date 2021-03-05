@@ -7,9 +7,11 @@ import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TopQuestion } from "./features/topQuestions/TopQuestion";
-
+import { selectUserInfo } from "./features/signIn/signInSlice";
+import { SignIn } from "./features/signIn/SignIn";
 function App() {
   const notificationStatus = useSelector(selectNav);
+  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
   return (
@@ -39,7 +41,7 @@ function App() {
                   <QuestionList />
                 </Route>
                 <Route exact path="/">
-                  <TopQuestion />
+                  {userInfo ? <TopQuestion /> : <SignIn />}
                 </Route>
                 <Route path="*">
                   <div className="temp">404</div>
