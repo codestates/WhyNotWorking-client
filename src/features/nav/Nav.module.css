@@ -17,6 +17,9 @@
 
   width: 1264px;
   height: 47px;
+
+  /* position: absolute; */
+  /* z-index: 9999; */
 }
 
 .logo_container {

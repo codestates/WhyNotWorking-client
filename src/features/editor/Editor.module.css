@@ -4,9 +4,9 @@
   align-items: center;
 }
 .container {
-  width: 727px;
+  width: 100%;
   /* min-height: 284px; */
-
+  background-color: burlywood;
   align-items: flex-start;
   /* justify-content: flex-start; */
 }
