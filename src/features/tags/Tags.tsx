@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useRouteMatch } from "react-router-dom";
 
 import { Pagination } from "../pagination/Pagination";
+import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { Tag } from "../tag/Tag";
 import styles from "./Tags.module.css";
 
 export function Tags() {
+  let match = useRouteMatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setCurrentPage(match.path));
+  }, [dispatch, match]);
+
   return (
     <div className={styles.container}>
       <div className={styles.titleBox}>Tags</div>

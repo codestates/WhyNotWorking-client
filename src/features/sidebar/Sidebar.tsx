@@ -31,14 +31,28 @@ export function Sidebar() {
             </li>
           </Link>
           <Link to="/tags">
-            <li className={styles.menu}>Tags</li>
+            <li
+              className={`${styles.menu} ${
+                currentPage === "/tags" ? styles.clicked : ""
+              }`}
+            >
+              Tags
+            </li>
           </Link>
-          <li className={styles.menu}>Users</li>
+          <Link to="/users">
+            <li
+              className={`${styles.menu} ${
+                currentPage === "/users" ? styles.clicked : ""
+              }`}
+            >
+              Users
+            </li>
+          </Link>
         </ul>
         <ul className={styles.inner_menu}>
           <li className={styles.title}>FIND A JOB</li>
-          <li className={styles.menu}>Jobs</li>
-          <li className={styles.menu}>Companies</li>
+          <li className={styles.menu}>Jobs 🚧</li>
+          <li className={styles.menu}>Companies 🚧</li>
         </ul>
       </ul>
     </div>
