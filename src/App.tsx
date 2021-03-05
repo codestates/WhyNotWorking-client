@@ -9,6 +9,10 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { TopQuestion } from "./features/topQuestions/TopQuestion";
 import { selectUserInfo } from "./features/signIn/signInSlice";
 import { SignIn } from "./features/signIn/SignIn";
+import { Editor } from "./features/editor/Editor";
+import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
+import { Tags } from "./features/tags/Tags";
+import { Users } from "./features/users/UsersPage";
 function App() {
   const notificationStatus = useSelector(selectNav);
   const userInfo = useSelector(selectUserInfo);
@@ -29,6 +33,7 @@ function App() {
         </header>
         <main className="main">
           <div className="main_content">
+
             <div className="left_content">
               <Sidebar></Sidebar>
             </div>
@@ -49,10 +54,36 @@ function App() {
               </Switch>
             </div>
             <Switch>
+              <Route exact path="/users">
+                <div className="left_content">
+                  <Sidebar></Sidebar>
+                </div>
+                <Users />
+              </Route>
+              <Route exact path="/tags">
+                <div className="left_content">
+                  <Sidebar></Sidebar>
+                </div>
+                <div className="center_content">
+                  <Tags />
+                </div>
+              </Route>
               <Route exact path="/questions">
+                <div className="left_content">
+                  <Sidebar></Sidebar>
+                </div>
+                <div className="center_content">
+                  <QuestionList />
+                </div>
                 <div className="right_sidebar"></div>
               </Route>
               <Route exact path="/">
+                <div className="left_content">
+                  <Sidebar></Sidebar>
+                </div>
+                <div className="center_content">
+                  <QuestionDetail />
+                </div>
                 <div className="right_sidebar"></div>
               </Route>
             </Switch>

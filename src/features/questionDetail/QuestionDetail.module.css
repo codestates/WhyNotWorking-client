@@ -1,0 +1,224 @@
+.container,
+.headerTop,
+.titleBox,
+.postBox,
+.content,
+.recommendBox,
+.contentBox,
+.tags,
+.upDown,
+.upDownNumber,
+.headerBottom > ul,
+.headerBottom li,
+.tags li,
+.editBox,
+.contentUtilsBox,
+.userBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 1051px;
+  padding: 24px;
+  height: 100%;
+
+  flex-direction: column;
+}
+.headerTop {
+  width: 100%;
+  height: 80px;
+}
+
+.header {
+  width: 100%;
+}
+
+.titleBox {
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 72px;
+  margin-bottom: 8px;
+
+  font-size: 27px;
+  text-align: left;
+}
+
+.askBox {
+  min-width: 100px;
+  height: 80px;
+
+  margin-left: 12px;
+}
+
+.askButton {
+  background-color: rgb(0, 149, 255);
+  color: white;
+
+  width: 100%;
+  height: 38px;
+
+  border: none;
+  border-radius: 3px;
+
+  outline: none;
+}
+
+.headerBottom {
+  width: 100%;
+  height: 25px;
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid silver;
+
+  margin-bottom: 16px;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+.mainLeft {
+  width: 727px;
+  height: 100%;
+
+  /* background-color: yellow; */
+}
+
+.postBox {
+  width: 100%;
+  min-height: 500px;
+  height: 700px;
+}
+
+.recommendBox {
+  min-width: 36px;
+  height: 100%;
+  padding-right: 16px;
+
+  justify-content: flex-start;
+
+  flex-direction: column;
+
+  /* background-color: violet; */
+}
+
+.contentBox {
+  width: 100%;
+  height: 100%;
+
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.tagsBox {
+  width: 100%;
+  height: 24px;
+
+  /* background-color: aquamarine; */
+}
+
+.tags {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tags li {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 4.8px 6px 4.8px 6px;
+
+  background-color: rgb(225, 236, 244);
+  color: rgb(57, 115, 157);
+
+  font-size: 0.7rem;
+
+  border-radius: 1px;
+
+  margin: 2px;
+}
+
+.editorBox {
+  margin-top: 24px;
+  width: 100%;
+  height: 100%;
+
+  /* background-color: blue; */
+}
+
+.upDown {
+  width: 36px;
+  height: 36px;
+
+  font-size: 3rem;
+  color: silver;
+}
+
+.upDownNumber {
+  width: 100%;
+}
+
+.headerBottom li {
+  height: 17px;
+  margin-bottom: 8px;
+  margin-right: 16px;
+}
+
+.headerBottom > ul {
+  justify-content: flex-start;
+}
+
+.headerBottom li span:first-child {
+  color: silver;
+  margin-right: 8px;
+}
+
+.contentUtilsBox {
+  padding-top: 4px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  height: 75px;
+  width: 100%;
+
+  justify-content: space-between;
+}
+
+.editBox {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.editBox li {
+  margin-right: 10px;
+  color: grey;
+}
+
+.userBox {
+  width: 200px;
+  height: 67px;
+
+  background-color: rgb(222, 233, 236);
+}
+
+.userBox {
+  justify-content: flex-start;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  margin: 10px;
+}
