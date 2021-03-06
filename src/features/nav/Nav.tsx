@@ -8,10 +8,8 @@ import { Link } from "react-router-dom";
 export function Nav() {
   return (
     <div className={styles.container}>
-      <Link to="/">
-        <div className={styles.logo_container}>
-          <span className={styles.logo}></span>
-        </div>
+      <Link to="/" className={styles.logo_container}>
+        <span className={styles.logo}></span>
       </Link>
       <ul className={styles.product_container}>Products</ul>
       <div className={styles.search_container}>

@@ -11,6 +11,7 @@ import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
 import { Users } from "./features/users/UsersPage";
+import { Home } from "./features/home/Home";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -80,7 +81,7 @@ function App() {
                   <Sidebar></Sidebar>
                 </div>
                 <div className="center_content">
-                  <QuestionDetail />
+                  <Home />
                 </div>
               </div>
             </Route>
