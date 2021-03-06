@@ -143,9 +143,17 @@ export function SignIn() {
         </div>
         <div className={styles.loginBox}>
           <div>Email</div>
-          <input type="text" onChange={(e) => setEmail(e.target.value)} />
+          <input
+            className={styles.input}
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <div>Password</div>
-          <input type="text" onChange={(e) => setPassword(e.target.value)} />
+          <input
+            className={styles.input}
+            type="text"
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <div className={styles.btn} onClick={logInSubmit}>
             Log in
           </div>
