@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk, RootState } from "../../app/store";
 
-interface UserInfo {
+export interface UserInfo {
   aboutMe: string | null;
   email: string | null;
   image: string | null;
@@ -38,6 +38,7 @@ export const signInSlice = createSlice({
 export const { login, logout } = signInSlice.actions;
 
 export const selectUserInfo = (state: RootState) => state.signIn.user;
+export const selectIsLogin = (state: RootState) => state.signIn.isLogin;
 
 export const loginAsync = (userInfo: {
   email: string;
@@ -61,7 +62,21 @@ export const loginAsync = (userInfo: {
       },
     }).then((usersResponse) => {
       dispatch(login(usersResponse.data.data));
+      localStorage.setItem("user", usersResponse.data.data);
     });
+  });
+};
+
+export const logoutAsync = (): AppThunk => (dispatch) => {
+  axios({
+    method: "post",
+    url: "http://localhost:4000/logout/",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(() => {
+    dispatch(logout());
+    localStorage.clear();
   });
 };
 

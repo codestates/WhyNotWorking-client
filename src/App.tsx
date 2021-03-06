@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Nav } from "./features/nav/Nav";
 import { Sidebar } from "./features/sidebar/Sidebar";
 import "./App.css";
@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { selectUserInfo } from "./features/signIn/signInSlice";
+import { login, selectUserInfo, UserInfo } from "./features/signIn/signInSlice";
 import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
@@ -16,6 +16,14 @@ function App() {
   const notificationStatus = useSelector(selectNav);
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    let loggedInUser = (localStorage.getItem("user") as unknown) as UserInfo;
+
+    if (loggedInUser) {
+      dispatch(login(loggedInUser));
+    }
+  });
 
   return (
     <Router>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignIn.module.css";
-import { login, loginAsync } from "./signInSlice";
+import { login, loginAsync, selectIsLogin } from "./signInSlice";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,11 @@ export function SignIn() {
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const isLogin = useSelector(selectIsLogin);
+
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  });
 
   const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=`;
 
