@@ -58,7 +58,7 @@
   border-bottom-right-radius: 3px;
 }
 
-input {
+.input {
   width: 171px;
   height: 25px;
   font-family: "FontAwesome", Arial;
@@ -68,11 +68,11 @@ input {
   padding: 5px 8px;
   border: solid 1px #bbc0c4;
 }
-input::placeholder {
+.input::placeholder {
   color: #bbc0c4;
 }
 
-input:focus {
+.input:focus {
   outline: none;
   border-color: #6cbbf7;
   box-shadow: 0 0 0 4px rgb(0 149 255 / 15%);
