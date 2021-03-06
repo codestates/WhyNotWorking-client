@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignIn.module.css";
-import { login } from "./signInSlice";
+import { login, loginAsync, selectIsLogin } from "./signInSlice";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,11 @@ export function SignIn() {
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const isLogin = useSelector(selectIsLogin);
+
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  });
 
   const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=`;
 
@@ -47,33 +52,33 @@ export function SignIn() {
       });
   };
 
-  const logInSubmit = () => {
-    const data = JSON.stringify({
-      password,
-      email,
-    });
-    axios({
-      method: "post",
-      url: "https://localhost:4000/login/",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data,
-    })
-      .then(() => {
-        axios.get("https://localhost:4000/users/").then((res: any) => {
-          dispatch(login(res));
-          history.push("/");
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const logInSubmit = () => {
+  //   const data = JSON.stringify({
+  //     password,
+  //     email,
+  //   });
+  //   axios({
+  //     method: "post",
+  //     url: "https://localhost:4000/login/",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     data,
+  //   })
+  //     .then(() => {
+  //       axios.get("https://localhost:4000/users/").then((res: any) => {
+  //         dispatch(login(res));
+  //         history.push("/");
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
         <svg
           className={styles.logo}
           aria-hidden="true"
@@ -149,12 +154,13 @@ export function SignIn() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <div>Password</div>
-          <input
-            className={styles.input}
-            type="text"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className={styles.btn} onClick={logInSubmit}>
+          <input type="text" onChange={(e) => setPassword(e.target.value)} />
+          <div
+            className={styles.btn}
+            onClick={() => {
+              dispatch(loginAsync({ email, password }));
+            }}
+          >
             Log in
           </div>
         </div>
