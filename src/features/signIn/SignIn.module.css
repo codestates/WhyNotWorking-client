@@ -92,7 +92,8 @@
   margin-top: 2px;
 }
 
-/* input {
+
+.input {
   width: 215px;
   height: 15px;
   padding: 9px 9px;
@@ -102,9 +103,9 @@
   margin-top: 1.5px;
   margin-bottom: 14px;
   cursor: pointer;
-} */
+} 
 
-input:focus {
+.input:focus {
   outline: none;
   border-color: #6cbbf7;
   box-shadow: 0 0 0 4px rgb(0 149 255 / 15%);

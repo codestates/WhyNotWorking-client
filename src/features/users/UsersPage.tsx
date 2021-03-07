@@ -24,7 +24,10 @@ export function Users() {
           href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
           rel="stylesheet"
         ></link>
-        <input placeholder="&#xf002; Filter by user"></input>
+        <input
+          className={styles.input}
+          placeholder="&#xf002; Filter by user"
+        ></input>
         <div className={styles.filterBox}>
           <div className={styles.popular}>New users</div>
           <div className={styles.name}>questions</div>
