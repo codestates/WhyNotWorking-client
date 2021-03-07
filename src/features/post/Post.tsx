@@ -1,27 +1,50 @@
 import React from "react";
-
+import { Link, useRouteMatch } from "react-router-dom";
 import styles from "./post.module.css";
 
-export function Post() {
+interface PostProps {
+  post: PostInterface;
+}
+
+interface UserInterface {
+  nickname: string;
+  image: string;
+}
+
+export interface PostInterface {
+  answers: Array<any>;
+  body: string;
+  createdAt: string;
+  id: string;
+  postTag: Array<any>;
+  title: string;
+  updatedAt: string;
+  user: UserInterface;
+  userId: string;
+  views: number;
+  votes: number;
+}
+
+export function Post({ post }: PostProps) {
   return (
     <div className={styles.container}>
       <div className={styles.countBox}>
         <div className={styles.votes}>
           <div className={styles.count}>
-            <span>0</span>
+            <span>{post.votes}</span>
           </div>
           <div>votes</div>
         </div>
         <div className={styles.answer}>
           {/*unanswered,answered,answered-accepted */}
           <div className={styles.count}>
-            <span>0</span>
+            <span>{post.answers.length}</span>
           </div>
           <div>answer</div>
         </div>
         <div className={styles.views}>
           <div className={styles.count}>
-            <span>0</span>
+            <span>{post.views}</span>
           </div>
           <div>views</div>
           {/* hot */}
@@ -29,9 +52,7 @@ export function Post() {
       </div>
       <div className={styles.summaryBox}>
         <div className={styles.title}>
-          <a href="https://stackoverflow.com/questions/66361472/app-crashed-with-base-apklibmonochrome-so">
-            App crashed with base.apk!libmonochrome.so
-          </a>
+          <Link to={`/post/${post.id}`}>{post.title}</Link>
         </div>
         <div className={styles.wrapper}>
           <div className={styles.tagBox}>
@@ -63,7 +84,7 @@ export function Post() {
           <div className={styles.infoBox}>
             <div>asked{/* modified */} 1 min ago</div>
             <a href="https://stackoverflow.com/users/15279516/soripk">
-              userName
+              {post.user.nickname}
             </a>
           </div>
         </div>

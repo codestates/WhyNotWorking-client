@@ -13,7 +13,8 @@
 .tags li,
 .editBox,
 .contentUtilsBox,
-.userBox {
+.userBox,
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,11 +80,17 @@
 .main {
   width: 100%;
   height: 100%;
+
+  justify-content: flex-start;
+
+  border: 1px solid black;
 }
 
 .mainLeft {
-  width: 727px;
+  min-width: 727px;
   height: 100%;
+
+  border: 1px solid black;
 
   /* background-color: yellow; */
 }
@@ -221,4 +228,10 @@
   height: 40px;
 
   margin: 10px;
+}
+
+.mainRight {
+  height: 100%;
+  width: 100%;
+  border: 1px solid;
 }
