@@ -31,7 +31,7 @@ export function SignIn() {
   const responseGoogle = (response: Response) => {
     axios
       .post(
-        "https://localhost:4000/login/googleLogin/",
+        `${process.env.REACT_APP_SERVER_HOST}/login/googleLogin/`,
         {
           token: response.tokenObj.id_token,
         },
@@ -41,7 +41,7 @@ export function SignIn() {
       )
       .then(() => {
         axios
-          .get("https://localhost:4000/users/")
+          .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
           .then((res: any) => {
             dispatch(login(res));
             history.push("/");
