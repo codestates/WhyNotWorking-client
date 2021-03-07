@@ -26,6 +26,8 @@ export function QuestionDetail() {
       },
     })
       .then((response) => {
+        console.log(response.data.data[0]);
+
         setPost(response.data.data[0]);
       })
       .catch(() => {
@@ -80,7 +82,10 @@ export function QuestionDetail() {
             </div>
             <div className={styles.contentBox}>
               <div className={styles.content}>
-                <MDEditor.Markdown source={"**hahaha**"} />
+                <MDEditor.Markdown
+                  source={`${post?.body}`}
+                  className={styles.preview}
+                />
               </div>
               <div className={styles.tagsBox}>
                 <ul className={styles.tags}>
