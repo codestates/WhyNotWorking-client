@@ -6,7 +6,14 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import axios from "axios";
+import dotenv from "dotenv";
 axios.defaults.withCredentials = true;
+
+if (process.env.NODE_ENV === "development") {
+  dotenv.config({
+    path: "./.env.development",
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>

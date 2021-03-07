@@ -48,7 +48,7 @@ export const loginAsync = (userInfo: {
 
   axios({
     method: "post",
-    url: "http://localhost:4000/login/",
+    url: `${process.env.REACT_APP_SERVER_HOST}/login/`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -56,7 +56,7 @@ export const loginAsync = (userInfo: {
   }).then(() => {
     axios({
       method: "get",
-      url: "http://localhost:4000/users/",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -70,7 +70,7 @@ export const loginAsync = (userInfo: {
 export const logoutAsync = (): AppThunk => (dispatch) => {
   axios({
     method: "post",
-    url: "http://localhost:4000/logout/",
+    url: `${process.env.REACT_APP_SERVER_HOST}/logout/`,
     headers: {
       "Content-Type": "application/json",
     },
