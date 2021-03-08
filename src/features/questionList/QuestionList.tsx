@@ -14,7 +14,7 @@ import {
   PostInfo,
 } from "./qLSlice";
 
-import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { useLocation, useRouteMatch } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -97,11 +97,9 @@ export function QuestionList() {
           </div>
         </div>
         <div className={styles.postList}>
-          {/* 
           {posts.map((v, i) => (
             <Post post={v} key={i} />
-          ))} */}
-          {/* <Post /> */}
+          ))}
         </div>
         <div className={styles.paginationBox}>
           <Pagination />

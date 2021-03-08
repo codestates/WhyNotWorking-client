@@ -1,22 +1,19 @@
-
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./Editor.module.css";
 import MDEditor from "@uiw/react-md-editor";
 
 export function Editor({
-  value,
   setValue,
 }: {
-  value: string | undefined;
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) {
-
   return (
     <div className={styles.container}>
       <MDEditor
         className={styles.editor}
-        value={value}
-        onChange={setValue}
+        onBlur={(e) => {
+          setValue(e.target.textContent as string);
+        }}
         preview="edit"
         height={210}
       />

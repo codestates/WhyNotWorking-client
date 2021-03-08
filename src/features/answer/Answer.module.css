@@ -15,22 +15,12 @@
 .contentUtilsBox,
 .userBox,
 .main,
-.mainRight,
-.postButtonBox {
+.mainRight {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container {
-  width: 1051px;
-  padding: 24px;
-  /* height: 100%; */
-
-  /* justify-content: flex-start; */
-
-  flex-direction: column;
-}
 .headerTop {
   width: 100%;
   height: 80px;
@@ -103,7 +93,7 @@
 
 .postBox {
   width: 100%;
-  min-height: 500px;
+  /* min-height: 500px; */
 
   align-items: flex-start;
   /* height: 700px; */
@@ -254,25 +244,4 @@
   height: 100%;
 
   text-align: left;
-}
-
-.postButtonBox {
-  margin-top: 20px;
-  width: 100%;
-  height: 40px;
-
-  justify-content: flex-start;
-}
-
-.postButton {
-  height: 100%;
-
-  background-color: royalblue;
-  color: white;
-
-  border: none;
-
-  border-radius: 5px;
-
-  padding: 10px;
 }

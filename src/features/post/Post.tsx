@@ -6,13 +6,20 @@ interface PostProps {
   post: PostInterface;
 }
 
-interface UserInterface {
+export interface UserInterface {
   nickname: string;
   image: string;
 }
 
+export interface AnswerInterface {
+  body: string;
+  choose: boolean;
+  user: UserInterface;
+  votes: number;
+}
+
 export interface PostInterface {
-  answers: Array<any>;
+  answers: Array<AnswerInterface>;
   body: string;
   createdAt: string;
   id: string;
