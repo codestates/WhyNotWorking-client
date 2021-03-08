@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +5,6 @@ import styles from "./questionList.module.css";
 import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
-
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,13 +28,12 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-
 export function QuestionList() {
   let match = useRouteMatch();
   let query = useQuery();
   const dispatch = useDispatch();
   const curPage = useSelector(selectPage);
-  const posts = useSelector(selectPosts);
+  const postsList = useSelector(selectPosts);
   const count = useSelector(selectCount);
 
   const [posts, setPosts] = useState([]);
@@ -61,10 +58,9 @@ export function QuestionList() {
     dispatch(getPostsAsync(1));
     dispatch(getCountAsync());
 
- getPostbyPage(currentPage);
+    getPostbyPage(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, match]);
-
 
   return (
     <div className={styles.container}>
@@ -102,12 +98,11 @@ export function QuestionList() {
           </div>
         </div>
         <div className={styles.postList}>
-
+          {/* 
           {posts.map((v, i) => (
             <Post post={v} key={i} />
-          ))}
+          ))} */}
           {/* <Post /> */}
-
         </div>
         <div className={styles.paginationBox}>
           <Pagination />
