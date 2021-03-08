@@ -4,7 +4,7 @@ import styles from "./SignUp.module.css";
 import { login } from "./signInSlice";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 export function SignUp() {
   const [email, setEmail] = useState<string>("");
@@ -125,9 +125,11 @@ export function SignUp() {
             type="text"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div className={styles.btn} onClick={signUpSubmit}>
-            Sign up
-          </div>
+          <Link to="/signupDetail">
+            <div className={styles.btn} onClick={signUpSubmit}>
+              Sign up
+            </div>
+          </Link>
         </div>
         <div className={styles.signUpLinkBox}>
           <div>Already have an account? </div>

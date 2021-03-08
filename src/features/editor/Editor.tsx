@@ -9,8 +9,6 @@ export function Editor({
   value: string | undefined;
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) {
-  // const [value, setValue] = useState<string | undefined>("");
-
   return (
     <div className={styles.container}>
       <MDEditor

@@ -1,43 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "../../app/store";
+import { RootState } from "../../app/store";
 
-interface NavState {
-  notificationStatus: { [key: string]: boolean };
+interface EditorState {
+  body: string | undefined;
 }
 
-const initialState: NavState = {
-  notificationStatus: { inbox: false, achivement: false },
+const initialState: EditorState = {
+  body: "",
 };
 
-export const navSlice = createSlice({
-  name: "nav",
+export const editorSlice = createSlice({
+  name: "editor",
   initialState,
   reducers: {
-    closeNotification: (state) => {
-      state.notificationStatus = {};
-    },
-    openNotification: (state, action: PayloadAction<string>) => {
-      state.notificationStatus = {};
-      state.notificationStatus[action.payload] = true;
+    setBody: (state, action: PayloadAction<string | undefined>) => {
+      state.body = action.payload;
     },
   },
 });
 
-export const { closeNotification, openNotification } = navSlice.actions;
+export const { setBody } = editorSlice.actions;
 
-// The function below is called a thunk and allows us to perform async logic. It
-// can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
-// will call the thunk with the `dispatch` function as the first argument. Async
-// code can then be executed and other actions can be dispatched
-// export const incrementAsync = (amount: number): AppThunk => (dispatch) => {
-//   setTimeout(() => {
-//     dispatch(incrementByAmount(amount));
-//   }, 1000);
-// };
+export const selectBody = (state: RootState) => state.editor.body;
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectNav = (state: RootState) => state.nav.notificationStatus;
-
-export default navSlice.reducer;
+export default editorSlice.reducer;

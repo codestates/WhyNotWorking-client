@@ -92,7 +92,6 @@
   margin-top: 2px;
 }
 
-
 .input {
   width: 215px;
   height: 15px;
@@ -103,7 +102,7 @@
   margin-top: 1.5px;
   margin-bottom: 14px;
   cursor: pointer;
-} 
+}
 
 .input:focus {
   outline: none;
@@ -122,7 +121,6 @@
   font-weight: normal !important;
   height: 15px;
   padding: 9px 7px;
-  cursor: pointer;
 }
 
 .btn:hover {

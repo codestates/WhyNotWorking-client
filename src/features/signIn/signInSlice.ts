@@ -8,6 +8,7 @@ export interface UserInfo {
   image: string | null;
   location: string | null;
   nickname: string | null;
+  id: number | null;
 }
 
 interface SignInState {
