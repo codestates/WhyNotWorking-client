@@ -1,11 +1,26 @@
+
 import React, { useEffect, useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./questionList.module.css";
 import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
+
+
+import { useDispatch, useSelector } from "react-redux";
+
+import { moveToPage, selectPage } from "../pagination/paginationSlice";
+import {
+  getCountAsync,
+  getPostsAsync,
+  selectPosts,
+  selectCount,
+  PostInfo,
+} from "./qLSlice";
+
 import { useLocation, useParams, useRouteMatch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";
 
@@ -15,10 +30,14 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
+
 export function QuestionList() {
   let match = useRouteMatch();
   let query = useQuery();
   const dispatch = useDispatch();
+  const curPage = useSelector(selectPage);
+  const posts = useSelector(selectPosts);
+  const count = useSelector(selectCount);
 
   const [posts, setPosts] = useState([]);
 
@@ -38,9 +57,14 @@ export function QuestionList() {
     const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
 
-    getPostbyPage(currentPage);
+    dispatch(moveToPage(1));
+    dispatch(getPostsAsync(1));
+    dispatch(getCountAsync());
+
+ getPostbyPage(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, match]);
+
 
   return (
     <div className={styles.container}>
@@ -48,7 +72,7 @@ export function QuestionList() {
         <div className={styles.header}>
           <div className={styles.titleBox}>
             <div>All Questions</div>
-            <div>20,889,999 questions</div>
+            <div>{count}</div>
           </div>
           <div className={styles.filterBox}>
             <div className={styles.btnWrapper}>
@@ -78,10 +102,12 @@ export function QuestionList() {
           </div>
         </div>
         <div className={styles.postList}>
+
           {posts.map((v, i) => (
             <Post post={v} key={i} />
           ))}
           {/* <Post /> */}
+
         </div>
         <div className={styles.paginationBox}>
           <Pagination />
