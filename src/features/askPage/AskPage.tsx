@@ -57,7 +57,7 @@ export function AskPage() {
             Include all the information someone would need to answer your
             question
           </p>
-          <Editor setValue={setBody} />
+          <Editor value={body} setValue={setBody} />
           <div className={styles.head}>Tags</div>
           <p>Add up to 5 tags to describe what your question is about</p>
           <input type="text" placeholder="e.g. (css spring java)"></input>
