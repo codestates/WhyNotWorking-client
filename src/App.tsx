@@ -12,6 +12,7 @@ import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
 import { Users } from "./features/users/UsersPage";
 import { Home } from "./features/home/Home";
+import { SignUp } from "./features/signUp/SignUp";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -81,6 +82,9 @@ function App() {
                 </div>
                 <div className="right_sidebar"></div>
               </div>
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
             </Route>
             <Route exact path="/signin">
               <SignIn />
