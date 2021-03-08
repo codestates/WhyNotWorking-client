@@ -7,6 +7,7 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { selectUserInfo } from "../signIn/signInSlice";
 import { selectBody } from "../editor/editorSlice";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export function AskPage() {
   const body = useSelector(selectBody);
@@ -15,6 +16,7 @@ export function AskPage() {
   const [list2, setList2] = useState<Boolean>(false);
   const [list3, setList3] = useState<Boolean>(false);
   const [title, setTitle] = useState<string>("");
+  const history = useHistory();
 
   const postReview = () => {
     if (userInfo != null) {
@@ -30,7 +32,7 @@ export function AskPage() {
           "Content-Type": "application/json",
         },
         data,
-      });
+      }).then(() => history.push("/questions"));
     }
   };
 
