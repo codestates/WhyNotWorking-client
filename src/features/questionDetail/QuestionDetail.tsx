@@ -7,7 +7,7 @@ import MDEditor from "@uiw/react-md-editor";
 import avatar from "../../assets/images/avatar.jpg";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import { PostInterface, UserInterface } from "../post/Post";
+import { PostInterface } from "../post/Post";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { useDispatch } from "react-redux";
 import { Answer } from "../answer/Answer";

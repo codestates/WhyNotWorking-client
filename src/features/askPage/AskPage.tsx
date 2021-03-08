@@ -5,17 +5,16 @@ import { Editor } from "../editor/Editor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { selectUserInfo } from "../signIn/signInSlice";
-import { selectBody } from "../editor/editorSlice";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 export function AskPage() {
-  const body = useSelector(selectBody);
   const userInfo = useSelector(selectUserInfo);
-  const [list1, setList1] = useState<Boolean>(false);
-  const [list2, setList2] = useState<Boolean>(false);
-  const [list3, setList3] = useState<Boolean>(false);
-  const [title, setTitle] = useState<string>("");
+  const [list1, setList1] = useState(false);
+  const [list2, setList2] = useState(false);
+  const [list3, setList3] = useState(false);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState<string | undefined>("");
   const history = useHistory();
 
   const postReview = () => {
@@ -58,7 +57,7 @@ export function AskPage() {
             Include all the information someone would need to answer your
             question
           </p>
-          {/* <Editor /> */}
+          <Editor setValue={setBody} />
           <div className={styles.head}>Tags</div>
           <p>Add up to 5 tags to describe what your question is about</p>
           <input type="text" placeholder="e.g. (css spring java)"></input>
