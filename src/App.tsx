@@ -20,10 +20,12 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let loggedInUser = (localStorage.getItem("user") as unknown) as UserInfo;
+    let loggedInUser = (localStorage.getItem("user") as unknown) as string;
 
     if (loggedInUser) {
-      dispatch(login(loggedInUser));
+      // console.log(Object.keys(i));
+      // console.log(Object.values(i));
+      dispatch(login(JSON.parse(loggedInUser)));
     }
   });
 

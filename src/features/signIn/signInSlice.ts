@@ -63,7 +63,7 @@ export const loginAsync = (userInfo: {
       },
     }).then((usersResponse) => {
       dispatch(login(usersResponse.data.data));
-      localStorage.setItem("user", usersResponse.data.data);
+      localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
     });
   });
 };
