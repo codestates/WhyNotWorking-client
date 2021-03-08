@@ -44,10 +44,20 @@ function App() {
             <Route exact path="/users">
               <div className="main_content">
                 <div className="left_content">
-                  <Sidebar></Sidebar>
+                  <Sidebar />
                 </div>
                 <div className="center_content">
                   <Users />
+                </div>
+              </div>
+            </Route>
+            <Route exact path="/post/:postId">
+              <div className="main_content">
+                <div className="left_content">
+                  <Sidebar />
+                </div>
+                <div className="center_content">
+                  <QuestionDetail />
                 </div>
               </div>
             </Route>
@@ -61,7 +71,7 @@ function App() {
                 </div>
               </div>
             </Route>
-            <Route exact path="/questions">
+            <Route path="/questions">
               <div className="main_content">
                 <div className="left_content">
                   <Sidebar></Sidebar>

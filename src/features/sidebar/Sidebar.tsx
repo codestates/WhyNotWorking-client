@@ -1,8 +1,8 @@
-import styles from "./Sidebar.module.css";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectSidebar } from "./sidebarSlice";
 import React from "react";
+import styles from "./Sidebar.module.css";
 
 export function Sidebar() {
   const currentPage = useSelector(selectSidebar);
@@ -21,7 +21,7 @@ export function Sidebar() {
         </Link>
         <ul className={styles.inner_menu}>
           <li className={styles.title}>PUBLIC</li>
-          <Link to="/questions">
+          <Link to="/questions?page=1">
             <li
               className={`${styles.menu} ${
                 currentPage === "/questions" ? styles.clicked : ""

@@ -1,20 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "../editor/Editor";
 import styles from "./QuestionDetail.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MDEditor from "@uiw/react-md-editor";
 import avatar from "../../assets/images/avatar.jpg";
+import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
+import { PostInterface } from "../post/Post";
+import { setCurrentPage } from "../sidebar/sidebarSlice";
+import { useDispatch } from "react-redux";
 
 export function QuestionDetail() {
+  let { postId } = useParams<{ postId: string }>();
+  const [post, setPost] = useState<PostInterface>();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const getPost = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/posts?post_id=${postId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log(response.data.data[0]);
+
+        setPost(response.data.data[0]);
+      })
+      .catch(() => {
+        history.push("/");
+      });
+  };
+
+  useEffect(() => {
+    dispatch(setCurrentPage("/questions"));
+
+    getPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <div className={styles.headerTop}>
-          <div className={styles.titleBox}>
-            AWS CodePipline - How to implement production deployment for certain
-            clients using the pipeline hosted on same EC2
-          </div>
+          <div className={styles.titleBox}>{post?.title}</div>
           <div className={styles.askBox}>
             <button className={styles.askButton}>Ask Question</button>
           </div>
@@ -31,7 +63,7 @@ export function QuestionDetail() {
             </li>
             <li>
               <span>Viewed</span>
-              <span>2 times</span>
+              <span>{post?.views} times</span>
             </li>
           </ul>
         </div>
@@ -43,14 +75,17 @@ export function QuestionDetail() {
               <div className={styles.upDown}>
                 <FontAwesomeIcon icon={faCaretUp}></FontAwesomeIcon>
               </div>
-              <div className={styles.upDownNumber}>0</div>
+              <div className={styles.upDownNumber}>{post?.votes}</div>
               <div className={styles.upDown}>
                 <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
               </div>
             </div>
             <div className={styles.contentBox}>
               <div className={styles.content}>
-                <MDEditor.Markdown source={"**hahaha**"} />
+                <MDEditor.Markdown
+                  source={`${post?.body}`}
+                  className={styles.preview}
+                />
               </div>
               <div className={styles.tagsBox}>
                 <ul className={styles.tags}>
@@ -66,7 +101,7 @@ export function QuestionDetail() {
                 </ul>
                 <div className={styles.userBox}>
                   <img src={avatar} alt="userImage" className={styles.avatar} />
-                  <div className={styles.username}>Munawiki</div>
+                  <div className={styles.username}>{post?.user.nickname}</div>
                 </div>
               </div>
             </div>
