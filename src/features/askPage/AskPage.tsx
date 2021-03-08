@@ -4,12 +4,13 @@ import styles from "./AskPage.module.css";
 import { Editor } from "../editor/Editor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { selectUserInfo } from "../signIn/signInSlice";
+import { selectIsLogin, selectUserInfo } from "../signIn/signInSlice";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 export function AskPage() {
   const userInfo = useSelector(selectUserInfo);
+  const isLogin = useSelector(selectIsLogin);
   const [list1, setList1] = useState(false);
   const [list2, setList2] = useState(false);
   const [list3, setList3] = useState(false);
@@ -18,15 +19,18 @@ export function AskPage() {
   const history = useHistory();
 
   const postReview = () => {
-    if (userInfo != null) {
+    if (userInfo !== null) {
       const data = JSON.stringify({
         title,
         body,
         userId: userInfo.id,
       });
+
+      console.log(userInfo);
+
       axios({
         method: "post",
-        url: "https://localhost:4000/posts/",
+        url: `${process.env.REACT_APP_SERVER_HOST}/posts`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -36,6 +40,7 @@ export function AskPage() {
   };
 
   return (
+
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={styles.titleBox}>

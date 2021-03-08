@@ -10,6 +10,7 @@ import axios from "axios";
 import { PostInterface } from "../post/Post";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { useDispatch } from "react-redux";
+import { Answer } from "../answer/Answer";
 
 export function QuestionDetail() {
   let { postId } = useParams<{ postId: string }>();
@@ -18,7 +19,6 @@ export function QuestionDetail() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [answerBody, setAnswerBody] = useState<string | undefined>("");
   const getPost = () => {
     axios({
       method: "get",
@@ -28,11 +28,34 @@ export function QuestionDetail() {
       },
     })
       .then((response) => {
-        console.log(response.data.data[0]);
         setPost(response.data.data[0]);
       })
       .catch(() => {
         history.push("/");
+      });
+  };
+
+  const postAnswer = () => {
+    const data = {
+      postId: post?.id,
+      userId: post?.userId,
+      body: value,
+    };
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_HOST}/answers`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    })
+      .then((response) => {
+        console.log(response);
+        getPost();
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -107,10 +130,16 @@ export function QuestionDetail() {
               </div>
             </div>
           </div>
+          {post?.answers.map((v, i) => (
+            <Answer answer={v} key={i} />
+          ))}
           <div className={styles.editorBox}>
-
-            <Editor value={value} setValue={setValue} />
-
+            <Editor setValue={setValue} />
+          </div>
+          <div className={styles.postButtonBox}>
+            <button className={styles.postButton} onClick={postAnswer}>
+              Post Your Answer
+            </button>
           </div>
         </div>
         <div className={styles.mainRight}></div>
