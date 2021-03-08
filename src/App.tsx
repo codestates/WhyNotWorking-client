@@ -5,18 +5,18 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { login, selectUserInfo, UserInfo } from "./features/signIn/signInSlice";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { login, UserInfo } from "./features/signIn/signInSlice";
 import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
 import { Users } from "./features/users/UsersPage";
 import { Home } from "./features/home/Home";
+import { SignUp } from "./features/signUp/SignUp";
 import { AskPage } from "./features/askPage/AskPage";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
-  const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -82,6 +82,9 @@ function App() {
                 </div>
                 <div className="right_sidebar"></div>
               </div>
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
             </Route>
             <Route exact path="/signin">
               <SignIn />
