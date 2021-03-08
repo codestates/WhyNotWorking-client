@@ -17,6 +17,7 @@ export function QuestionDetail() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [answerBody, setAnswerBody] = useState<string | undefined>("");
   const getPost = () => {
     axios({
       method: "get",
@@ -107,7 +108,7 @@ export function QuestionDetail() {
             </div>
           </div>
           <div className={styles.editorBox}>
-            <Editor />
+            <Editor setValue={setAnswerBody} />
           </div>
         </div>
         <div className={styles.mainRight}></div>
