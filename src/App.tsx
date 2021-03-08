@@ -12,6 +12,7 @@ import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
 import { Users } from "./features/users/UsersPage";
 import { Home } from "./features/home/Home";
+import { AskPage } from "./features/askPage/AskPage";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -94,6 +95,9 @@ function App() {
                   <Home />
                 </div>
               </div>
+            </Route>
+            <Route path="/askPage">
+              <AskPage />
             </Route>
           </Switch>
         </main>

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./questionList.module.css";
 import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import { moveToPage, selectPage } from "../pagination/paginationSlice";
 import {
   getCountAsync,
@@ -18,9 +15,9 @@ import {
 } from "./qLSlice";
 
 import { useLocation, useParams, useRouteMatch } from "react-router-dom";
-
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -72,7 +69,9 @@ export function QuestionList() {
           </div>
           <div className={styles.filterBox}>
             <div className={styles.btnWrapper}>
-              <div className={styles.btn}>Ask Question</div>
+              <Link to="/askPage">
+                <div className={styles.btn}>Ask Question</div>
+              </Link>
             </div>
             <div className={styles.filterWrapper}>
               <div className={styles.newest}>Newest</div>
