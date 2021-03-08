@@ -13,6 +13,7 @@ export function SignUp() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // todo : redux 방식으로 수정
   const signUpSubmit = () => {
     const data = JSON.stringify({
       password,

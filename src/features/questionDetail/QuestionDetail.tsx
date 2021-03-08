@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 export function QuestionDetail() {
   let { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostInterface>();
+  const [value, setValue] = useState<string | undefined>("");
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -27,7 +28,6 @@ export function QuestionDetail() {
     })
       .then((response) => {
         console.log(response.data.data[0]);
-
         setPost(response.data.data[0]);
       })
       .catch(() => {
@@ -107,7 +107,7 @@ export function QuestionDetail() {
             </div>
           </div>
           <div className={styles.editorBox}>
-            <Editor />
+            <Editor value={value} setValue={setValue} />
           </div>
         </div>
         <div className={styles.mainRight}></div>
