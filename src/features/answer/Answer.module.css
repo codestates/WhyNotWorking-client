@@ -119,8 +119,10 @@
 }
 
 .content {
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
+
+  max-width: 675px;
 
   align-items: flex-start;
   justify-content: flex-start;
