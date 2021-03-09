@@ -56,7 +56,7 @@
   text-align: left;
 }
 
-.writingBox > input {
+.writingBox > div > input {
   width: 100%;
   height: 40px;
   border: solid 1px #d6d9dc;
@@ -64,10 +64,10 @@
   padding: 7px;
   box-sizing: border-box;
 }
-.writingBox > input::placeholder {
+.writingBox > div > input::placeholder {
   color: #bbc0c4;
 }
-.writingBox > input:focus {
+.writingBox > div > input:focus {
   outline: none;
   border-color: #6cbbf7;
   box-shadow: 0 0 0 4px rgb(0 149 255 / 15%);
@@ -167,4 +167,69 @@
 
 .btn:hover {
   background-color: #0064bd;
+}
+
+.tagBox {
+  width: 100%;
+  position: relative;
+}
+
+.tagWrapBox {
+  height: 40px;
+  width: 100%;
+
+  top: 0px;
+
+  position: absolute;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* background-color: black; */
+}
+
+.tagStyle {
+  float: left;
+  top: 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+
+  margin-left: 7px;
+  height: 30px;
+
+  padding-left: 3px;
+  padding-right: 3px;
+
+  background-color: #0095ff;
+
+  border: none;
+  border-radius: 5px;
+
+  color: white;
+}
+
+.hiddenInput {
+  width: 100%;
+  height: 100%;
+
+  outline: none;
+
+  padding-left: 7px;
+
+  background-color: transparent;
+  border: none;
+}
+
+.tagClose {
+  width: 20px;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
