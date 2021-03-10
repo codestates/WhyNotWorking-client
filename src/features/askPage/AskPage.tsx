@@ -40,7 +40,6 @@ export function AskPage() {
   };
 
   return (
-
     <div className={styles.bg}>
       <div className={styles.container}>
         <div className={styles.titleBox}>
@@ -66,7 +65,7 @@ export function AskPage() {
               Include all the information someone would need to answer your
               question
             </p>
-            <Editor value={body} setValue={setBody} />
+            <Editor setValue={setBody} />
             <div className={styles.head}>Tags</div>
             <p>Add up to 5 tags to describe what your question is about</p>
             <input type="text" placeholder="e.g. (css spring java)"></input>
