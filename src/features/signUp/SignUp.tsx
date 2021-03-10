@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUp.module.css";
-import { login } from "./signInSlice";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
+import { loginAsync } from "../signIn/signInSlice";
 
 export function SignUp() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [nickname, setNickname] = useState<string>("");
+  const [email, setEmail] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
+  const [nickname, setNickname] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -22,31 +23,20 @@ export function SignUp() {
     });
     axios({
       method: "post",
-      url: "https://localhost:4000/users/",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
       headers: {
         "Content-Type": "application/json",
       },
       data,
-    })
-      .then(() => {
-        axios({
-          method: "post",
-          url: "https://localhost:4000/login/",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data,
-        });
-      })
-      .then(() => {
-        axios.get("https://localhost:4000/users/").then((res: any) => {
-          dispatch(login(res));
-          history.push("/signUp");
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      if (res.status === 200 && email && password) {
+        dispatch(loginAsync({ email, password }));
+        setMessage(null);
+        history.push("/signupDetail");
+      } else {
+        setMessage(res.data.message);
+      }
+    });
   };
 
   return (
@@ -107,33 +97,83 @@ export function SignUp() {
       </div>
       <div className={styles.wrapper}>
         <div className={styles.loginBox}>
+          <link
+            href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+            rel="stylesheet"
+          ></link>
           <div>Display name</div>
-          <input
-            className={styles.input}
-            type="text"
-            onChange={(e) => setNickname(e.target.value)}
-          />
+          {message === "Such nickname already exists" ? (
+            <>
+              <input
+                className={styles.invalidInput}
+                type="text"
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="&#xf06a;"
+              />
+              <div className={styles.message}>{message}</div>
+            </>
+          ) : message === "should send full data" && !nickname ? (
+            <>
+              <input
+                className={styles.invalidInput}
+                type="text"
+                onChange={(e) => setNickname(e.target.value)}
+                placeholder="&#xf06a;"
+              />
+              <div className={styles.message}>
+                Display name cannot be empty.
+              </div>
+            </>
+          ) : (
+            <input
+              className={styles.input}
+              type="text"
+              onChange={(e) => setNickname(e.target.value)}
+            />
+          )}
           <div>Email</div>
-          <input
-            className={styles.input}
-            type="text"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          {message === "Such email already exists" ? (
+            <>
+              <input
+                className={styles.invalidInput}
+                type="text"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="&#xf06a;"
+              />
+              <div className={styles.message}>{message}</div>
+            </>
+          ) : message === "should send full data" && !email ? (
+            <>
+              <input
+                className={styles.invalidInput}
+                type="text"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="&#xf06a;"
+              />
+              <div className={styles.message}>Email cannot be empty.</div>
+            </>
+          ) : (
+            <input
+              className={styles.input}
+              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          )}
           <div>Password</div>
           <input
             className={styles.input}
             type="text"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Link to="/signupDetail">
-            <div className={styles.btn} onClick={signUpSubmit}>
-              Sign up
-            </div>
-          </Link>
+          <div className={styles.btn} onClick={signUpSubmit}>
+            Sign up
+          </div>
         </div>
         <div className={styles.signUpLinkBox}>
           <div>Already have an account? </div>
-          <div className={styles.signUpLink}> Log in</div>
+          <Link to="/signin">
+            <div className={styles.signUpLink}> Log in</div>
+          </Link>
         </div>
       </div>
     </div>

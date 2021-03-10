@@ -2,38 +2,69 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUpDetail.module.css";
 import { login, selectUserInfo } from "./signInSlice";
-
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+interface TagInfo {
+  id: number;
+  tagName: string;
+  detail: string;
+}
 export function SignUpDetail() {
   const userInfo = useSelector(selectUserInfo);
   const [location, setLocation] = useState<string>("");
-  const [tags, setTags] = useState<Array<string | undefined>>([]);
+  const [tags, setTags] = useState<Array<string | undefined>>([
+    "javascript",
+    "css",
+    "css",
+  ]);
+  const [tagResult, setTagResult] = useState<TagInfo | null>(null);
   const [nickname, setNickname] = useState<string>("");
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string>("https://i.imgur.com/pG0fYRq.png");
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const fileInput = () => React.createRef<HTMLInputElement | null>();
+  const fileInput = React.createRef<any>();
 
-  // const imageChangeHandler = () => {
-  //   if (fileInput()) {
-  //     setImage(fileInput().current.files[0]);
-  //   }
-  // };
+  const imageChangeHandler = () => {
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(`${reader.result}`);
+    };
+    let url = reader.readAsDataURL(fileInput.current.files[0]);
+    console.log(image);
+  };
+
+  const tagInputHandler = (tag: string) => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_HOST}/tags?${tag}`)
+      .then((res) => {
+        if (res.status === 200) {
+          const { id, tagName, detail } = res.data.data;
+          setTagResult({ id, tagName, detail });
+        } else {
+          setTags([...tags, tag]);
+        }
+      });
+  };
+
   const updateSubmit = () => {
-    const data = JSON.stringify({
-      location,
-      image,
-      nickname,
-    });
+    const formData = new FormData();
+
+    formData.append("image", image);
+    formData.append("nickname", nickname);
+    if (userInfo !== null) {
+      formData.append("userId", `${userInfo.id}`);
+    }
+
     axios({
       method: "patch",
       url: "https://localhost:4000/users/",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
-      data,
+      data: formData,
     })
       .then(() => {
         axios.get("https://localhost:4000/users/").then((res: any) => {
@@ -62,20 +93,19 @@ export function SignUpDetail() {
           onChange={(e) => setNickname(e.target.value)}
         />
         <div className={styles.imageSettingBox}>
-          <img
-            className={styles.img}
-            src="https://i.imgur.com/pG0fYRq.png"
-            alt="프로필사진"
-          ></img>
+          <img className={styles.img} src={image} alt="프로필사진"></img>
           <div className={styles.imageSetting}>
             <div className={styles.head}>Profile picture</div>
             <p>Adding a photo can make it easier for others to recognize you</p>
+            <label htmlFor="fileInput" className={styles.profileBtn}>
+              Pick a photo
+            </label>
             <input
               type="file"
-              // onChange={imageChangeHandler}
+              onChange={imageChangeHandler}
               ref={fileInput}
-              className={styles.fileUploader}
-              id="fileUploader"
+              className={styles.fileInput}
+              id="fileInput"
             ></input>
           </div>
         </div>
@@ -86,23 +116,35 @@ export function SignUpDetail() {
         </p>
         <div className={styles.input}>
           <div className={styles.selectedTagsBox}>
-            {tags.map((t) => (
-              <div
-                key={tags.indexOf(t)}
-                className={styles.selectedTag}
-                onClick={() => {
-                  setTags(
-                    tags.map((T) => {
-                      if (T !== t) return T;
-                    })
-                  );
-                }}
-              >
-                {t}
-              </div>
-            ))}
+            {tags.map((t, i) => {
+              if (t)
+                return (
+                  <div
+                    key={i}
+                    className={styles.selectedTag}
+                    onClick={() => {
+                      setTags(
+                        tags.map((T) => {
+                          if (T !== t) return T;
+                        })
+                      );
+                    }}
+                  >
+                    {t}
+                    <FontAwesomeIcon
+                      icon={faTimesCircle}
+                      className={styles.icon}
+                    ></FontAwesomeIcon>
+                  </div>
+                );
+            })}
           </div>
-          <input type="text" className={styles.tagInput}></input>
+          <input
+            type="text"
+            className={styles.tagInput}
+            onChange={(e) => tagInputHandler(e.target.value)}
+          ></input>
+          {tagResult ? <div className={styles.tagSearchResultBox}></div> : ""}
         </div>
         <div className={styles.head}>Your location</div>
         <input
