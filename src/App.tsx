@@ -14,6 +14,7 @@ import { Users } from "./features/users/UsersPage";
 import { Home } from "./features/home/Home";
 import { SignUp } from "./features/signUp/SignUp";
 import { AskPage } from "./features/askPage/AskPage";
+import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -103,6 +104,9 @@ function App() {
             </Route>
             <Route path="/askPage">
               <AskPage />
+            </Route>
+            <Route path="/signupDetail">
+              <SignUpDetail />
             </Route>
           </Switch>
         </main>

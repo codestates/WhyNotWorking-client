@@ -43,9 +43,12 @@
 }
 .imageSettingBox {
   display: flex;
-  align-items: flex-end;
   margin-bottom: 20px;
   margin-top: 7px;
+}
+
+.imageSetting {
+  margin-top: 10px;
 }
 .detailBox > p,
 .imageSetting > p {
@@ -62,9 +65,6 @@
   box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
     0 1px 4px rgb(0 0 0 / 10%);
   margin-right: 15px;
-}
-.fileUploader {
-  margin-bottom: 7px;
 }
 
 .input {
@@ -90,8 +90,9 @@
 .tagInput {
   border: transparent;
   background-color: transparent;
-  height: 30px;
-  width: 100%;
+  min-height: 30px;
+  height: fit-content;
+  width: fit-content;
 }
 
 .tagInput:focus {
@@ -128,4 +129,64 @@
   color: #0077cc;
   padding-left: 3px;
   padding-right: 3px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.profileBtn {
+  border: solid 1px transparent;
+  border-color: #7aa7c7;
+  border-radius: 3px;
+  color: #39739d;
+  background-color: #e1ecf4;
+  font-size: 11px;
+  padding: 5px;
+  box-shadow: inset 0 1px 0 0 rgb(225 225 225 /40%);
+}
+
+.profileBtn:hover {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.selectedTagsBox {
+  padding: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  height: fit-content;
+}
+
+.selectedTag {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  font-size: 14px;
+  color: #39739d;
+  width: fit-content;
+  height: 20px;
+  padding: 2px 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3px;
+}
+.icon {
+  color: #c9cbcf;
+  background-color: white;
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+.tagSearchResultBox {
+  width: 372px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #bbc0c4;
+  background-color: white;
+  z-index: 100;
+  position: absolute;
+  top: 315px;
+  left: 447px;
 }
