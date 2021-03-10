@@ -100,44 +100,16 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
   axios
-    .post(
-      `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
-      {
-        authorizationCode,
-      },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    )
-    .then((res) => {
+    .post(`${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`)
+    .then(() => {
       axios
-        .get("https://github.com/login/oauth/user", {
-          headers: {
-            authorization: `token ${res.data.accessToken}`,
-          },
+        .get(`${process.env.REACT_APP_SERVER_HOST}/users`)
+        .then((res: any) => {
+          dispatch(login(res.data.data));
+          localStorage.setItem("user", res.data.data);
         })
-        .then((res) => {
-          const { name, location, avatar_url } = res.data;
-          const data = JSON.stringify({
-            nickname: name,
-            location,
-            image: avatar_url,
-          }); //email도 보내줘야하는지? 컨트롤러엔 없음
-          axios
-            .patch(`${process.env.REACT_APP_SERVER_HOST}/users/`, data, {
-              headers: { "Content-Type": "application/json" },
-            })
-            .then(() => {
-              axios
-                .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
-                .then((res: any) => {
-                  dispatch(login(res.data.data));
-                  localStorage.setItem("user", res.data.data);
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            });
+        .catch((error) => {
+          console.log(error);
         });
     });
 };

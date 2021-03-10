@@ -140,3 +140,34 @@ svg {
   font-family: Arial, Helvetica, sans-serif;
   margin-bottom: 4px;
 }
+
+.googleLogin {
+  width: 284px;
+  border: 1px solid #d6d9dc !important;
+  background-color: white;
+  padding-bottom: 13px !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+}
+.googleLogin > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.googleLogin:hover {
+  background-color: #fafafb;
+}
+
+.gitHubLogin {
+  background-color: #2f3337;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 13px !important;
+  border-radius: 5px !important;
+  cursor: pointer;
+}
+
+.gitHubLogin:hover {
+  background-color: #242729;
+}
