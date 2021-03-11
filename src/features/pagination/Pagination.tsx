@@ -10,7 +10,11 @@ import {
   selectPageList,
 } from "./paginationSlice";
 
-export function Pagination() {
+export function Pagination({
+  getDataByPage,
+}: {
+  getDataByPage: (page: number) => void;
+}) {
   const count = 20889999;
   const posts = true;
 
