@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Editor } from "../editor/Editor";
 import styles from "./QuestionDetail.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import avatar from "../../assets/images/avatar.jpg";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MDEditor from "@uiw/react-md-editor";
-import avatar from "../../assets/images/avatar.jpg";
-import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import { AnswerInterface, PostInterface } from "../post/Post";
-import { setCurrentPage } from "../sidebar/sidebarSlice";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import { PostInterface, AnswerInterface } from "../post/Post";
+import { setCurrentPage } from "../sidebar/sidebarSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Answer } from "../answer/Answer";
+import { Editor } from "../editor/Editor";
 
 export enum voteType {
   up,
@@ -50,6 +50,8 @@ export function QuestionDetail() {
       },
     })
       .then((response) => {
+        console.log(response.data.data[0]);
+
         setPost(response.data.data[0]);
       })
       .catch(() => {
@@ -125,6 +127,7 @@ export function QuestionDetail() {
     dispatch(setCurrentPage("/questions"));
     postView();
     getPost();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
@@ -187,8 +190,11 @@ export function QuestionDetail() {
               </div>
               <div className={styles.tagsBox}>
                 <ul className={styles.tags}>
-                  <li>amazon-ec2</li>
-                  <li>aws-codepipeline</li>
+                  {post?.postTag.map((v, i) => (
+                    <li key={i}>{v.tag.tagName}</li>
+                  ))}
+                  {/* <li>amazon-ec2</li> */}
+                  {/* <li>aws-codepipeline</li> */}
                 </ul>
               </div>
               <div className={styles.contentUtilsBox}>
