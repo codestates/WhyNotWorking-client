@@ -35,7 +35,7 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      console.log(response.data.data[0].answer);
+      // console.log(response.data.data[0].answer);
 
       setPosts(response.data.data);
     });

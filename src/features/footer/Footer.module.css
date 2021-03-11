@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  height: 272px;
+  width: 100%;
+
+  background-color: rgb(36, 39, 41);
+}

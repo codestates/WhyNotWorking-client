@@ -67,7 +67,12 @@ export function Post({ post }: PostProps) {
         </div>
         <div className={styles.wrapper}>
           <div className={styles.tagBox}>
-            <a
+            {post?.postTag.map((v, i) => (
+              <div key={i} className={styles.tag}>
+                {v.tag.tagName}
+              </div>
+            ))}
+            {/* <a
               href="https://stackoverflow.com/questions/tagged/android"
               className={styles.tag}
               title=""
@@ -90,7 +95,7 @@ export function Post({ post }: PostProps) {
               rel="tag"
             >
               crash
-            </a>
+            </a> */}
           </div>
           <div className={styles.infoBox}>
             <div>asked{/* modified */} 1 min ago</div>

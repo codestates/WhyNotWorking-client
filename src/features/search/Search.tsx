@@ -44,12 +44,18 @@ export function Search() {
         type="text"
         className={styles.search}
         placeholder="Search..."
+        value={inputValue}
         onChange={(e) => {
           searchFunc(e.target.value);
           setInputValue(e.target.value);
         }}
       />
-      <ul className={styles.autoComplete}>
+      <ul
+        className={styles.autoComplete}
+        onClick={() => {
+          setInputValue("");
+        }}
+      >
         {searchResult.map((v) => (
           <Link to={`/post/${v.id}`}>
             <li

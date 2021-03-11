@@ -27,6 +27,7 @@ export function AskPage() {
         title,
         body,
         userId: userInfo.id,
+        tags,
       });
 
       axios({
@@ -36,24 +37,13 @@ export function AskPage() {
           "Content-Type": "application/json",
         },
         data,
-      }).then(() => {
-        const tagData = JSON.stringify({
-          title,
-          body,
-          userId: userInfo.id,
+      })
+        .then(() => {
+          history.push("/questions?page=1");
+        })
+        .catch((err) => {
+          console.log(err);
         });
-
-        axios({
-          method: "post",
-          url: `${process.env.REACT_APP_SERVER_HOST}/postTags`,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: tagData,
-        }).then(() => {
-          history.push("/questions");
-        });
-      });
     }
   };
 
