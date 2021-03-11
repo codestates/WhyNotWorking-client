@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { AppThunk, RootState } from "../../app/store";
 import { login } from "../signIn/signInSlice";
-import { useHistory } from "react-router-dom";
 
 export const gitHubSignUp = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
-  const history = useHistory();
   axios
     .post(
       `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
@@ -43,7 +41,6 @@ export const gitHubSignUp = (authorizationCode: any): AppThunk => (
                 .then((res: any) => {
                   dispatch(login(res.data.data));
                   localStorage.setItem("user", res.data.data);
-                  history.push("/signupDetail");
                 })
                 .catch((error) => {
                   console.log(error);

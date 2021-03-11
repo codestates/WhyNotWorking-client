@@ -22,7 +22,7 @@ export interface PostInterface {
   answers: Array<AnswerInterface>;
   body: string;
   createdAt: string;
-  id: string;
+  id: number;
   postTag: Array<any>;
   title: string;
   updatedAt: string;

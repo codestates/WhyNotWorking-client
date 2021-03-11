@@ -181,12 +181,22 @@
 
 .tagSearchResultBox {
   width: 372px;
-  height: 50px;
+  height: fit-content;
   border-radius: 5px;
   border: 1px solid #bbc0c4;
   background-color: white;
   z-index: 100;
   position: absolute;
-  top: 315px;
+  top: 454px;
   left: 447px;
+  padding: 7px;
+}
+.tagName {
+}
+
+.detail {
+  width: 360px;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
 }

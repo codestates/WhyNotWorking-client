@@ -1,0 +1,101 @@
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.headInfo {
+  display: flex;
+}
+.imgBox {
+  width: 210px;
+  height: 254px;
+  border-radius: 5px;
+  border: solid 1px #d6d9dc;
+  padding: 12px;
+}
+.img {
+  width: 164px;
+  height: 164px;
+  border-radius: 4px;
+  margin-top: 15px;
+}
+
+.introductionBox {
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 20px;
+}
+.name {
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.noneAboutMe {
+  color: #6a737c;
+  margin-top: 16px;
+  font-size: 15px;
+}
+
+.aboutMe {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.settingLink {
+  color: #0077cc;
+  text-decoration: underline;
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+.sideInfoBox {
+  margin-left: 360px;
+  text-align: left;
+}
+.countInfo {
+  display: flex;
+  margin-bottom: 20px;
+}
+.questionsCountBox {
+  margin-left: 10px;
+}
+.location {
+  margin-bottom: 7px;
+}
+
+.title {
+  color: #3c4146;
+  font-size: 14px;
+}
+.count {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sideInfo {
+  color: #3c4146;
+}
+
+.icon {
+  color: #9199a1;
+}
+
+.summaryBox {
+  margin-top: 35px;
+  margin-left: 260px;
+}
+.summaryTitle {
+  display: flex;
+  font-size: 18px;
+  padding-bottom: 10px;
+  border-bottom: solid 1px #d6d9dc;
+  font-weight: 900;
+}
+.postsCount {
+  color: #9199a1;
+  margin-left: 10px;
+  font-weight: normal !important;
+}

@@ -5,26 +5,33 @@ import {
   faComment,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openNotification, selectNav } from "../nav/navSlice";
 import styles from "./NavMenu.module.css";
 import { Notification } from "../notification/Notification";
-import { selectIsLogin } from "../signIn/signInSlice";
+import { selectIsLogin, selectUserInfo } from "../signIn/signInSlice";
 import { Link } from "react-router-dom";
 
 export function NavMenu() {
   const notificationStatus = useSelector(selectNav);
   const isLogin = useSelector(selectIsLogin);
+  const userInfo = useSelector(selectUserInfo);
+  const [userId, setUserId] = useState<number | null>(3);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (userInfo) setUserId(userInfo.id);
+  });
   return (
     <div className={styles.container}>
       {isLogin ? (
         <ol className={styles.menu_container}>
-          <li className={styles.menu_avatar}>
-            <span className={styles.avatar}></span>
-          </li>
+          <Link to={`/users/${userId}`}>
+            <li className={styles.menu_avatar}>
+              <span className={styles.avatar}></span>
+            </li>
+          </Link>
           <li
             className={styles.menu_item}
             onClick={() => {
