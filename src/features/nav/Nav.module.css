@@ -15,7 +15,8 @@
   /* background-color: yellow; */
   background-color: rgb(250, 250, 251);
 
-  width: 1264px;
+  max-width: 1264px;
+  width: 100%;
   height: 47px;
 
   /* position: absolute; */

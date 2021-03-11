@@ -21,8 +21,9 @@ export function NavMenu() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userInfo) setUserId(userInfo.id);
-  });
+    // if (userInfo) setUserId(userInfo.id);
+  }, [userInfo]);
+
   return (
     <div className={styles.container}>
       {isLogin ? (
