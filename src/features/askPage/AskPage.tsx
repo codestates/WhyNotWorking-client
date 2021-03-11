@@ -82,6 +82,7 @@ export function AskPage() {
               type="text"
               placeholder="e.g. Is there an R function or finding the index of an element in a vector"
               onChange={(e) => setTitle(e.target.value)}
+              className={styles.input}
             ></input>
             <div className={styles.head}>Body</div>
             <p>
