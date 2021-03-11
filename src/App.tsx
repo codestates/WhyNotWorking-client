@@ -54,7 +54,7 @@ function App() {
                 </div>
               </div>
             </Route>
-            <Route exact path="/post/:postId">
+            <Route path="/post/:postId">
               <div className="main_content">
                 <div className="left_content">
                   <Sidebar />

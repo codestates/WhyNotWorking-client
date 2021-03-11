@@ -27,7 +27,7 @@ export function Sidebar() {
                 currentPage === "/questions" ? styles.clicked : ""
               }`}
             >
-              Stack Overflow
+              Queue Overflow
             </li>
           </Link>
           <Link to="/tags">

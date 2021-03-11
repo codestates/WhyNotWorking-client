@@ -173,6 +173,8 @@
 
   font-size: 3rem;
   color: silver;
+
+  cursor: pointer;
 }
 
 .upDownNumber {

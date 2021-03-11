@@ -7,10 +7,15 @@ import MDEditor from "@uiw/react-md-editor";
 import avatar from "../../assets/images/avatar.jpg";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
-import { PostInterface } from "../post/Post";
+import { AnswerInterface, PostInterface } from "../post/Post";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { useDispatch } from "react-redux";
 import { Answer } from "../answer/Answer";
+
+export enum voteType {
+  up,
+  down,
+}
 
 export function QuestionDetail() {
   let { postId } = useParams<{ postId: string }>();
@@ -18,6 +23,23 @@ export function QuestionDetail() {
   const [value, setValue] = useState<string | undefined>("");
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const postView = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/posts/viewsUp`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        id: postId,
+      },
+    })
+      .then(() => {
+        getPost();
+      })
+      .catch(() => {});
+  };
 
   const getPost = () => {
     axios({
@@ -50,8 +72,7 @@ export function QuestionDetail() {
       },
       data: data,
     })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         getPost();
       })
       .catch((error) => {
@@ -59,12 +80,55 @@ export function QuestionDetail() {
       });
   };
 
+  const isPost = (obj: PostInterface | AnswerInterface) => {
+    return (obj as PostInterface).views !== undefined;
+  };
+
+  const postVote = (type: voteType, obj: PostInterface | AnswerInterface) => {
+    const data: { id?: number; votes?: number } = {};
+
+    data.id = obj.id;
+    data.votes = obj.votes + 1;
+
+    let url = `${process.env.REACT_APP_SERVER_HOST}/`;
+
+    if (isPost(obj)) {
+      url += `posts/`;
+    } else {
+      url += `answers/`;
+    }
+
+    if (type === voteType.up) {
+      url += `votesUp`;
+    } else if (type === voteType.down) {
+      url += `votesDown`;
+    }
+
+    axios({
+      method: "get",
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        id: obj.id,
+      },
+    })
+      .then(() => {
+        getPost();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
     dispatch(setCurrentPage("/questions"));
-
+    postView();
     getPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [postId]);
+
+  // useEffect(() => {}, [postId]);
 
   return (
     <div className={styles.container}>
@@ -96,11 +160,21 @@ export function QuestionDetail() {
         <div className={styles.mainLeft}>
           <div className={styles.postBox}>
             <div className={styles.recommendBox}>
-              <div className={styles.upDown}>
+              <div
+                className={styles.upDown}
+                onClick={() => {
+                  postVote(voteType.up, post as PostInterface);
+                }}
+              >
                 <FontAwesomeIcon icon={faCaretUp}></FontAwesomeIcon>
               </div>
               <div className={styles.upDownNumber}>{post?.votes}</div>
-              <div className={styles.upDown}>
+              <div
+                className={styles.upDown}
+                onClick={() => {
+                  postVote(voteType.down, post as PostInterface);
+                }}
+              >
                 <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
               </div>
             </div>
@@ -130,8 +204,8 @@ export function QuestionDetail() {
               </div>
             </div>
           </div>
-          {post?.answers.map((v, i) => (
-            <Answer answer={v} key={i} />
+          {post?.answer.map((v, i) => (
+            <Answer answer={v} key={i} postVote={postVote} />
           ))}
           <div className={styles.editorBox}>
             <Editor setValue={setValue} />
