@@ -54,18 +54,64 @@ export const loginAsync = (userInfo: {
       "Content-Type": "application/json",
     },
     data,
-  }).then(() => {
-    axios({
-      method: "get",
-      url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((usersResponse) => {
-      dispatch(login(usersResponse.data.data));
-      localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
+  })
+    .then(() => {
+      axios({
+        method: "get",
+        url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((usersResponse) => {
+        dispatch(login(usersResponse.data.data));
+        localStorage.setItem("user", usersResponse.data.data);
+      });
+    })
+    .catch((error) => {
+      alert("회원정보가 일치하지 않습니다.");
     });
-  });
+};
+
+export const googleLoginAsync = (token: any): AppThunk => (dispatch) => {
+  axios
+    .post(
+      `${process.env.REACT_APP_SERVER_HOST}/login/googleLogin/`,
+      {
+        token,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+    .then(() => {
+      axios
+        .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
+        .then((res: any) => {
+          dispatch(login(res.data.data));
+          localStorage.setItem("user", res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+};
+
+export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
+  dispatch
+) => {
+  axios
+    .post(`${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`)
+    .then(() => {
+      axios
+        .get(`${process.env.REACT_APP_SERVER_HOST}/users`)
+        .then((res: any) => {
+          dispatch(login(res.data.data));
+          localStorage.setItem("user", res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
 };
 
 export const logoutAsync = (): AppThunk => (dispatch) => {

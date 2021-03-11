@@ -20,6 +20,8 @@
 
 .logo {
   margin-bottom: 25px;
+  width: 45px;
+  height: 30px;
 }
 
 .wrapper > div,
@@ -31,13 +33,17 @@
   margin-bottom: 9px;
 }
 .googleLogin {
+  width: 284px;
   border: 1px solid #d6d9dc !important;
   background-color: white;
-  display: flex;
-  justify-content: center;
   padding-bottom: 13px !important;
   border-radius: 5px !important;
   cursor: pointer;
+}
+.googleLogin > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .googleLogin:hover {
   background-color: #fafafb;
@@ -56,24 +62,7 @@
 .gitHubLogin:hover {
   background-color: #242729;
 }
-.faceBookLogin {
-  background-color: #385499;
-  margin-bottom: 19px !important;
-  padding-bottom: 13px !important;
-  color: white;
-  display: flex;
-  justify-content: center;
-  border-radius: 5px !important;
-  cursor: pointer;
-}
 
-.faceBookLogin:hover {
-  background-color: #314a86;
-}
-
-/* svg {
-  margin-right: 5px;
-} */
 .loginBox {
   box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
     0 1px 4px rgb(0 0 0 / 10%);
@@ -139,4 +128,24 @@
 }
 .signUpLink:hover {
   color: #0095ff;
+}
+.kep-login-facebook {
+  height: 15px;
+  border-radius: 5px;
+}
+
+.wrapper > span > button {
+  width: 284px;
+  height: 38px;
+  border-radius: 5px !important;
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px !important;
+}
+
+.wrapper > span > button:hover {
+  background-color: #3d5596;
 }
