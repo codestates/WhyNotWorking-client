@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { login, UserInfo } from "./features/signIn/signInSlice";
 import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
@@ -17,6 +16,7 @@ import { AskPage } from "./features/askPage/AskPage";
 import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
 import { Footer } from "./features/footer/Footer";
 import { MyPage } from "./features/mypage/MyPage";
+import { login } from "./features/signIn/signInSlice";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -24,6 +24,8 @@ function App() {
 
   useEffect(() => {
     let loggedInUser = (localStorage.getItem("user") as unknown) as string;
+
+    // localStorage.clear();
 
     if (loggedInUser) {
       dispatch(login(JSON.parse(loggedInUser)));

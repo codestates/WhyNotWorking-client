@@ -18,7 +18,7 @@ interface SignInState {
 
 const initialState: SignInState = {
   user: null,
-  isLogin: true,
+  isLogin: false,
 };
 
 export const signInSlice = createSlice({
@@ -62,14 +62,20 @@ export const loginAsync = (userInfo: {
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((usersResponse) => {
-        dispatch(login(usersResponse.data.data));
+      })
+        .then((usersResponse) => {
+          console.log(usersResponse.data.data);
 
-        localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
-      });
+          dispatch(login(usersResponse.data.data));
+          localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     })
     .catch((error) => {
-      alert("회원정보가 일치하지 않습니다.");
+      console.log(error);
+      // alert("회원정보가 일치하지 않습니다.");
     });
 };
 

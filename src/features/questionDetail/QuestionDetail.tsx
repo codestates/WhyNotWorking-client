@@ -4,13 +4,14 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { PostInterface, AnswerInterface } from "../post/Post";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Answer } from "../answer/Answer";
 import { Editor } from "../editor/Editor";
+import { selectUserInfo } from "../signIn/signInSlice";
 
 export enum voteType {
   up,
@@ -19,6 +20,7 @@ export enum voteType {
 
 export function QuestionDetail() {
   let { postId } = useParams<{ postId: string }>();
+  const userInfo = useSelector(selectUserInfo);
   const [post, setPost] = useState<PostInterface>();
   const [value, setValue] = useState<string | undefined>("");
   const history = useHistory();
@@ -50,8 +52,6 @@ export function QuestionDetail() {
       },
     })
       .then((response) => {
-        console.log(response.data.data[0]);
-
         setPost(response.data.data[0]);
       })
       .catch(() => {
@@ -62,7 +62,7 @@ export function QuestionDetail() {
   const postAnswer = () => {
     const data = {
       postId: post?.id,
-      userId: post?.userId,
+      userId: userInfo?.id,
       body: value,
     };
 

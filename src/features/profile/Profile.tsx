@@ -92,7 +92,7 @@ export function Profile({
       setLocation(location);
     }
     getSortedPosts();
-  });
+  }, []);
 
   return (
     <div className={styles.container}>
