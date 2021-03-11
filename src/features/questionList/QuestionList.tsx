@@ -45,9 +45,9 @@ export function QuestionList() {
     const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
 
-    dispatch(moveToPage(1));
-    dispatch(getPostsAsync(1));
-    dispatch(getCountAsync());
+    // dispatch(moveToPage(1));
+    // dispatch(getPostsAsync(1));
+    // dispatch(getCountAsync());
 
     getPostbyPage(currentPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
