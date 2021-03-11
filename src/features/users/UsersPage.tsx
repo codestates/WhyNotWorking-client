@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Pagination } from "../pagination/Pagination";
 import styles from "./Users.module.css";
@@ -6,13 +6,36 @@ import { User } from "../user/UUser";
 import { useDispatch } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
+import axios from "axios";
+
+export interface UserInfo {
+  id: number;
+  nickname: string;
+  email: string;
+  image: string;
+  location: string;
+}
 
 export function Users() {
   let match = useRouteMatch();
   const dispatch = useDispatch();
+  const [users, setUsers] = useState<UserInfo[]>();
+
+  const getUsersByPage = (page: number) => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users?page=${page}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setUsers(res.data.data);
+    });
+  };
 
   useEffect(() => {
     dispatch(setCurrentPage(match.path));
+    getUsersByPage(1);
   }, [dispatch, match]);
 
   return (
@@ -35,45 +58,10 @@ export function Users() {
         </div>
       </div>
       <div className={styles.listBox}>
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
-        <User />
+        {users ? users.map((u, i) => <User key={i} userInfo={u} />) : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination />
+        <Pagination getDataByPage={getUsersByPage} />
       </div>
     </div>
   );
