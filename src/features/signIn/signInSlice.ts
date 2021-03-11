@@ -3,9 +3,9 @@ import axios from "axios";
 import { AppThunk, RootState } from "../../app/store";
 
 export interface UserInfo {
-  aboutMe: string | null;
+  aboutMe: string | undefined;
   email: string | null;
-  image: string | null;
+  image: string | undefined;
   location: string | null;
   nickname: string | null;
   id: number | null;
@@ -18,7 +18,7 @@ interface SignInState {
 
 const initialState: SignInState = {
   user: null,
-  isLogin: false,
+  isLogin: true,
 };
 
 export const signInSlice = createSlice({

@@ -56,7 +56,8 @@
   text-align: left;
 }
 
-.writingBox > div > input {
+.writingBox > div > input,
+.input {
   width: 100%;
   height: 40px;
   border: solid 1px #d6d9dc;
@@ -64,10 +65,12 @@
   padding: 7px;
   box-sizing: border-box;
 }
-.writingBox > div > input::placeholder {
+.writingBox > div > input::placeholder,
+.input::placeholder {
   color: #bbc0c4;
 }
-.writingBox > div > input:focus {
+.writingBox > div > input:focus,
+.input:focus {
   outline: none;
   border-color: #6cbbf7;
   box-shadow: 0 0 0 4px rgb(0 149 255 / 15%);

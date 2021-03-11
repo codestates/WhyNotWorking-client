@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUpDetail.module.css";
-import { login, selectUserInfo } from "./signInSlice";
+import { login, selectUserInfo } from "../signIn/signInSlice";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+
 interface TagInfo {
   id: number;
   tagName: string;
@@ -19,7 +20,12 @@ export function SignUpDetail() {
     "css",
     "css",
   ]);
-  const [tagResult, setTagResult] = useState<TagInfo | null>(null);
+  const [tagResult, setTagResult] = useState<TagInfo | null>({
+    tagName: "java",
+    detail:
+      "dkdkdkdkdkkkkkkkkkkkkkkkkhfhfhfhfhfhfhfhfhfhfhfhfhffhfhfhffhfhfhffhffh",
+    id: 1,
+  });
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("https://i.imgur.com/pG0fYRq.png");
 
@@ -54,13 +60,11 @@ export function SignUpDetail() {
 
     formData.append("image", image);
     formData.append("nickname", nickname);
-    if (userInfo !== null) {
-      formData.append("userId", `${userInfo.id}`);
-    }
+    formData.append("location", location);
 
     axios({
       method: "patch",
-      url: "https://localhost:4000/users/",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -94,6 +98,7 @@ export function SignUpDetail() {
         />
         <div className={styles.imageSettingBox}>
           <img className={styles.img} src={image} alt="프로필사진"></img>
+
           <div className={styles.imageSetting}>
             <div className={styles.head}>Profile picture</div>
             <p>Adding a photo can make it easier for others to recognize you</p>
@@ -144,7 +149,14 @@ export function SignUpDetail() {
             className={styles.tagInput}
             onChange={(e) => tagInputHandler(e.target.value)}
           ></input>
-          {tagResult ? <div className={styles.tagSearchResultBox}></div> : ""}
+          {tagResult ? (
+            <div className={styles.tagSearchResultBox}>
+              <div className={styles.name}>{tagResult.tagName}</div>
+              <div className={styles.detail}>{tagResult.detail}</div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles.head}>Your location</div>
         <input

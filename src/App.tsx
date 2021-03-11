@@ -16,6 +16,7 @@ import { SignUp } from "./features/signUp/SignUp";
 import { AskPage } from "./features/askPage/AskPage";
 import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
 import { Footer } from "./features/footer/Footer";
+import { MyPage } from "./features/mypage/MyPage";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -113,12 +114,22 @@ function App() {
               </div>
               <Footer />
             </Route>
-            <Route path="/askPage">
+            <Route exact path="/askPage">
               <AskPage />
               <Footer />
             </Route>
-            <Route path="/signupDetail">
+            <Route exact path="/signupDetail">
               <SignUpDetail />
+            </Route>
+            <Route exact path="/users/:userId">
+              <div className="main_content">
+                <div className="left_content">
+                  <Sidebar />
+                </div>
+                <div className="center_content">
+                  <MyPage />
+                </div>
+              </div>
             </Route>
           </Switch>
         </main>
