@@ -88,7 +88,7 @@ export function AskPage() {
               Include all the information someone would need to answer your
               question
             </p>
-            <Editor setValue={setBody} />
+            <Editor setValue={setBody} value={body} />
             <div className={styles.head}>Tags</div>
             <p>Add up to 5 tags to describe what your question is about</p>
             <div className={styles.tagBox}>

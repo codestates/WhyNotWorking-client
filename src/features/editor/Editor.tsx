@@ -4,8 +4,10 @@ import MDEditor from "@uiw/react-md-editor";
 
 export function Editor({
   setValue,
+  value,
 }: {
   setValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+  value: string | undefined;
 }) {
   return (
     <div className={styles.container}>
@@ -16,6 +18,7 @@ export function Editor({
         }}
         preview="edit"
         height={210}
+        value={value ? value : ""}
       />
     </div>
   );

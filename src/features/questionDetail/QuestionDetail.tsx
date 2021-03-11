@@ -208,7 +208,7 @@ export function QuestionDetail() {
             <Answer answer={v} key={i} postVote={postVote} />
           ))}
           <div className={styles.editorBox}>
-            <Editor setValue={setValue} />
+            <Editor setValue={setValue} value={value} />
           </div>
           <div className={styles.postButtonBox}>
             <button className={styles.postButton} onClick={postAnswer}>

@@ -15,6 +15,7 @@ import { Home } from "./features/home/Home";
 import { SignUp } from "./features/signUp/SignUp";
 import { AskPage } from "./features/askPage/AskPage";
 import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
+import { MyPage } from "./features/mypage/MyPage";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
@@ -102,11 +103,21 @@ function App() {
                 </div>
               </div>
             </Route>
-            <Route path="/askPage">
+            <Route exact path="/askPage">
               <AskPage />
             </Route>
-            <Route path="/signupDetail">
+            <Route exact path="/signupDetail">
               <SignUpDetail />
+            </Route>
+            <Route exact path="/users/:userId">
+              <div className="main_content">
+                <div className="left_content">
+                  <Sidebar />
+                </div>
+                <div className="center_content">
+                  <MyPage />
+                </div>
+              </div>
             </Route>
           </Switch>
         </main>
