@@ -2,23 +2,35 @@ import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
-import { AnswerInterface } from "../post/Post";
+import { AnswerInterface, PostInterface } from "../post/Post";
 import styles from "./Answer.module.css";
 import avatar from "../../assets/images/avatar.jpg";
+import { voteType } from "../questionDetail/QuestionDetail";
 interface AnswerProps {
   answer: AnswerInterface;
+  postVote: (type: voteType, obj: PostInterface | AnswerInterface) => void;
 }
 
-export function Answer({ answer }: AnswerProps) {
+export function Answer({ answer, postVote }: AnswerProps) {
   return (
     <div className={styles.container}>
       <div className={styles.postBox}>
         <div className={styles.recommendBox}>
-          <div className={styles.upDown}>
+          <div
+            className={styles.upDown}
+            onClick={() => {
+              postVote(voteType.up, answer as AnswerInterface);
+            }}
+          >
             <FontAwesomeIcon icon={faCaretUp}></FontAwesomeIcon>
           </div>
           <div className={styles.upDownNumber}>{answer?.votes}</div>
-          <div className={styles.upDown}>
+          <div
+            className={styles.upDown}
+            onClick={() => {
+              postVote(voteType.down, answer as AnswerInterface);
+            }}
+          >
             <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
           </div>
         </div>

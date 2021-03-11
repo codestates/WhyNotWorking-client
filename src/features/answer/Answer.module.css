@@ -119,7 +119,7 @@
 }
 
 .content {
-  /* width: 100%; */
+  width: 100%;
   height: 100%;
 
   max-width: 675px;
@@ -173,10 +173,13 @@
 
   font-size: 3rem;
   color: silver;
+
+  cursor: pointer;
 }
 
 .upDownNumber {
   width: 100%;
+  margin-right: 4px;
 }
 
 .headerBottom li {

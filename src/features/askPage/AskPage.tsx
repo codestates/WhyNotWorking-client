@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "./AskPage.module.css";
 import { Editor } from "../editor/Editor";
@@ -15,8 +15,11 @@ export function AskPage() {
   const [list2, setList2] = useState(false);
   const [list3, setList3] = useState(false);
   const [title, setTitle] = useState("");
+  const [tagValue, setTagValue] = useState("");
   const [body, setBody] = useState<string | undefined>("");
   const history = useHistory();
+  const [tags, setTags] = useState<Array<string>>([]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const postReview = () => {
     if (userInfo !== null) {
@@ -26,8 +29,6 @@ export function AskPage() {
         userId: userInfo.id,
       });
 
-      console.log(userInfo);
-
       axios({
         method: "post",
         url: `${process.env.REACT_APP_SERVER_HOST}/posts`,
@@ -35,8 +36,30 @@ export function AskPage() {
           "Content-Type": "application/json",
         },
         data,
-      }).then(() => history.push("/questions"));
+      }).then(() => {
+        const tagData = JSON.stringify({
+          title,
+          body,
+          userId: userInfo.id,
+        });
+
+        axios({
+          method: "post",
+          url: `${process.env.REACT_APP_SERVER_HOST}/postTags`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: tagData,
+        }).then(() => {
+          history.push("/questions");
+        });
+      });
     }
+  };
+
+  const tagCloseHandler = (index: number) => {
+    setTags(tags.filter((v, i) => i !== index));
+    inputRef.current?.focus();
   };
 
   return (
@@ -68,7 +91,45 @@ export function AskPage() {
             <Editor setValue={setBody} />
             <div className={styles.head}>Tags</div>
             <p>Add up to 5 tags to describe what your question is about</p>
-            <input type="text" placeholder="e.g. (css spring java)"></input>
+            <div className={styles.tagBox}>
+              <input
+                type="text"
+                placeholder={
+                  tags.length === 0 && tagValue === ""
+                    ? "e.g. (css spring java)"
+                    : ""
+                }
+              ></input>
+              <div className={styles.tagWrapBox}>
+                {tags.map((v, i) => (
+                  <div
+                    className={styles.tagStyle}
+                    key={i}
+                    onClick={() => {
+                      tagCloseHandler(i);
+                    }}
+                  >
+                    {v}
+                    <div className={styles.tagClose}>x</div>
+                  </div>
+                ))}
+                <input
+                  type="text"
+                  className={styles.hiddenInput}
+                  value={tagValue}
+                  ref={inputRef}
+                  onKeyUp={(e) => {
+                    if (e.key === " ") {
+                      setTags([...tags, tagValue.split(" ")[0]]);
+                      setTagValue("");
+                    }
+                  }}
+                  onChange={(e) => {
+                    setTagValue(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
           </div>
           <div className={styles.sideBar}>
             <div className={styles.tutorial}>

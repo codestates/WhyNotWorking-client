@@ -5,14 +5,8 @@ import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { moveToPage, selectPage } from "../pagination/paginationSlice";
-import {
-  getCountAsync,
-  getPostsAsync,
-  selectPosts,
-  selectCount,
-  PostInfo,
-} from "./qLSlice";
+import { moveToPage } from "../pagination/paginationSlice";
+import { getCountAsync, getPostsAsync, selectCount } from "./qLSlice";
 
 import { useLocation, useRouteMatch } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
@@ -29,8 +23,6 @@ export function QuestionList() {
   let match = useRouteMatch();
   let query = useQuery();
   const dispatch = useDispatch();
-  const curPage = useSelector(selectPage);
-  const postsList = useSelector(selectPosts);
   const count = useSelector(selectCount);
 
   const [posts, setPosts] = useState([]);
@@ -43,6 +35,8 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
+      console.log(response.data.data[0].answer);
+
       setPosts(response.data.data);
     });
   };
@@ -65,7 +59,7 @@ export function QuestionList() {
         <div className={styles.header}>
           <div className={styles.titleBox}>
             <div>All Questions</div>
-            <div>{count}</div>
+            <div>{count} questions</div>
           </div>
           <div className={styles.filterBox}>
             <div className={styles.btnWrapper}>

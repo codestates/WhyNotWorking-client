@@ -12,6 +12,9 @@ export interface UserInterface {
 }
 
 export interface AnswerInterface {
+  kind: "answerInterface";
+  id: number;
+  postId: number;
   body: string;
   choose: boolean;
   user: UserInterface;
@@ -19,10 +22,11 @@ export interface AnswerInterface {
 }
 
 export interface PostInterface {
-  answers: Array<AnswerInterface>;
+  kind: "postInterface";
+  answer: Array<AnswerInterface>;
   body: string;
   createdAt: string;
-  id: string;
+  id: number;
   postTag: Array<any>;
   title: string;
   updatedAt: string;
@@ -45,7 +49,7 @@ export function Post({ post }: PostProps) {
         <div className={styles.answer}>
           {/*unanswered,answered,answered-accepted */}
           <div className={styles.count}>
-            <span>{post.answers.length}</span>
+            <span>{post.answer.length}</span>
           </div>
           <div>answer</div>
         </div>

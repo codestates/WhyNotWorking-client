@@ -4,6 +4,7 @@ import { selectNav } from "./navSlice";
 import styles from "./Nav.module.css";
 import { NavMenu } from "../navMenu/NavMenu";
 import { Link } from "react-router-dom";
+import { Search } from "../search/Search";
 
 export function Nav() {
   return (
@@ -13,7 +14,7 @@ export function Nav() {
       </Link>
       <ul className={styles.product_container}>Products</ul>
       <div className={styles.search_container}>
-        <input type="text" className={styles.search} />
+        <Search></Search>
       </div>
       <div className={styles.menu_container}>
         <NavMenu></NavMenu>

@@ -179,10 +179,13 @@
 
   font-size: 3rem;
   color: silver;
+
+  cursor: pointer;
 }
 
 .upDownNumber {
   width: 100%;
+  margin-right: 4px;
 }
 
 .headerBottom li {
