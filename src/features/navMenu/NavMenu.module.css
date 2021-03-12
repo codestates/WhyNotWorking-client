@@ -5,7 +5,8 @@
 .menu_container,
 .menu_avatar,
 .menu_item,
-.icon {
+.icon,
+.avatarLink {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,4 +149,9 @@
 .signUpBox {
   color: white;
   background-color: rgb(0, 149, 255);
+}
+
+.avatarLink {
+  width: 100%;
+  height: 100%;
 }

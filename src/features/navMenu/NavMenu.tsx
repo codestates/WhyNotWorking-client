@@ -28,11 +28,11 @@ export function NavMenu() {
     <div className={styles.container}>
       {isLogin ? (
         <ol className={styles.menu_container}>
-          <Link to={`/users/${userId}`}>
-            <li className={styles.menu_avatar}>
-              <span className={styles.avatar}></span>
-            </li>
-          </Link>
+          <li className={styles.menu_avatar}>
+            <Link to={`/users/${userId}`} className={styles.avatarLink}>
+              <span className={styles.avatar} title={"avatar image"}></span>
+            </Link>
+          </li>
           <li
             className={styles.menu_item}
             onClick={() => {
