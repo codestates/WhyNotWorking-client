@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-  Link,
-  useHistory,
-  useLocation,
-} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Activity.module.css";
 import { UserInfo } from "../signIn/signInSlice";
 import { PostInterface } from "../post/Post";
 import { AnswerInfo } from "../mypage/MyPage";
+import { PostSummary } from "../postSummary/PostSummary";
 
 export interface MenuProps {
   setCurPage: (page: string) => void;
@@ -20,8 +13,8 @@ export interface MenuProps {
 }
 
 interface ActivityProps extends MenuProps {
-  questions: PostInterface[] | [];
-  answers: AnswerInfo[] | [];
+  questions: PostInterface[];
+  answers: AnswerInfo[];
 }
 
 export function Activity({
@@ -30,6 +23,7 @@ export function Activity({
   questions,
   answers,
 }: ActivityProps) {
+  const history = useHistory();
   useEffect(() => {
     setCurPage("activity");
   });
@@ -41,7 +35,18 @@ export function Activity({
           <div className={styles.count}>({questions.length})</div>
         </div>
 
-        <div className={styles.postList}></div>
+        <div className={styles.postList}>
+          {questions.map((p, i) => (
+            <Link to={`/post/${p.id}`}>
+              <PostSummary
+                key={i}
+                vote={p.votes}
+                title={p.title}
+                createdAt={p.createdAt}
+              ></PostSummary>
+            </Link>
+          ))}
+        </div>
       </div>
       <div className={styles.answersBox}>
         <div className={styles.titleBox}>
@@ -49,7 +54,18 @@ export function Activity({
           <div className={styles.count}>({answers.length})</div>
         </div>
 
-        <div className={styles.postList}></div>
+        <div className={styles.postList}>
+          {answers.map((p, i) => (
+            <Link to={`/post/${p.postId}`}>
+              <PostSummary
+                key={i}
+                vote={p.vote}
+                title={p.title}
+                createdAt={p.createdAt}
+              ></PostSummary>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,23 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./User.module.css";
+import { UserInfo } from "../users/UsersPage";
+import axios from "axios";
 
-export function User() {
+interface UserProps {
+  userInfo: UserInfo;
+}
+
+export interface TagInfo {
+  id: number;
+  tagName: string;
+  detail: string;
+}
+
+export function User({ userInfo }: UserProps) {
+  const [tags, setTags] = useState<TagInfo[]>();
+
+  const getUsersTags = (userId: number) => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/tags?user_id=${userId}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setTags(res.data.data);
+    });
+  };
+
+  useEffect(() => {
+    getUsersTags(userInfo.id);
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.imgBox}>
-        <img src="https://i.imgur.com/pG0fYRq.png" alt="프로필사진"></img>
+        <img src={userInfo.image} alt="프로필사진"></img>
       </div>
       <div className={styles.infoBox}>
-        <div className={styles.name}>User Name</div>
+        <div className={styles.name}>{userInfo.nickname}</div>
         <div className={styles.info}>
-          <div className={styles.region}>Seoul, South Korea</div>
+          <div className={styles.region}>{userInfo.nickname}</div>
           <div className={styles.createdDate}>one day</div>
         </div>
         <div className={styles.tags}>
-          <div className={styles.tag}>javascript</div>,
-          <div className={styles.tag}>react</div>
-          {",  "}
-          <div className={styles.tag}>css</div>
+          {tags
+            ? tags.map((t, i) => (
+                <div key={i} className={styles.tag}>
+                  {t.tagName}
+                </div>
+              ))
+            : ""}
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ import { MenuProps } from "../activity/Activity";
 import { selectUserInfo } from "../signIn/signInSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { PostInterface } from "../post/Post";
+import { Post, PostInterface } from "../post/Post";
 import { AnswerInfo } from "../mypage/MyPage";
 import { PostSummary } from "../postSummary/PostSummary";
 
@@ -28,7 +28,6 @@ export interface NewPost {
   vote: number;
   title: string;
   id: number;
-  isQ: Boolean;
   createdAt: string;
 }
 export function Profile({
@@ -50,24 +49,20 @@ export function Profile({
   const [image, setImage] = useState<string | undefined>(
     "https://i.imgur.com/pG0fYRq.png"
   );
-  const [aboutMe, setAboutMe] = useState<string | undefined>(
-    "hi hello world bye good night"
-  );
+  const [aboutMe, setAboutMe] = useState<string | undefined>();
   const [sortedPosts, setSortedPosts] = useState<NewPost[] | null>(null);
   const getSortedPosts = () => {
     const qPosts: NewPost[] = questions.map((q) => ({
       vote: q.votes,
       title: q.title,
       id: q.id,
-      isQ: true,
       createdAt: q.createdAt,
     }));
 
     const aPosts: NewPost[] = answers.map((a) => ({
       vote: a.vote,
-      title: a.postTitle,
+      title: a.title,
       id: a.postId,
-      isQ: false,
       createdAt: a.createdAt,
     }));
     const totalPosts: any = qPosts.concat(aPosts);
@@ -148,6 +143,11 @@ export function Profile({
         </div>
         <div className={styles.postList}>
           <div className={styles.postSummary}>
+            <PostSummary
+              vote={33}
+              title={"hello world help me"}
+              createdAt={"202020"}
+            />
             {sortedPosts
               ? sortedPosts.map((p: NewPost, i) => {
                   if (p) {

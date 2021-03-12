@@ -27,7 +27,7 @@ export interface AnswerInfo {
   choose: Boolean;
   createdAt: string;
   updatedAt: string;
-  postTitle: string; //!서버 변경사항 확인 후 수정
+  title: string;
 }
 
 export function MyPage() {

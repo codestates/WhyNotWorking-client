@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
 
@@ -6,13 +6,29 @@ import { Pagination } from "../pagination/Pagination";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { Tag } from "../tag/Tag";
 import styles from "./Tags.module.css";
+import { TagInfo } from "../user/UUser";
+import axios from "axios";
 
 export function Tags() {
   let match = useRouteMatch();
   const dispatch = useDispatch();
+  const [tags, setTags] = useState<TagInfo[]>();
+
+  const getTagsByPage = (page: number) => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/tags?page=${page}`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setTags(res.data.data);
+    });
+  };
 
   useEffect(() => {
     dispatch(setCurrentPage(match.path));
+    getTagsByPage(1);
   }, [dispatch, match]);
 
   return (
@@ -39,41 +55,14 @@ export function Tags() {
         </div>
       </div>
       <div className={styles.listBox}>
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
-        <Tag />
+        {tags
+          ? tags.map((t, i) => {
+              <Tag key={i} tagInfo={t} />;
+            })
+          : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination />
+        <Pagination getDataByPage={getTagsByPage} />
       </div>
     </div>
   );
