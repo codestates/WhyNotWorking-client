@@ -10,50 +10,56 @@ export function Sidebar() {
   return (
     <div className={styles.container}>
       <ul className={styles.content}>
-        <Link to="/">
-          <li
-            className={`${styles.menu} ${
-              currentPage === "/" ? styles.clicked : ""
-            }`}
-          >
+        <li
+          className={`${styles.menu} ${
+            currentPage === "/" ? styles.clicked : ""
+          }`}
+        >
+          <Link to="/" className={styles.link}>
             Home
-          </li>
-        </Link>
-        <ul className={styles.inner_menu}>
-          <li className={styles.title}>PUBLIC</li>
-          <Link to="/questions?page=1">
+          </Link>
+        </li>
+
+        <li className={styles.inner_menu}>
+          <ul>
+            <li className={styles.title}>PUBLIC</li>
             <li
               className={`${styles.menu} ${
                 currentPage === "/questions" ? styles.clicked : ""
               }`}
             >
-              Queue Overflow
+              <Link to="/questions?page=1" className={styles.link}>
+                Queue Overflow
+              </Link>
             </li>
-          </Link>
-          <Link to="/tags?page=1">
             <li
               className={`${styles.menu} ${
                 currentPage === "/tags" ? styles.clicked : ""
               }`}
             >
-              Tags
+              <Link to="/tags?page=1" className={styles.link}>
+                Tags
+              </Link>
             </li>
-          </Link>
-          <Link to="/users?page=1">
+
             <li
               className={`${styles.menu} ${
                 currentPage === "/users" ? styles.clicked : ""
               }`}
             >
-              Users
+              <Link to="/users?page=1" className={styles.link}>
+                Users
+              </Link>
             </li>
-          </Link>
-        </ul>
-        <ul className={styles.inner_menu}>
-          <li className={styles.title}>FIND A JOB</li>
-          <li className={styles.menu}>Jobs 🚧</li>
-          <li className={styles.menu}>Companies 🚧</li>
-        </ul>
+          </ul>
+        </li>
+        <li className={styles.inner_menu}>
+          <ul>
+            <li className={styles.title}>FIND A JOB</li>
+            <li className={styles.menu}>Jobs 🚧</li>
+            <li className={styles.menu}>Companies 🚧</li>
+          </ul>
+        </li>
       </ul>
     </div>
   );
