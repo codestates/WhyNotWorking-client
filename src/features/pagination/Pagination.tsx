@@ -59,6 +59,7 @@ export function Pagination({
   };
 
   useEffect(() => {
+    console.log(count);
     if (count) {
       if (isQuestion) {
         getPageList(1, Math.ceil(count / 15));
@@ -69,69 +70,70 @@ export function Pagination({
       }
     }
   }, []);
-  if (lastPage === 0) return <div></div>;
-  else
-    return (
-      <div className={styles.container}>
-        <div className={styles.prevBtnWrapper}>
-          {curPage > 1 ? (
-            <Link to={`/${path}?page=${curPage - 1}`} className={styles.link}>
-              <div
-                className={styles.btn}
-                onClick={() => {
-                  setCurPage(curPage - 1);
-                  getPageList(curPage - 1, lastPage);
-                }}
-              >
-                Prev
-              </div>
-            </Link>
-          ) : (
-            ""
-          )}
-        </div>
-        <div className={styles.listWrapper}>
-          {pageList.map((p, i) => {
-            if (p === 0 || p === -1)
-              return (
-                <div key={i} className={styles.ellipsis}>
-                  ...
-                </div>
-              );
-            return (
-              <Link to={`/${path}?page=${p}`} className={styles.link}>
-                <div
-                  key={i}
-                  className={`${styles.btn} ${
-                    curPage === p ? styles.pageSelected : ""
-                  }`}
-                  onClick={() => {
-                    setCurPage(p);
-                    getPageList(p, lastPage);
-                    // getDataByPage(p);
-                  }}
-                >
-                  {p}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-        <div className={styles.nextBtnWrapper}>
-          {curPage < lastPage ? (
-            <Link to={`/${path}?page=${curPage + 1}`} className={styles.link}>
-              <div
-                className={styles.btn}
-                onClick={() => {
-                  setCurPage(curPage + 1);
-                  getPageList(curPage + 1, lastPage);
-                }}
-              >
-                Next
-              </div>
-            </Link>
-          ) : null}
-        </div>
+
+  return lastPage === 0 ? (
+    <div></div>
+  ) : (
+    <div className={styles.container}>
+      <div className={styles.prevBtnWrapper}>
+        {curPage > 1 ? (
+          <Link to={`/${path}?page=${curPage - 1}`} className={styles.link}>
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setCurPage(curPage - 1);
+                getPageList(curPage - 1, lastPage);
+              }}
+            >
+              Prev
+            </div>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
-    );
+      <div className={styles.listWrapper}>
+        {pageList.map((p, i) => {
+          if (p === 0 || p === -1)
+            return (
+              <div key={i} className={styles.ellipsis}>
+                ...
+              </div>
+            );
+          return (
+            <Link to={`/${path}?page=${p}`} className={styles.link}>
+              <div
+                key={i}
+                className={`${styles.btn} ${
+                  curPage === p ? styles.pageSelected : ""
+                }`}
+                onClick={() => {
+                  setCurPage(p);
+                  getPageList(p, lastPage);
+                  // getDataByPage(p);
+                }}
+              >
+                {p}
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+      <div className={styles.nextBtnWrapper}>
+        {curPage < lastPage ? (
+          <Link to={`/${path}?page=${curPage + 1}`} className={styles.link}>
+            <div
+              className={styles.btn}
+              onClick={() => {
+                setCurPage(curPage + 1);
+                getPageList(curPage + 1, lastPage);
+              }}
+            >
+              Next
+            </div>
+          </Link>
+        ) : null}
+      </div>
+    </div>
+  );
 }
