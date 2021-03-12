@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./post.module.css";
+import TimeAgo from "javascript-time-ago";
 
 interface PostProps {
   post: PostInterface;
@@ -37,6 +38,8 @@ export interface PostInterface {
 }
 
 export function Post({ post }: PostProps) {
+  const timeAgo = new TimeAgo("en-US");
+
   return (
     <div className={styles.container}>
       <div className={styles.countBox}>
@@ -73,7 +76,10 @@ export function Post({ post }: PostProps) {
             ))}
           </div>
           <div className={styles.infoBox}>
-            <div>asked{/* modified */} 1 min ago</div>
+            <div>
+              asked{" "}
+              {post?.createdAt ? timeAgo.format(new Date(post?.createdAt)) : ""}
+            </div>
             <a href="https://stackoverflow.com/users/15279516/soripk">
               {post.user.nickname}
             </a>

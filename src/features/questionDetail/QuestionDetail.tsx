@@ -13,6 +13,7 @@ import { Answer } from "../answer/Answer";
 import { Editor } from "../editor/Editor";
 import { selectUserInfo } from "../signIn/signInSlice";
 import { currentPost } from "../askPage/askSlice";
+import TimeAgo from "javascript-time-ago";
 
 export enum voteType {
   up,
@@ -26,6 +27,7 @@ export function QuestionDetail() {
   const [value, setValue] = useState<string | undefined>("");
   const history = useHistory();
   const dispatch = useDispatch();
+  const timeAgo = new TimeAgo("en-US");
 
   const postView = () => {
     axios({
@@ -191,11 +193,20 @@ export function QuestionDetail() {
           <ul>
             <li>
               <span>Asked</span>
-              <span>today</span>
+              <span>
+                {post?.createdAt
+                  ? timeAgo.format(new Date(post?.createdAt))
+                  : ""}
+              </span>
             </li>
             <li>
               <span>Active</span>
-              <span>today</span>
+              <span>
+                {" "}
+                {post?.createdAt
+                  ? timeAgo.format(new Date(post?.createdAt))
+                  : ""}
+              </span>
             </li>
             <li>
               <span>Viewed</span>
