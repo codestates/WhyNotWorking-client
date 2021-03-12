@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styles from "./Setting.module.css";
 import { MenuProps } from "../activity/Activity";
 import { Editor } from "../editor/Editor";
@@ -8,9 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export function Setting({ setCurPage, userInfo }: MenuProps) {
-  const [nickname, setNickname] = useState<string | null>(
-    userInfo ? userInfo.nickname : ""
-  );
+  const [nickname, setNickname] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(
     userInfo ? userInfo.location : ""
   );
@@ -24,6 +21,7 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
     userInfo ? userInfo.image : undefined
   );
   const [saved, setSaved] = useState(false);
+  const [sameName, setSameName] = useState<Boolean>(false);
   const saveProfile = () => {
     const formData = new FormData();
     if (image) {
@@ -47,7 +45,13 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
       },
       data: formData,
     })
-      .then(() => setSaved(true))
+      .then((res) => {
+        if (res.status !== 200) {
+          setSameName(true);
+        } else {
+          setSaved(true);
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -65,7 +69,6 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
   };
 
   useEffect(() => {
-    console.log(userInfo);
     setCurPage("setting");
   }, []);
 
@@ -92,12 +95,21 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
         </div>
         <div className={styles.infoSetting}>
           <div className={styles.lastHead}>Display name</div>
+          <link
+            href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+            rel="stylesheet"
+          ></link>
           <input
             type="text"
-            className={styles.input}
+            className={`${sameName ? styles.sameName : styles.input}`}
             value={nickname !== null ? nickname : ""}
             onChange={(e) => setNickname(e.target.value)}
           ></input>
+          {sameName ? (
+            <div className={styles.message}>{"such name already exists"}</div>
+          ) : (
+            ""
+          )}
           <div className={styles.lastHead}>Location</div>
           <input
             type="text"

@@ -125,6 +125,7 @@ export function MyPage() {
                 qCount={qCount}
                 questions={questions}
                 answers={answers}
+                userId={Number(userId)}
               />
             </Route>
             <Route exact path={`${match.path}/activity`}>
