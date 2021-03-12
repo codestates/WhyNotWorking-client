@@ -23,11 +23,11 @@ export interface AnswerInfo {
   postId: number;
   userId: number;
   body: string;
-  vote: number;
+  votes: number;
   choose: Boolean;
   createdAt: string;
   updatedAt: string;
-  title: string;
+  post: { title: string };
 }
 
 export function MyPage() {

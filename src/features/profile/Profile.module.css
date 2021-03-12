@@ -52,7 +52,7 @@
 }
 
 .sideInfoBox {
-  margin-left: 360px;
+  margin-left: 550px;
   text-align: left;
 }
 .countInfo {
@@ -98,4 +98,9 @@
   color: #9199a1;
   margin-left: 10px;
   font-weight: normal !important;
+}
+.postList {
+  width: 100%;
+  height: fit-content;
+  box-sizing: border-box;
 }

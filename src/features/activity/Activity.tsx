@@ -37,9 +37,8 @@ export function Activity({
 
         <div className={styles.postList}>
           {questions.map((p, i) => (
-            <Link to={`/post/${p.id}`}>
+            <Link key={i} to={`/post/${p.id}`}>
               <PostSummary
-                key={i}
                 vote={p.votes}
                 title={p.title}
                 createdAt={p.createdAt}
@@ -56,11 +55,10 @@ export function Activity({
 
         <div className={styles.postList}>
           {answers.map((p, i) => (
-            <Link to={`/post/${p.postId}`}>
+            <Link key={i} to={`/post/${p.postId}`}>
               <PostSummary
-                key={i}
-                vote={p.vote}
-                title={p.title}
+                vote={p.votes}
+                title={p.post.title}
                 createdAt={p.createdAt}
               ></PostSummary>
             </Link>

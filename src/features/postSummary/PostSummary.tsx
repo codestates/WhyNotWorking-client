@@ -12,11 +12,13 @@ export function PostSummary({ vote, title, createdAt }: PostSummaryProps) {
   const history = useHistory();
   return (
     <div className={styles.container}>
-      <div className={styles.vote}>{vote}</div>
+      <div className={styles.vote}>{vote ? vote : "0"}</div>
 
       <div className={styles.title}>{title}</div>
 
-      <div className={styles.date}>{createdAt}</div>
+      <div className={styles.date}>
+        {createdAt.split("").slice(0, 10).join("")}
+      </div>
     </div>
   );
 }

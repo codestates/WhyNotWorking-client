@@ -28,9 +28,9 @@ export function Search() {
       });
   };
 
-  useEffect(() => {
-    getPosts();
-  }, []);
+  // useEffect(() => {
+  //   getPosts();
+  // }, []);
 
   const searchFunc = (word: string) => {
     setSearchResult(
@@ -45,6 +45,7 @@ export function Search() {
         className={styles.search}
         placeholder="Search..."
         value={inputValue}
+        onClick={getPosts}
         onChange={(e) => {
           searchFunc(e.target.value);
           setInputValue(e.target.value);

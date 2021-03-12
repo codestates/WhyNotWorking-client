@@ -42,7 +42,7 @@ export function SignUp() {
 
   //GitHub login
   const githubLogin = () => {
-    const gitHubClientId = "838af603fc9df488ebc5";
+    const gitHubClientId = "9a3d08ed3fc50acb64d7";
     const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}`;
     window.location.assign(GITHUB_LOGIN_URL);
   };

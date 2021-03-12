@@ -49,7 +49,7 @@ export function SignUpDetail() {
 
   const getAllTags = () => {
     axios
-      .get(`${process.env.REACT_APP_SERVER_HOST}/tags?`)
+      .get(`${process.env.REACT_APP_SERVER_HOST}/tags/allTags`)
       .then((res) => {
         setAllTags(res.data.data);
       })
@@ -71,7 +71,7 @@ export function SignUpDetail() {
 
   useEffect(() => {
     getAllTags();
-  });
+  }, []);
 
   const imageChangeHandler = () => {
     setImage(fileInput.current.files[0]);
