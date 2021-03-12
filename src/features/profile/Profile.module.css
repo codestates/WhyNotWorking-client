@@ -10,7 +10,6 @@
 }
 .imgBox {
   width: 210px;
-  height: 254px;
   border-radius: 5px;
   border: solid 1px #d6d9dc;
   padding: 12px;
@@ -19,7 +18,6 @@
   width: 164px;
   height: 164px;
   border-radius: 4px;
-  margin-top: 15px;
 }
 
 .introductionBox {

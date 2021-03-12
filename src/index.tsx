@@ -19,6 +19,21 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
+axios.interceptors.response.use(
+  function (response) {
+    // Do something with response data
+    if (response.data.accessToken !== undefined) {
+      localStorage.setItem("user", JSON.stringify("response.data.accessToken"));
+    }
+
+    return response;
+  },
+  function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
