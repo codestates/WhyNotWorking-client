@@ -58,7 +58,7 @@ export const loginAsync = (userInfo: {
     .then(() => {
       axios({
         method: "get",
-        url: `${process.env.REACT_APP_SERVER_HOST}/users/`,
+        url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,7 +92,7 @@ export const googleLoginAsync = (token: any): AppThunk => (dispatch) => {
     )
     .then(() => {
       axios
-        .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
+        .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
         .then((res: any) => {
           dispatch(login(res.data.data));
           localStorage.setItem("user", res.data.data);
@@ -110,7 +110,7 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
     .post(`${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`)
     .then(() => {
       axios
-        .get(`${process.env.REACT_APP_SERVER_HOST}/users`)
+        .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
         .then((res: any) => {
           dispatch(login(res.data.data));
           localStorage.setItem("user", res.data.data);

@@ -14,6 +14,7 @@ export function Logout() {
         className={styles.logoutButton}
         onClick={() => {
           dispatch(logoutAsync());
+          history.push("/");
         }}
       >
         Logout
