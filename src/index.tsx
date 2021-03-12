@@ -7,6 +7,10 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import axios from "axios";
 import dotenv from "dotenv";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+
+TimeAgo.addDefaultLocale(en);
 axios.defaults.withCredentials = true;
 
 if (process.env.NODE_ENV === "development") {
