@@ -5,7 +5,6 @@ import { Post } from "../post/Post";
 import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { moveToPage } from "../pagination/paginationSlice";
 import { getCountAsync, getPostsAsync, selectCount } from "./qLSlice";
 
 import { useLocation, useRouteMatch } from "react-router-dom";
@@ -103,7 +102,12 @@ export function QuestionList() {
           ))}
         </div>
         <div className={styles.paginationBox}>
-          <Pagination getDataByPage={getPostbyPage} />
+          <Pagination
+            getDataByPage={getPostbyPage}
+            count={postCount}
+            isQuestion={true}
+            path={"questions"}
+          />
         </div>
       </div>
       <div className={styles.tagBox}></div>

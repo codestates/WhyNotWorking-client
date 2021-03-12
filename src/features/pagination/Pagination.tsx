@@ -1,94 +1,135 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import styles from "./pagination.module.css";
-import {
-  next,
-  prev,
-  moveToPage,
-  setPageList,
-  selectPage,
-  selectPageList,
-} from "./paginationSlice";
+import { Link } from "react-router-dom";
 
 export function Pagination({
   getDataByPage,
+  count,
+  isQuestion,
+  path,
 }: {
   getDataByPage: (page: number) => void;
+  count: number | undefined;
+  isQuestion: Boolean;
+  path: string;
 }) {
-  const count = 20889999;
-  const posts = true;
-
   const [lastPage, setLastPage] = useState<number>(0);
-  const curPage = useSelector(selectPage);
-  const pageList = useSelector(selectPageList);
-  const dispatch = useDispatch();
+  const [curPage, setCurPage] = useState(1);
+  const [pageList, setPageList] = useState<number[]>([]);
+
+  const getPageList = (curPage: number, lastPage: number) => {
+    if (lastPage < 7) {
+      let list: Array<number> = [];
+      for (let i = 1; i <= lastPage; i++) {
+        list.push(i);
+      }
+      setPageList(list);
+    } else {
+      if (curPage - 4 >= 1 && curPage + 4 <= lastPage) {
+        setPageList([
+          1,
+          0,
+          curPage - 2,
+          curPage - 1,
+          curPage,
+          curPage + 1,
+          curPage + 2,
+          -1,
+          lastPage,
+        ]);
+        return;
+      }
+      if (curPage - 4 >= 1 || curPage + 4 > lastPage) {
+        setPageList([
+          1,
+          0,
+          lastPage - 4,
+          lastPage - 3,
+          lastPage - 2,
+          lastPage - 1,
+          lastPage,
+        ]);
+        return;
+      }
+      if (curPage < 4 || curPage + 4 <= lastPage) {
+        setPageList([1, 2, 3, 4, 5, 0, lastPage]);
+        return;
+      }
+    }
+  };
 
   useEffect(() => {
-    if (posts) {
-      dispatch(setPageList(Math.ceil(count / 15)));
-      setLastPage(Math.ceil(count / 15));
-    } else {
-      dispatch(setPageList(Math.ceil(count / 36)));
-      setLastPage(Math.ceil(count / 36));
+    if (count) {
+      if (isQuestion) {
+        getPageList(1, Math.ceil(count / 15));
+        setLastPage(Math.ceil(count / 15));
+      } else {
+        getPageList(1, Math.ceil(count / 36));
+        setLastPage(Math.ceil(count / 36));
+      }
     }
-  }, [dispatch, posts]);
-
-  if (lastPage === 0) return <div>loading...</div>;
+  }, []);
+  if (lastPage === 0) return <div></div>;
   else
     return (
       <div className={styles.container}>
         <div className={styles.prevBtnWrapper}>
           {curPage > 1 ? (
-            <div
-              className={styles.prev}
-              onClick={() => {
-                dispatch(prev());
-                dispatch(setPageList(lastPage));
-              }}
-            >
-              Prev
-            </div>
-          ) : null}
+            <Link to={`/${path}?page=${curPage - 1}`} className={styles.link}>
+              <div
+                className={styles.btn}
+                onClick={() => {
+                  setCurPage(curPage - 1);
+                  getPageList(curPage - 1, lastPage);
+                }}
+              >
+                Prev
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles.listWrapper}>
-          {pageList.map((p) => {
+          {pageList.map((p, i) => {
             if (p === 0 || p === -1)
               return (
-                <div key={pageList.indexOf(p)} className={styles.ellipsis}>
+                <div key={i} className={styles.ellipsis}>
                   ...
                 </div>
               );
-            if (p === curPage)
-              return (
-                <div key={pageList.indexOf(p)} className={styles.pageSelected}>
+            return (
+              <Link to={`/${path}?page=${p}`} className={styles.link}>
+                <div
+                  key={i}
+                  className={`${styles.btn} ${
+                    curPage === p ? styles.pageSelected : ""
+                  }`}
+                  onClick={() => {
+                    setCurPage(p);
+                    getPageList(p, lastPage);
+                    // getDataByPage(p);
+                  }}
+                >
                   {p}
                 </div>
-              );
-            return (
-              <div
-                key={pageList.indexOf(p)}
-                className={styles.page}
-                onClick={() => {
-                  dispatch(moveToPage(p));
-                  dispatch(setPageList(lastPage));
-                }}
-              >
-                {p}
-              </div>
+              </Link>
             );
           })}
         </div>
         <div className={styles.nextBtnWrapper}>
           {curPage < lastPage ? (
-            <div
-              className={styles.next}
-              onClick={() => {
-                dispatch(next());
-                dispatch(setPageList(lastPage));
-              }}
-            >
-              Next
-            </div>
+            <Link to={`/${path}?page=${curPage + 1}`} className={styles.link}>
+              <div
+                className={styles.btn}
+                onClick={() => {
+                  setCurPage(curPage + 1);
+                  getPageList(curPage + 1, lastPage);
+                }}
+              >
+                Next
+              </div>
+            </Link>
           ) : null}
         </div>
       </div>

@@ -4,7 +4,7 @@ import { Pagination } from "../pagination/Pagination";
 import styles from "./Users.module.css";
 import { User } from "../user/UUser";
 import { useDispatch } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";
 
@@ -16,10 +16,16 @@ export interface UserInfo {
   location: string;
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export function Users() {
   let match = useRouteMatch();
+  let query = useQuery();
   const dispatch = useDispatch();
   const [users, setUsers] = useState<UserInfo[]>();
+  const [count, setCount] = useState<number>();
 
   const getUsersByPage = (page: number) => {
     axios({
@@ -33,9 +39,23 @@ export function Users() {
     });
   };
 
+  const getUsersCount = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/count`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setCount(res.data.data);
+    });
+  };
+
   useEffect(() => {
+    const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
-    getUsersByPage(1);
+    getUsersByPage(currentPage);
+    getUsersCount();
   }, [dispatch, match]);
 
   return (
@@ -61,7 +81,12 @@ export function Users() {
         {users ? users.map((u, i) => <User key={i} userInfo={u} />) : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination getDataByPage={getUsersByPage} />
+        <Pagination
+          getDataByPage={getUsersByPage}
+          count={count}
+          isQuestion={false}
+          path={"users"}
+        />
       </div>
     </div>
   );

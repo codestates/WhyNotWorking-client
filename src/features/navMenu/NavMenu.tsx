@@ -17,11 +17,11 @@ export function NavMenu() {
   const notificationStatus = useSelector(selectNav);
   const isLogin = useSelector(selectIsLogin);
   const userInfo = useSelector(selectUserInfo);
-  const [userId, setUserId] = useState<number | null>(3);
+  const [userId, setUserId] = useState<number | null>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (userInfo) setUserId(userInfo.id);
+    if (userInfo) setUserId(userInfo.id);
   }, [userInfo]);
 
   return (

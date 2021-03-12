@@ -27,16 +27,19 @@ export function SignUpDetail() {
     id: 1,
   });
   const [nickname, setNickname] = useState<string>("");
-  const [image, setImage] = useState<string>("https://i.imgur.com/pG0fYRq.png");
-
+  const [image, setImage] = useState<string>("");
+  const [preview, setPreview] = useState<string>(
+    "https://i.imgur.com/pG0fYRq.png"
+  );
   const dispatch = useDispatch();
   const history = useHistory();
   const fileInput = React.createRef<any>();
 
   const imageChangeHandler = () => {
+    setImage(fileInput.current.files[0]);
     let reader = new FileReader();
     reader.onloadend = () => {
-      setImage(`${reader.result}`);
+      setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
     console.log(image);
@@ -71,10 +74,12 @@ export function SignUpDetail() {
       data: formData,
     })
       .then(() => {
-        axios.get("https://localhost:4000/users/").then((res: any) => {
-          dispatch(login(res));
-          history.push("/");
-        });
+        axios
+          .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
+          .then((res: any) => {
+            dispatch(login(res));
+            history.push("/");
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +102,7 @@ export function SignUpDetail() {
           onChange={(e) => setNickname(e.target.value)}
         />
         <div className={styles.imageSettingBox}>
-          <img className={styles.img} src={image} alt="프로필사진"></img>
+          <img className={styles.img} src={preview} alt="프로필사진"></img>
 
           <div className={styles.imageSetting}>
             <div className={styles.head}>Profile picture</div>
@@ -166,7 +171,9 @@ export function SignUpDetail() {
             setLocation(e.target.value);
           }}
         ></input>
-        <div className={styles.createBtn}>Create my account</div>
+        <div className={styles.createBtn} onClick={updateSubmit}>
+          Create my account
+        </div>
         <div className={styles.policy}>
           By clicking "Create my account", you agree to our
           <div className={styles.point}>terms of service</div>,

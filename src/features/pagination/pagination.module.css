@@ -5,7 +5,7 @@
 .listWrapper {
   display: flex;
 }
-.container > div > div {
+.btn {
   padding: 4px 8px;
   border-radius: 3px;
   margin: 0 3px;
@@ -13,9 +13,10 @@
   font-size: 13px;
   min-width: 7.3px;
   cursor: pointer;
+  color: black;
 }
 
-.container > div > div:hover {
+.btn:hover {
   background-color: #d6d9dc;
 }
 .pageSelected {

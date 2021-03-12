@@ -41,15 +41,21 @@ export function Profile({
   const match = useRouteMatch();
   const history = useHistory();
   const myInfo = useSelector(selectUserInfo);
-
-  const [myId, setMyId] = useState<number | null>(null);
-  const [userId, setUserId] = useState<number | null>(null);
-  const [nickName, setNickName] = useState<string | null>("ojjo");
-  const [location, setLocation] = useState<string | null>("seoul, south korea");
-  const [image, setImage] = useState<string | undefined>(
-    "https://i.imgur.com/pG0fYRq.png"
+  const [userId, setUserId] = useState<number | null>(
+    userInfo ? userInfo.id : null
   );
-  const [aboutMe, setAboutMe] = useState<string | undefined>();
+  const [nickName, setNickName] = useState<string | null>(
+    userInfo ? userInfo.nickname : null
+  );
+  const [location, setLocation] = useState<string | null>(
+    userInfo ? userInfo.location : null
+  );
+  const [image, setImage] = useState<string | undefined>(
+    userInfo ? userInfo.image : undefined
+  );
+  const [aboutMe, setAboutMe] = useState<string | undefined>(
+    userInfo ? userInfo.aboutMe : undefined
+  );
   const [sortedPosts, setSortedPosts] = useState<NewPost[] | null>(null);
   const getSortedPosts = () => {
     const qPosts: NewPost[] = questions.map((q) => ({
@@ -74,18 +80,6 @@ export function Profile({
 
   useEffect(() => {
     setCurPage("profile");
-    if (myInfo) {
-      const userId = myInfo.id;
-      setMyId(userId);
-    }
-    if (userInfo) {
-      const { id, nickname, aboutMe, image, location } = userInfo;
-      setUserId(id);
-      setNickName(nickname);
-      setImage(image);
-      setAboutMe(aboutMe);
-      setLocation(location);
-    }
     getSortedPosts();
   }, []);
 
@@ -99,20 +93,24 @@ export function Profile({
           <div className={styles.name}>{nickName}</div>
           {aboutMe ? (
             <div className={styles.aboutMe}>{aboutMe}</div>
-          ) : userId === myId ? (
-            <>
+          ) : myInfo ? (
+            userId === myInfo.id ? (
+              <>
+                <div className={styles.noneAboutMe}>
+                  Your about me is currently blank.
+                </div>
+                <Link to={`${match.url}/setting`}>
+                  <div className={styles.settingLink}>Click here to edit</div>
+                </Link>
+              </>
+            ) : (
               <div className={styles.noneAboutMe}>
-                Your about me is currently blank.
+                Apparently, this user prefers to keep an air of mystery about
+                them.
               </div>
-              <Link to={`${match.url}/setting`}>
-                <div className={styles.settingLink}>Click here to edit</div>
-              </Link>
-            </>
+            )
           ) : (
-            <div className={styles.noneAboutMe}>
-              Apparently, this user prefers to keep an air of mystery about
-              them.
-            </div>
+            ""
           )}
         </div>
         <div className={styles.sideInfoBox}>
@@ -143,11 +141,6 @@ export function Profile({
         </div>
         <div className={styles.postList}>
           <div className={styles.postSummary}>
-            <PostSummary
-              vote={33}
-              title={"hello world help me"}
-              createdAt={"202020"}
-            />
             {sortedPosts
               ? sortedPosts.map((p: NewPost, i) => {
                   if (p) {

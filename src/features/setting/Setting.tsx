@@ -4,15 +4,26 @@ import styles from "./Setting.module.css";
 import { MenuProps } from "../activity/Activity";
 import { Editor } from "../editor/Editor";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export function Setting({ setCurPage, userInfo }: MenuProps) {
-  const [nickname, setNickname] = useState<string | null>("");
-  const [location, setLocation] = useState<string | null>("");
-  const [image, setImage] = useState<string | undefined>(
-    "https://i.imgur.com/pG0fYRq.png"
+  const [nickname, setNickname] = useState<string | null>(
+    userInfo ? userInfo.nickname : ""
   );
-  const [aboutMe, setAboutMe] = useState<string | undefined>("");
-
+  const [location, setLocation] = useState<string | null>(
+    userInfo ? userInfo.location : ""
+  );
+  const [image, setImage] = useState<string | undefined>(
+    userInfo ? userInfo.image : ""
+  );
+  const [aboutMe, setAboutMe] = useState<string | undefined>(
+    userInfo ? userInfo.aboutMe : ""
+  );
+  const [preview, setPreview] = useState<string | undefined>(
+    userInfo ? userInfo.image : undefined
+  );
+  const [saved, setSaved] = useState(false);
   const saveProfile = () => {
     const formData = new FormData();
     if (image) {
@@ -35,30 +46,27 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
         "Content-Type": "multipart/form-data",
       },
       data: formData,
-    }).catch((error) => {
-      console.log(error);
-    });
+    })
+      .then(() => setSaved(true))
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const fileInput = React.createRef<any>();
 
   const imageChangeHandler = () => {
+    setImage(fileInput.current.files[0]);
     let reader = new FileReader();
     reader.onloadend = () => {
-      setImage(`${reader.result}`);
+      setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
     console.log(image);
   };
 
   useEffect(() => {
+    console.log(userInfo);
     setCurPage("setting");
-    if (userInfo) {
-      const { nickname, location, aboutMe, image } = userInfo;
-      setNickname(nickname);
-      setLocation(location);
-      setAboutMe(aboutMe);
-      setImage(image);
-    }
   }, []);
 
   return (
@@ -68,7 +76,7 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
         <div className={styles.imgSetting}>
           <div className={styles.midHead}>Public information</div>
           <div className={styles.imgBox}>
-            <img className={styles.img} src={image} alt="profile picture" />
+            <img className={styles.img} src={preview} alt="profile picture" />
             <label htmlFor="fileInput" className={styles.profileBtn}>
               Change picture
             </label>
@@ -88,6 +96,7 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
             type="text"
             className={styles.input}
             value={nickname !== null ? nickname : ""}
+            onChange={(e) => setNickname(e.target.value)}
           ></input>
           <div className={styles.lastHead}>Location</div>
           <input
@@ -95,6 +104,7 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
             className={styles.input}
             placeholder="위치 입력"
             value={location !== null ? location : ""}
+            onChange={(e) => setLocation(e.target.value)}
           ></input>
         </div>
       </div>
@@ -103,6 +113,13 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
         <Editor setValue={setAboutMe} value={aboutMe} />
       </div>
       <div className={styles.btnBox}>
+        <div className={`${saved ? styles.saved : styles.beforeSaved}`}>
+          <FontAwesomeIcon
+            icon={faCheck}
+            className={styles.icon}
+          ></FontAwesomeIcon>
+          <div>Your profile has been saved successfully.</div>
+        </div>
         <div className={styles.saveBtn} onClick={saveProfile}>
           Save profile
         </div>

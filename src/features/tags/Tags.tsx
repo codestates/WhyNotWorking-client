@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
 
 import { Pagination } from "../pagination/Pagination";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
@@ -9,10 +9,16 @@ import styles from "./Tags.module.css";
 import { TagInfo } from "../user/UUser";
 import axios from "axios";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export function Tags() {
   let match = useRouteMatch();
+  let query = useQuery();
   const dispatch = useDispatch();
   const [tags, setTags] = useState<TagInfo[]>();
+  const [count, setCount] = useState<number>();
 
   const getTagsByPage = (page: number) => {
     axios({
@@ -26,9 +32,23 @@ export function Tags() {
     });
   };
 
+  const getTagsCount = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/tags/count`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setCount(res.data.data);
+    });
+  };
+
   useEffect(() => {
+    const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
-    getTagsByPage(1);
+    getTagsByPage(currentPage);
+    getTagsCount();
   }, [dispatch, match]);
 
   return (
@@ -62,7 +82,12 @@ export function Tags() {
           : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination getDataByPage={getTagsByPage} />
+        <Pagination
+          getDataByPage={getTagsByPage}
+          count={count}
+          isQuestion={false}
+          path={"tags"}
+        />
       </div>
     </div>
   );
