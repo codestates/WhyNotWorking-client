@@ -64,16 +64,16 @@ export function MyPage() {
     axios
       .get(`${process.env.REACT_APP_SERVER_HOST}/users?user_id=${userId}`)
       .then((res) => {
-        // setUserInfo(res.data.data);
-        // setMyId(res.data.data.id);
+        setUserInfo(res.data.data);
+        setMyId(res.data.data.id);
       });
   };
 
   useEffect(() => {
-    // dispatch(setCurrentPage("/users"));
-    // getQuestions();
-    // getAnswers();
-    // getUserInfoById();
+    dispatch(setCurrentPage("/users"));
+    getQuestions();
+    getAnswers();
+    getUserInfoById();
   }, []);
 
   return (

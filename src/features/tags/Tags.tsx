@@ -13,6 +13,7 @@ export function Tags() {
   let match = useRouteMatch();
   const dispatch = useDispatch();
   const [tags, setTags] = useState<TagInfo[]>();
+  const [count, setCount] = useState<number>();
 
   const getTagsByPage = (page: number) => {
     axios({
@@ -26,9 +27,22 @@ export function Tags() {
     });
   };
 
+  const getTagsCount = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/tags/count`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      setCount(res.data.data);
+    });
+  };
+
   useEffect(() => {
     dispatch(setCurrentPage(match.path));
     getTagsByPage(1);
+    getTagsCount();
   }, [dispatch, match]);
 
   return (
@@ -62,7 +76,11 @@ export function Tags() {
           : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination getDataByPage={getTagsByPage} />
+        <Pagination
+          getDataByPage={getTagsByPage}
+          count={count}
+          isQuestion={false}
+        />
       </div>
     </div>
   );

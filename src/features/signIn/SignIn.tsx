@@ -15,7 +15,7 @@ export function SignIn() {
   //GoogleLogin
   const clientConfig = {
     client_id:
-      "49247123368-f78m9lgdolhbdurar4q65gurb6a9phmq.apps.googleusercontent.com",
+      "437661234824-bo6ot1cmqvbfe4j8d0elupr9fl19v6o0.apps.googleusercontent.com",
   };
 
   const preLoginTracking = (): void => {
