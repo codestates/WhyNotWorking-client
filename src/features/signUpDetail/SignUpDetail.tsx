@@ -15,17 +15,29 @@ interface TagInfo {
 export function SignUpDetail() {
   const userInfo = useSelector(selectUserInfo);
   const [location, setLocation] = useState<string>("");
-  const [tags, setTags] = useState<Array<string | undefined>>([
-    "javascript",
-    "css",
-    "css",
-  ]);
-  const [tagResult, setTagResult] = useState<TagInfo | null>({
-    tagName: "java",
-    detail:
-      "dkdkdkdkdkkkkkkkkkkkkkkkkhfhfhfhfhfhfhfhfhfhfhfhfhffhfhfhffhfhfhffhffh",
-    id: 1,
-  });
+  const [allTags, setAllTags] = useState<TagInfo[] | null>(null);
+  const [word, setWord] = useState<string>("");
+  const [tagResult, setTagResult] = useState<Array<TagInfo | undefined> | null>(
+    [
+      {
+        id: 1,
+        tagName: "kk",
+        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
+      },
+      {
+        id: 1,
+        tagName: "kk",
+        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
+      },
+      ,
+      {
+        id: 1,
+        tagName: "kk",
+        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
+      },
+    ]
+  );
+  const [userTags, setUserTags] = useState<Array<TagInfo | undefined>>([]);
   const [nickname, setNickname] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [preview, setPreview] = useState<string>(
@@ -35,6 +47,32 @@ export function SignUpDetail() {
   const history = useHistory();
   const fileInput = React.createRef<any>();
 
+  const getAllTags = () => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_HOST}/tags?`)
+      .then((res) => {
+        setAllTags(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const searchTag = (word: string) => {
+    if (allTags) {
+      let result = allTags.map((t) => {
+        if (t.tagName.includes(word)) {
+          return t;
+        }
+      });
+      setTagResult(result);
+    }
+  };
+
+  useEffect(() => {
+    getAllTags();
+  });
+
   const imageChangeHandler = () => {
     setImage(fileInput.current.files[0]);
     let reader = new FileReader();
@@ -43,19 +81,6 @@ export function SignUpDetail() {
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
     console.log(image);
-  };
-
-  const tagInputHandler = (tag: string) => {
-    axios
-      .get(`${process.env.REACT_APP_SERVER_HOST}/tags?${tag}`)
-      .then((res) => {
-        if (res.status === 200) {
-          const { id, tagName, detail } = res.data.data;
-          setTagResult({ id, tagName, detail });
-        } else {
-          setTags([...tags, tag]);
-        }
-      });
   };
 
   const updateSubmit = () => {
@@ -73,6 +98,22 @@ export function SignUpDetail() {
       },
       data: formData,
     })
+      .then(() => {
+        const tagIdArr = userTags.map((t) => {
+          if (t) return t.id;
+        });
+        axios({
+          method: "post",
+          url: `${process.env.REACT_APP_SERVER_HOST}/userTags/`,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            userId: userInfo ? userInfo.id : "",
+            tagId: tagIdArr,
+          },
+        });
+      })
       .then(() => {
         axios
           .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
@@ -126,42 +167,68 @@ export function SignUpDetail() {
         </p>
         <div className={styles.input}>
           <div className={styles.selectedTagsBox}>
-            {tags.map((t, i) => {
-              if (t)
-                return (
-                  <div
-                    key={i}
-                    className={styles.selectedTag}
-                    onClick={() => {
-                      setTags(
-                        tags.map((T) => {
-                          if (T !== t) return T;
-                        })
-                      );
-                    }}
-                  >
-                    {t}
-                    <FontAwesomeIcon
-                      icon={faTimesCircle}
-                      className={styles.icon}
-                    ></FontAwesomeIcon>
-                  </div>
-                );
-            })}
+            {userTags
+              ? userTags.map((t, i) => {
+                  if (t)
+                    return (
+                      <div
+                        key={i}
+                        className={styles.selectedTag}
+                        onClick={() => {
+                          setUserTags(
+                            userTags.map((T) => {
+                              if (T !== t) return T;
+                            })
+                          );
+                        }}
+                      >
+                        {t.tagName}
+                        <FontAwesomeIcon
+                          icon={faTimesCircle}
+                          className={styles.icon}
+                        ></FontAwesomeIcon>
+                      </div>
+                    );
+                })
+              : ""}
           </div>
           <input
+            value={word}
             type="text"
             className={styles.tagInput}
-            onChange={(e) => tagInputHandler(e.target.value)}
+            onChange={(e) => setWord(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === " ") {
+                searchTag(word);
+                setWord("");
+              }
+            }}
           ></input>
-          {tagResult ? (
-            <div className={styles.tagSearchResultBox}>
-              <div className={styles.name}>{tagResult.tagName}</div>
-              <div className={styles.detail}>{tagResult.detail}</div>
-            </div>
-          ) : (
-            ""
-          )}
+        </div>
+        <div
+          className={`${
+            tagResult ? styles.tagSearchResultBox : styles.noneResult
+          }`}
+        >
+          {tagResult
+            ? tagResult.map((t, i) => {
+                if (t) {
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => {
+                        setUserTags([...userTags, t]);
+                        setTagResult(null);
+                      }}
+                      className={styles.tagWrapper}
+                    >
+                      <div className={styles.name}>{t.tagName}</div>
+                      <div className={styles.detail}>{t.detail}</div>
+                    </div>
+                  );
+                }
+              })
+            : ""}
         </div>
         <div className={styles.head}>Your location</div>
         <input

@@ -47,7 +47,7 @@ export function Users() {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      setCount(res.data.data);
+      setCount(res.data.data[0].count);
     });
   };
 
