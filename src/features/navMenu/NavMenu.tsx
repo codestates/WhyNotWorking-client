@@ -30,7 +30,11 @@ export function NavMenu() {
         <ol className={styles.menu_container}>
           <li className={styles.menu_avatar}>
             <Link to={`/users/${userId}`} className={styles.avatarLink}>
-              <span className={styles.avatar} title={"avatar image"}></span>
+              <img
+                src={userInfo?.image}
+                alt="avatar"
+                className={styles.avatar}
+              />
             </Link>
           </li>
           <li
