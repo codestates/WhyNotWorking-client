@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { selectIsLogin, selectUserInfo } from "../signIn/signInSlice";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, useRouteMatch } from "react-router-dom";
+import { selectEditPost } from "./askSlice";
+import MDEditor from "@uiw/react-md-editor";
 
 export function AskPage() {
   const userInfo = useSelector(selectUserInfo);
-  const isLogin = useSelector(selectIsLogin);
   const [list1, setList1] = useState(false);
   const [list2, setList2] = useState(false);
   const [list3, setList3] = useState(false);
@@ -20,6 +21,20 @@ export function AskPage() {
   const history = useHistory();
   const [tags, setTags] = useState<Array<string>>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const editPost = useSelector(selectEditPost);
+  const match = useRouteMatch();
+
+  useEffect(() => {
+    if (match.path.search("edit") !== -1) {
+      setIsEdit(true);
+      const tagText = editPost?.postTag.map((v) => v.tag.tagName);
+      setTags(tagText as Array<string>);
+      setTitle(editPost?.title as string);
+      setBody(editPost?.body as string);
+      // setTags(editPost?.postTag as any);
+    }
+  }, []);
 
   const postReview = () => {
     if (userInfo !== null) {
@@ -32,6 +47,32 @@ export function AskPage() {
 
       axios({
         method: "post",
+        url: `${process.env.REACT_APP_SERVER_HOST}/posts`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data,
+      })
+        .then(() => {
+          history.push("/questions?page=1");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const patchReview = () => {
+    if (userInfo !== null) {
+      const data = JSON.stringify({
+        id: editPost?.id,
+        title: title,
+        body: body,
+        tags: tags,
+      });
+
+      axios({
+        method: "patch",
         url: `${process.env.REACT_APP_SERVER_HOST}/posts`,
         headers: {
           "Content-Type": "application/json",
@@ -73,13 +114,20 @@ export function AskPage() {
               placeholder="e.g. Is there an R function or finding the index of an element in a vector"
               onChange={(e) => setTitle(e.target.value)}
               className={styles.input}
+              value={title}
             ></input>
             <div className={styles.head}>Body</div>
             <p>
               Include all the information someone would need to answer your
               question
             </p>
-            <Editor setValue={setBody} value={body} />
+            <MDEditor
+              className={styles.editor}
+              onChange={setBody}
+              preview="edit"
+              height={210}
+              value={body}
+            />
             <div className={styles.head}>Tags</div>
             <p>Add up to 5 tags to describe what your question is about</p>
             <div className={styles.tagBox}>
@@ -221,7 +269,12 @@ export function AskPage() {
           </div>
         </div>
         <div className={styles.btnBox}>
-          <div className={styles.btn} onClick={postReview}>
+          <div
+            className={styles.btn}
+            onClick={() => {
+              isEdit ? patchReview() : postReview();
+            }}
+          >
             Review your question
           </div>
         </div>

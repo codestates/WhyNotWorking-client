@@ -15,7 +15,8 @@
 .contentUtilsBox,
 .userBox,
 .main,
-.mainRight {
+.mainRight,
+.updateBox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -253,4 +254,27 @@
   height: 100%;
 
   text-align: left;
+}
+.updateBox {
+  width: 100%;
+  flex-direction: column;
+
+  /* justify-content: flex-start; */
+  align-items: flex-start;
+}
+
+.updateEditor {
+  width: 100%;
+}
+
+.updateButton {
+  margin-top: 20px;
+  width: 100px;
+  height: 32px;
+
+  background-color: rgb(122, 151, 238);
+
+  color: white;
+  border-radius: 5px;
+  border: none;
 }

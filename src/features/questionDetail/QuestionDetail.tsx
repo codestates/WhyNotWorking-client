@@ -5,13 +5,14 @@ import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { PostInterface, AnswerInterface } from "../post/Post";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Answer } from "../answer/Answer";
 import { Editor } from "../editor/Editor";
 import { selectUserInfo } from "../signIn/signInSlice";
+import { currentPost } from "../askPage/askSlice";
 
 export enum voteType {
   up,
@@ -53,6 +54,7 @@ export function QuestionDetail() {
     })
       .then((response) => {
         setPost(response.data.data[0]);
+        dispatch(currentPost(response.data.data[0]));
       })
       .catch(() => {
         history.push("/");
@@ -68,6 +70,49 @@ export function QuestionDetail() {
 
     axios({
       method: "post",
+      url: `${process.env.REACT_APP_SERVER_HOST}/answers`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    })
+      .then(() => {
+        getPost();
+        setValue("");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deletePost = () => {
+    const data = {
+      id: post?.id,
+    };
+
+    axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_SERVER_HOST}/posts`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    })
+      .then(() => {
+        history.push("/questions?page=1");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteAnswer = (id: number) => {
+    const data = {
+      id,
+    };
+
+    axios({
+      method: "delete",
       url: `${process.env.REACT_APP_SERVER_HOST}/answers`,
       headers: {
         "Content-Type": "application/json",
@@ -193,15 +238,21 @@ export function QuestionDetail() {
                   {post?.postTag.map((v, i) => (
                     <li key={i}>{v.tag.tagName}</li>
                   ))}
-                  {/* <li>amazon-ec2</li> */}
-                  {/* <li>aws-codepipeline</li> */}
                 </ul>
               </div>
               <div className={styles.contentUtilsBox}>
                 <ul className={styles.editBox}>
                   <li>Share</li>
-                  <li>Edit</li>
-                  <li>Follow</li>
+                  <Link to={`edit/${postId}`}>
+                    <li>Edit</li>
+                  </Link>
+                  <li
+                    onClick={() => {
+                      deletePost();
+                    }}
+                  >
+                    Delete
+                  </li>
                 </ul>
                 <div className={styles.userBox}>
                   <img src={avatar} alt="userImage" className={styles.avatar} />
@@ -211,10 +262,15 @@ export function QuestionDetail() {
             </div>
           </div>
           {post?.answer.map((v, i) => (
-            <Answer answer={v} key={i} postVote={postVote} />
+            <Answer
+              answer={v}
+              key={i}
+              postVote={postVote}
+              deleteAnswer={deleteAnswer}
+            />
           ))}
           <div className={styles.editorBox}>
-            <Editor setValue={setValue} value={value} />
+            <MDEditor onChange={setValue} value={value} preview="edit" />
           </div>
           <div className={styles.postButtonBox}>
             <button className={styles.postButton} onClick={postAnswer}>

@@ -65,7 +65,10 @@ function App() {
                 </div>
               </div>
             </Route>
-            <Route path="/post/:postId">
+            <Route exact path="/post/edit/:postId">
+              <AskPage />
+            </Route>
+            <Route exact path="/post/:postId">
               <div className="main_content">
                 <div className="left_content">
                   <Sidebar />

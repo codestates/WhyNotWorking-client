@@ -18,6 +18,7 @@ export function Editor({
         }}
         preview="edit"
         height={210}
+        value={value}
       />
     </div>
   );
