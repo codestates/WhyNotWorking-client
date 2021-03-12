@@ -90,8 +90,10 @@ export function Profile({
         <div className={styles.imgBox}>
           <img
             className={styles.img}
+
             src={userData ? userData.image : ""}
             alt="profile picture"
+
           />
         </div>
         <div className={styles.introductionBox}>
