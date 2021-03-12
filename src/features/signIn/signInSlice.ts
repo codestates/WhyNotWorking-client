@@ -55,16 +55,16 @@ export const loginAsync = (userInfo: {
     },
     data,
   })
-    .then(() => {
+    .then((res) => {
       axios({
         method: "get",
         url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
         headers: {
           "Content-Type": "application/json",
+          Authorization: res.data.accessToken,
         },
       })
         .then((usersResponse) => {
-          console.log(usersResponse, "@#$%@#$%#$^$#%^#$");
           dispatch(login(usersResponse.data.data));
         })
         .catch((e) => {

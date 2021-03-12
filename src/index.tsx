@@ -22,9 +22,12 @@ if (process.env.NODE_ENV === "development") {
 axios.interceptors.response.use(
   function (response) {
     // Do something with response data
-    // if (response.data.accessToken !== undefined) {
-    //   localStorage.setItem("user", JSON.stringify(response.data.accessToken));
-    // }
+
+    console.log(response.data.accessToken);
+
+    if (response.data.accessToken !== undefined) {
+      localStorage.setItem("user", response.data.accessToken);
+    }
 
     return response;
   },

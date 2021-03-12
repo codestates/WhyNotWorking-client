@@ -28,16 +28,16 @@ function App() {
   const notificationStatus = useSelector(selectNav);
   const dispatch = useDispatch();
 
-  const stayLogin = () => {
+  const stayLogin = (token: string) => {
     axios({
       method: "get",
-      url: `${process.env.REACT_APP_SERVER_HOST}/users`,
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/myinfo`,
       headers: {
         "Content-Type": "application/json",
+        Authorization: token,
       },
     })
       .then((usersResponse) => {
-        console.log(usersResponse, "@@@@");
         dispatch(login(usersResponse.data.data));
       })
       .catch((e) => {
@@ -46,7 +46,10 @@ function App() {
   };
 
   useEffect(() => {
-    stayLogin();
+    const token = localStorage.getItem("user");
+    if (token) {
+      stayLogin(token);
+    }
   }, []);
 
   return (
