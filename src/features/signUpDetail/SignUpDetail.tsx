@@ -71,10 +71,12 @@ export function SignUpDetail() {
       data: formData,
     })
       .then(() => {
-        axios.get("https://localhost:4000/users/").then((res: any) => {
-          dispatch(login(res));
-          history.push("/");
-        });
+        axios
+          .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
+          .then((res: any) => {
+            dispatch(login(res));
+            history.push("/");
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -166,7 +168,9 @@ export function SignUpDetail() {
             setLocation(e.target.value);
           }}
         ></input>
-        <div className={styles.createBtn}>Create my account</div>
+        <div className={styles.createBtn} onClick={updateSubmit}>
+          Create my account
+        </div>
         <div className={styles.policy}>
           By clicking "Create my account", you agree to our
           <div className={styles.point}>terms of service</div>,
