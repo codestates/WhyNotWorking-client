@@ -6,9 +6,14 @@ import { Pagination } from "../pagination/Pagination";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { Tag } from "../tag/Tag";
 import styles from "./Tags.module.css";
-import { TagInfo } from "../user/UUser";
 import axios from "axios";
 
+export interface TagInfo {
+  id: number;
+  tagName: string;
+  detail: string;
+  postCount: number;
+}
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Tag.module.css";
-import { TagInfo } from "../user/UUser";
+import { TagInfo } from "../tags/Tags";
 
 export function Tag({ tagInfo }: { tagInfo: TagInfo }) {
   return (

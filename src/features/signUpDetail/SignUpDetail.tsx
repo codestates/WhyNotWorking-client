@@ -38,10 +38,14 @@ export function SignUpDetail() {
     ]
   );
   const [userTags, setUserTags] = useState<Array<TagInfo | undefined>>([]);
-  const [nickname, setNickname] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [nickname, setNickname] = useState<string | null>(
+    userInfo ? userInfo.nickname : ""
+  );
+  const [image, setImage] = useState<string | undefined>(
+    userInfo ? userInfo.image : ""
+  );
   const [preview, setPreview] = useState<string>(
-    "https://i.imgur.com/pG0fYRq.png"
+    "https://i.imgur.com/lqGXdm7.png"
   );
   const dispatch = useDispatch();
   const history = useHistory();
@@ -85,9 +89,8 @@ export function SignUpDetail() {
 
   const updateSubmit = () => {
     const formData = new FormData();
-
-    formData.append("image", image);
-    formData.append("nickname", nickname);
+    if (image) formData.append("image", image);
+    if (nickname) formData.append("nickname", nickname);
     formData.append("location", location);
 
     axios({
@@ -102,21 +105,23 @@ export function SignUpDetail() {
         const tagIdArr = userTags.map((t) => {
           if (t) return t.id;
         });
-        axios({
-          method: "post",
-          url: `${process.env.REACT_APP_SERVER_HOST}/userTags/`,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: {
-            userId: userInfo ? userInfo.id : "",
-            tagId: tagIdArr,
-          },
-        });
+        if (tagIdArr.length > 0) {
+          axios({
+            method: "post",
+            url: `${process.env.REACT_APP_SERVER_HOST}/userTags/`,
+            headers: {
+              "Content-Type": "application/json",
+            },
+            data: {
+              userId: userInfo ? userInfo.id : "",
+              tagId: tagIdArr,
+            },
+          });
+        }
       })
       .then(() => {
         axios
-          .get(`${process.env.REACT_APP_SERVER_HOST}/users/`)
+          .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
           .then((res: any) => {
             dispatch(login(res));
             history.push("/");
