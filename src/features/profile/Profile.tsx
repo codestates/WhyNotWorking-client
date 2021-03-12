@@ -67,7 +67,6 @@ export function Profile({
       if (a.vote < b.vote) return -1;
     });
     setSortedPosts(sorted);
-    console.log(sortedPosts);
   };
 
   const getUserInfoById = () => {
