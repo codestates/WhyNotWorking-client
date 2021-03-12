@@ -106,15 +106,25 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
         headers: { "Content-Type": "application/json" },
       }
     )
-    .then(() => {
+    .then((res) => {
+      const { email } = res.data;
+      const data = JSON.stringify({
+        email,
+      });
       axios
-        .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
-        .then((res: any) => {
-          dispatch(login(res.data.data));
-          localStorage.setItem("user", res.data.data);
+        .post(`${process.env.REACT_APP_SERVER_HOST}/sign/`, data, {
+          headers: { "Content-Type": "application/json" },
         })
-        .catch((error) => {
-          console.log(error);
+        .then(() => {
+          axios
+            .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
+            .then((res: any) => {
+              dispatch(login(res.data.data));
+              localStorage.setItem("user", res.data.data);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
     });
 };
