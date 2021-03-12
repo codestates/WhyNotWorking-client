@@ -14,6 +14,7 @@ export interface UserInfo {
   email: string;
   image: string;
   location: string;
+  tag: { tagName: string }[];
 }
 
 function useQuery() {
