@@ -103,7 +103,11 @@ export function QuestionList() {
           ))}
         </div>
         <div className={styles.paginationBox}>
-          <Pagination getDataByPage={getPostbyPage} />
+          <Pagination
+            getDataByPage={getPostbyPage}
+            count={postCount}
+            isQuestion={true}
+          />
         </div>
       </div>
       <div className={styles.tagBox}></div>
