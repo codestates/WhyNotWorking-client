@@ -58,7 +58,6 @@ export function Post({ post }: PostProps) {
             <span>{post.views}</span>
           </div>
           <div>views</div>
-          {/* hot */}
         </div>
       </div>
       <div className={styles.summaryBox}>
@@ -72,30 +71,6 @@ export function Post({ post }: PostProps) {
                 {v.tag.tagName}
               </div>
             ))}
-            {/* <a
-              href="https://stackoverflow.com/questions/tagged/android"
-              className={styles.tag}
-              title=""
-              rel="tag"
-            >
-              android
-            </a>
-            <a
-              href="https://stackoverflow.com/questions/tagged/webview"
-              className={styles.tag}
-              title=""
-              rel="tag"
-            >
-              webview
-            </a>
-            <a
-              href="https://stackoverflow.com/questions/tagged/crash"
-              className={styles.tag}
-              title=""
-              rel="tag"
-            >
-              crash
-            </a> */}
           </div>
           <div className={styles.infoBox}>
             <div>asked{/* modified */} 1 min ago</div>
