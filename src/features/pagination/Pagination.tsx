@@ -108,6 +108,7 @@ export function Pagination({
               onClick={() => {
                 setCurPage(p);
                 getPageList(p, lastPage);
+                getDataByPage(p);
               }}
             >
               {p}
