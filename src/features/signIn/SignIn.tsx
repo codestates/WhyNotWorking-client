@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./SignIn.module.css";
-import { googleLoginAsync, gitHubLoginAsync, loginAsync } from "./signInSlice";
+import {
+  googleLoginAsync,
+  gitHubLoginAsync,
+  loginAsync,
+  selectIsLogin,
+} from "./signInSlice";
 import { useHistory, Link } from "react-router-dom";
 import { GoogleLoginButton } from "ts-react-google-login-component";
-import FacebookLogin from "react-facebook-login";
-import axios from "axios";
+
 export function SignIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const isLogin = useSelector(selectIsLogin);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,9 +33,6 @@ export function SignIn() {
 
   const responseGoogle = (googleUser: any): void => {
     const id_token = googleUser.getAuthResponse(true).id_token;
-    // const googleId = googleUser.getId();
-    // console.log({ googleId });
-    // console.log({ accessToken: id_token });
     dispatch(googleLoginAsync(id_token));
   };
 
@@ -48,6 +50,10 @@ export function SignIn() {
       history.push("/");
     }
   });
+
+  useEffect(() => {
+    if (isLogin) history.push("/");
+  }, [isLogin, history]);
 
   //Facebook login
   const responseFacebook = (response: any) => {

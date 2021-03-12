@@ -55,7 +55,7 @@ export const loginAsync = (userInfo: {
     },
     data,
   })
-    .then((res) => {
+    .then(() => {
       axios({
         method: "get",
         url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
@@ -64,9 +64,8 @@ export const loginAsync = (userInfo: {
         },
       })
         .then((usersResponse) => {
-          console.log(usersResponse);
+          console.log(usersResponse, "@#$%@#$%#$^$#%^#$");
           dispatch(login(usersResponse.data.data));
-          localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
         })
         .catch((e) => {
           console.log(e);
@@ -89,16 +88,8 @@ export const googleLoginAsync = (token: any): AppThunk => (dispatch) => {
         headers: { "Content-Type": "application/json" },
       }
     )
-    .then(() => {
-      axios
-        .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
-        .then((res: any) => {
-          dispatch(login(res.data.data));
-          localStorage.setItem("user", res.data.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    .then((res) => {
+      dispatch(login(res.data.data));
     });
 };
 
