@@ -122,8 +122,7 @@ export function SignUpDetail() {
       .then(() => {
         axios
           .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
-          .then((res: any) => {
-            dispatch(login(res));
+          .then(() => {
             history.push("/");
           });
       })

@@ -78,7 +78,7 @@ export function Profile({
           <img
             className={styles.img}
             src={userInfo ? userInfo.image : ""}
-            alt="profile picture"
+            alt="profile"
           />
         </div>
         <div className={styles.introductionBox}>

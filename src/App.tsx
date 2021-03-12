@@ -21,24 +21,38 @@ import { AskPage } from "./features/askPage/AskPage";
 import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
 import { Footer } from "./features/footer/Footer";
 import { MyPage } from "./features/mypage/MyPage";
-import { login } from "./features/signIn/signInSlice";
+import { login, loginAsync } from "./features/signIn/signInSlice";
+import axios from "axios";
 
 function App() {
   const notificationStatus = useSelector(selectNav);
   const dispatch = useDispatch();
-  // const match = useRouteMatch();
 
-  // console.log(match);
+  const stayLogin = (token: string) => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken = ${token}`,
+      },
+    })
+      .then((usersResponse) => {
+        dispatch(login(usersResponse.data.data));
+        localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
-    let loggedInUser = (localStorage.getItem("user") as unknown) as string;
+    let token = (localStorage.getItem("user") as unknown) as string;
 
-    // localStorage.clear();
-
-    if (loggedInUser) {
-      dispatch(login(JSON.parse(loggedInUser)));
+    if (token) {
+      stayLogin(token);
     }
-  });
+  }, []);
 
   return (
     <Router>
