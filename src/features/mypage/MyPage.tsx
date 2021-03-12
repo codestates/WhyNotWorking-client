@@ -15,7 +15,7 @@ import { setCurrentPage } from "../sidebar/sidebarSlice";
 import { Profile } from "../profile/Profile";
 import { Activity } from "../activity/Activity";
 import { Setting } from "../setting/Setting";
-import { UserInfo } from "../signIn/signInSlice";
+import { UserInfo, selectUserInfo } from "../signIn/signInSlice";
 import axios from "axios";
 import { PostInterface } from "../post/Post";
 
@@ -32,6 +32,7 @@ export interface AnswerInfo {
 
 export function MyPage() {
   const match = useRouteMatch();
+  const myInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
   const { userId } = useParams<{ userId: string }>();
   const [questions, setQuestions] = useState<PostInterface[] | []>([]);
@@ -40,7 +41,6 @@ export function MyPage() {
   const [aCount, setAcount] = useState(0);
   const [curPage, setCurPage] = useState("profile");
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [myId, setMyId] = useState<number | null>(3);
 
   const getQuestions = () => {
     axios
@@ -65,7 +65,6 @@ export function MyPage() {
       .get(`${process.env.REACT_APP_SERVER_HOST}/users?user_id=${userId}`)
       .then((res) => {
         setUserInfo(res.data.data);
-        setMyId(res.data.data.id);
       });
   };
 
@@ -98,16 +97,20 @@ export function MyPage() {
               Activity
             </div>
           </Link>
-          {Number(userId) === myId ? (
-            <Link to={`${match.url}/setting`}>
-              <div
-                className={`${styles.menu} ${
-                  curPage === "setting" ? styles.selected : ""
-                }`}
-              >
-                Edit profile
-              </div>
-            </Link>
+          {myInfo ? (
+            Number(userId) === myInfo.id ? (
+              <Link to={`${match.url}/setting`}>
+                <div
+                  className={`${styles.menu} ${
+                    curPage === "setting" ? styles.selected : ""
+                  }`}
+                >
+                  Edit profile
+                </div>
+              </Link>
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}

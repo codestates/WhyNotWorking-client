@@ -30,7 +30,7 @@ export function Sidebar() {
               Queue Overflow
             </li>
           </Link>
-          <Link to="/tags">
+          <Link to="/tags?page=1">
             <li
               className={`${styles.menu} ${
                 currentPage === "/tags" ? styles.clicked : ""
@@ -39,7 +39,7 @@ export function Sidebar() {
               Tags
             </li>
           </Link>
-          <Link to="/users">
+          <Link to="/users?page=1">
             <li
               className={`${styles.menu} ${
                 currentPage === "/users" ? styles.clicked : ""

@@ -4,7 +4,7 @@ import { Pagination } from "../pagination/Pagination";
 import styles from "./Users.module.css";
 import { User } from "../user/UUser";
 import { useDispatch } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
+import { useRouteMatch, useLocation } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";
 
@@ -16,8 +16,13 @@ export interface UserInfo {
   location: string;
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export function Users() {
   let match = useRouteMatch();
+  let query = useQuery();
   const dispatch = useDispatch();
   const [users, setUsers] = useState<UserInfo[]>();
   const [count, setCount] = useState<number>();
@@ -47,8 +52,9 @@ export function Users() {
   };
 
   useEffect(() => {
+    const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
-    getUsersByPage(1);
+    getUsersByPage(currentPage);
     getUsersCount();
   }, [dispatch, match]);
 
@@ -79,6 +85,7 @@ export function Users() {
           getDataByPage={getUsersByPage}
           count={count}
           isQuestion={false}
+          path={"users"}
         />
       </div>
     </div>

@@ -27,16 +27,19 @@ export function SignUpDetail() {
     id: 1,
   });
   const [nickname, setNickname] = useState<string>("");
-  const [image, setImage] = useState<string>("https://i.imgur.com/pG0fYRq.png");
-
+  const [image, setImage] = useState<string>("");
+  const [preview, setPreview] = useState<string>(
+    "https://i.imgur.com/pG0fYRq.png"
+  );
   const dispatch = useDispatch();
   const history = useHistory();
   const fileInput = React.createRef<any>();
 
   const imageChangeHandler = () => {
+    setImage(fileInput.current.files[0]);
     let reader = new FileReader();
     reader.onloadend = () => {
-      setImage(`${reader.result}`);
+      setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
     console.log(image);
@@ -99,7 +102,7 @@ export function SignUpDetail() {
           onChange={(e) => setNickname(e.target.value)}
         />
         <div className={styles.imageSettingBox}>
-          <img className={styles.img} src={image} alt="프로필사진"></img>
+          <img className={styles.img} src={preview} alt="프로필사진"></img>
 
           <div className={styles.imageSetting}>
             <div className={styles.head}>Profile picture</div>
