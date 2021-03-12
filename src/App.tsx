@@ -31,12 +31,13 @@ function App() {
   const stayLogin = () => {
     axios({
       method: "get",
-      url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
+      url: `${process.env.REACT_APP_SERVER_HOST}/users`,
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((usersResponse) => {
+        console.log(usersResponse, "@@@@");
         dispatch(login(usersResponse.data.data));
       })
       .catch((e) => {
