@@ -55,7 +55,9 @@ export const loginAsync = (userInfo: {
     },
     data,
   })
-    .then((res) => {
+    .then(() => {
+      // localStorage.setItem("user", res.data.accessToken);
+
       axios({
         method: "get",
         url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
@@ -64,9 +66,7 @@ export const loginAsync = (userInfo: {
         },
       })
         .then((usersResponse) => {
-          console.log(usersResponse);
           dispatch(login(usersResponse.data.data));
-          localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
         })
         .catch((e) => {
           console.log(e);

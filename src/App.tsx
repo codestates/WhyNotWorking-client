@@ -28,18 +28,16 @@ function App() {
   const notificationStatus = useSelector(selectNav);
   const dispatch = useDispatch();
 
-  const stayLogin = (token: string) => {
+  const stayLogin = () => {
     axios({
       method: "get",
       url: `${process.env.REACT_APP_SERVER_HOST}/users/myInfo`,
       headers: {
         "Content-Type": "application/json",
-        Cookie: `accessToken = ${token}`,
       },
     })
       .then((usersResponse) => {
         dispatch(login(usersResponse.data.data));
-        localStorage.setItem("user", JSON.stringify(usersResponse.data.data));
       })
       .catch((e) => {
         console.log(e);
@@ -47,11 +45,7 @@ function App() {
   };
 
   useEffect(() => {
-    let token = (localStorage.getItem("user") as unknown) as string;
-
-    if (token) {
-      stayLogin(token);
-    }
+    stayLogin();
   }, []);
 
   return (
