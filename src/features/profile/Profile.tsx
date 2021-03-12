@@ -7,6 +7,7 @@ import {
   Link,
   useHistory,
   useLocation,
+  useParams,
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./Profile.module.css";
@@ -24,7 +25,6 @@ interface ProfileProps extends MenuProps {
   qCount: number;
   questions: PostInterface[];
   answers: AnswerInfo[];
-  userId: number;
 }
 export interface NewPost {
   vote: number;
@@ -40,10 +40,9 @@ export function Profile({
   qCount,
   questions,
   answers,
-  userId,
 }: ProfileProps) {
   const match = useRouteMatch();
-  const history = useHistory();
+  const { userId } = useParams<{ userId: string }>();
   const myInfo = useSelector(selectUserInfo);
   const [userData, setUserData] = useState<UserInfo | null>(null);
   const [sortedPosts, setSortedPosts] = useState<NewPost[] | null>(null);
@@ -91,7 +90,9 @@ export function Profile({
           <img
             className={styles.img}
             src={userData ? userData.image : ""}
+
             alt="profile"
+
           />
         </div>
         <div className={styles.introductionBox}>

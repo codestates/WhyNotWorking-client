@@ -97,7 +97,15 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
   axios
-    .post(`${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`)
+    .post(
+      `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
+      {
+        authorizationCode,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
     .then(() => {
       axios
         .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
