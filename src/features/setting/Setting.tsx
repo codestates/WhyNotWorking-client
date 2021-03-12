@@ -20,6 +20,9 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
   const [aboutMe, setAboutMe] = useState<string | undefined>(
     userInfo ? userInfo.aboutMe : ""
   );
+  const [preview, setPreview] = useState<string | undefined>(
+    userInfo ? userInfo.image : undefined
+  );
   const [saved, setSaved] = useState(false);
   const saveProfile = () => {
     const formData = new FormData();
@@ -52,9 +55,10 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
   const fileInput = React.createRef<any>();
 
   const imageChangeHandler = () => {
+    setImage(fileInput.current.files[0]);
     let reader = new FileReader();
     reader.onloadend = () => {
-      setImage(`${reader.result}`);
+      setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
     console.log(image);
@@ -63,13 +67,6 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
   useEffect(() => {
     console.log(userInfo);
     setCurPage("setting");
-    // if (userInfo) {
-    //   const { nickname, location, aboutMe, image } = userInfo;
-    //   setNickname(nickname);
-    //   setLocation(location);
-    //   setAboutMe(aboutMe);
-    //   setImage(image);
-    // }
   }, []);
 
   return (
@@ -79,7 +76,7 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
         <div className={styles.imgSetting}>
           <div className={styles.midHead}>Public information</div>
           <div className={styles.imgBox}>
-            <img className={styles.img} src={image} alt="profile picture" />
+            <img className={styles.img} src={preview} alt="profile picture" />
             <label htmlFor="fileInput" className={styles.profileBtn}>
               Change picture
             </label>
