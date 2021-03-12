@@ -5,7 +5,12 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch,
+} from "react-router-dom";
 import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";
@@ -21,6 +26,9 @@ import { login } from "./features/signIn/signInSlice";
 function App() {
   const notificationStatus = useSelector(selectNav);
   const dispatch = useDispatch();
+  // const match = useRouteMatch();
+
+  // console.log(match);
 
   useEffect(() => {
     let loggedInUser = (localStorage.getItem("user") as unknown) as string;
@@ -56,7 +64,6 @@ function App() {
                   <Users />
                 </div>
               </div>
-              <Footer />
             </Route>
             <Route path="/post/:postId">
               <div className="main_content">
@@ -67,7 +74,6 @@ function App() {
                   <QuestionDetail />
                 </div>
               </div>
-              <Footer />
             </Route>
             <Route exact path="/tags">
               <div className="main_content">
@@ -78,7 +84,6 @@ function App() {
                   <Tags />
                 </div>
               </div>
-              <Footer />
             </Route>
             <Route path="/questions">
               <div className="main_content">
@@ -97,7 +102,6 @@ function App() {
                   <div className="right_name">강성호</div>
                 </div>
               </div>
-              <Footer />
             </Route>
             <Route exact path="/signup">
               <SignUp />
@@ -114,11 +118,9 @@ function App() {
                   <Home />
                 </div>
               </div>
-              <Footer />
             </Route>
             <Route exact path="/askPage">
               <AskPage />
-              <Footer />
             </Route>
             <Route exact path="/signupDetail">
               <SignUpDetail />
@@ -135,6 +137,7 @@ function App() {
             </Route>
           </Switch>
         </main>
+        <Footer />
       </div>
     </Router>
   );

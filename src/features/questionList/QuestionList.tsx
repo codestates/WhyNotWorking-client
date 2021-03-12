@@ -23,8 +23,8 @@ export function QuestionList() {
   let match = useRouteMatch();
   let query = useQuery();
   const dispatch = useDispatch();
-  const count = useSelector(selectCount);
-
+  // const count = useSelector(selectCount);
+  const [postCount, setPostCount] = useState(0);
   const [posts, setPosts] = useState([]);
 
   const getPostbyPage = (page: number) => {
@@ -35,9 +35,19 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      // console.log(response.data.data[0].answer);
-
       setPosts(response.data.data);
+    });
+  };
+
+  const getCount = () => {
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_HOST}/posts/count`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      setPostCount(response.data.data[0].count);
     });
   };
 
@@ -45,11 +55,8 @@ export function QuestionList() {
     const currentPage = (query.get("page") as unknown) as number;
     dispatch(setCurrentPage(match.path));
 
-    // dispatch(moveToPage(1));
-    // dispatch(getPostsAsync(1));
-    // dispatch(getCountAsync());
-
     getPostbyPage(currentPage);
+    getCount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, match]);
 
@@ -59,7 +66,7 @@ export function QuestionList() {
         <div className={styles.header}>
           <div className={styles.titleBox}>
             <div>All Questions</div>
-            <div>{count} questions</div>
+            <div>{postCount} questions</div>
           </div>
           <div className={styles.filterBox}>
             <div className={styles.btnWrapper}>
