@@ -268,7 +268,11 @@ export function QuestionDetail() {
                   </li>
                 </ul>
                 <div className={styles.userBox}>
-                  <img src={avatar} alt="userImage" className={styles.avatar} />
+                  <img
+                    src={post?.user.image}
+                    alt="userImage"
+                    className={styles.avatar}
+                  />
                   <div className={styles.username}>{post?.user.nickname}</div>
                 </div>
               </div>
