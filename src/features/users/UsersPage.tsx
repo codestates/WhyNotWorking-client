@@ -82,12 +82,7 @@ export function Users() {
         {users ? users.map((u, i) => <User key={i} userInfo={u} />) : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination
-          getDataByPage={getUsersByPage}
-          count={count}
-          isQuestion={false}
-          path={"users"}
-        />
+        <Pagination count={count} path={"users"} />
       </div>
     </div>
   );

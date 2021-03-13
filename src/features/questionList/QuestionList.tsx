@@ -23,7 +23,7 @@ export function QuestionList() {
   let query = useQuery();
   const dispatch = useDispatch();
   // const count = useSelector(selectCount);
-  const [postCount, setPostCount] = useState(0);
+  const [postCount, setPostCount] = useState<number>();
   const [posts, setPosts] = useState([]);
 
   const getPostbyPage = (page: number) => {
@@ -102,12 +102,7 @@ export function QuestionList() {
           ))}
         </div>
         <div className={styles.paginationBox}>
-          <Pagination
-            getDataByPage={getPostbyPage}
-            count={postCount}
-            isQuestion={true}
-            path={"questions"}
-          />
+          <Pagination count={postCount} path={"questions"} />
         </div>
       </div>
       <div className={styles.tagBox}></div>
