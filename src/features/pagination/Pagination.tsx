@@ -3,14 +3,10 @@ import styles from "./pagination.module.css";
 import { Link } from "react-router-dom";
 
 export function Pagination({
-  getDataByPage,
   count,
-  isQuestion,
   path,
 }: {
-  getDataByPage: (page: number) => void;
   count: number | undefined;
-  isQuestion: Boolean;
   path: string;
 }) {
   const [lastPage, setLastPage] = useState<number>(0);
@@ -61,7 +57,7 @@ export function Pagination({
   useEffect(() => {
     console.log(count);
     if (count) {
-      if (isQuestion) {
+      if (path === "questions") {
         getPageList(1, Math.ceil(count / 15));
         setLastPage(Math.ceil(count / 15));
       } else {
@@ -69,7 +65,7 @@ export function Pagination({
         setLastPage(Math.ceil(count / 36));
       }
     }
-  }, []);
+  }, [count]);
 
   return lastPage === 0 ? (
     <div></div>
@@ -101,16 +97,14 @@ export function Pagination({
               </div>
             );
           return (
-            <Link to={`/${path}?page=${p}`} className={styles.link}>
+            <Link key={i} to={`/${path}?page=${p}`} className={styles.link}>
               <div
-                key={i}
                 className={`${styles.btn} ${
                   curPage === p ? styles.pageSelected : ""
                 }`}
                 onClick={() => {
                   setCurPage(p);
                   getPageList(p, lastPage);
-                  // getDataByPage(p);
                 }}
               >
                 {p}

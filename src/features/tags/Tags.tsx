@@ -87,12 +87,7 @@ export function Tags() {
           : ""}
       </div>
       <div className={styles.paginationBox}>
-        <Pagination
-          getDataByPage={getTagsByPage}
-          count={count}
-          isQuestion={false}
-          path={"tags"}
-        />
+        <Pagination count={count} path={"tags"} />
       </div>
     </div>
   );
