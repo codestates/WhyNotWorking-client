@@ -5,8 +5,14 @@ import { Editor } from "../editor/Editor";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { matchPath, useRouteMatch } from "react-router-dom";
 
-export function Setting({ setCurPage, userInfo }: MenuProps) {
+interface SettingProps extends MenuProps {
+  userId: string;
+}
+
+export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
+  const match = useRouteMatch();
   const [nickname, setNickname] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(
     userInfo ? userInfo.location : ""
@@ -17,11 +23,22 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
   const [aboutMe, setAboutMe] = useState<string | undefined>(
     userInfo ? userInfo.aboutMe : ""
   );
-  const [preview, setPreview] = useState<string | undefined>(
-    userInfo ? userInfo.image : undefined
-  );
+  const [preview, setPreview] = useState<string | undefined>();
   const [saved, setSaved] = useState(false);
   const [sameName, setSameName] = useState<Boolean>(false);
+
+  const getUserInfoById = () => {
+    axios
+      .get(`${process.env.REACT_APP_SERVER_HOST}/users?user_id=${userId}`)
+      .then((res) => {
+        const { nickname, location, image, aboutMe } = res.data.data;
+        setNickname(nickname);
+        setAboutMe(aboutMe);
+        setPreview(image);
+        setLocation(location);
+      });
+  };
+
   const saveProfile = () => {
     const formData = new FormData();
     if (image) {
@@ -65,11 +82,12 @@ export function Setting({ setCurPage, userInfo }: MenuProps) {
       setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
-    console.log(image);
   };
 
   useEffect(() => {
+    console.log(nickname);
     setCurPage("setting");
+    getUserInfoById();
   }, []);
 
   return (
