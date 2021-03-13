@@ -69,11 +69,12 @@ export function MyPage() {
   };
 
   useEffect(() => {
+    console.log(userId);
     dispatch(setCurrentPage("/users"));
     getQuestions();
     getAnswers();
     getUserInfoById();
-  }, []);
+  }, [userId]);
 
   return (
     <Router>
@@ -125,6 +126,7 @@ export function MyPage() {
                 qCount={qCount}
                 questions={questions}
                 answers={answers}
+                userId={userId}
               />
             </Route>
             <Route exact path={`${match.path}/activity`}>
@@ -136,7 +138,11 @@ export function MyPage() {
               />
             </Route>
             <Route exact path={`${match.path}/setting`}>
-              <Setting userInfo={userInfo} setCurPage={setCurPage} />
+              <Setting
+                userInfo={userInfo}
+                setCurPage={setCurPage}
+                userId={userId}
+              />
             </Route>
           </Switch>
         </div>

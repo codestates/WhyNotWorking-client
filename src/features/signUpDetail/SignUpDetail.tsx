@@ -15,32 +15,13 @@ interface TagInfo {
 export function SignUpDetail() {
   const userInfo = useSelector(selectUserInfo);
   const [location, setLocation] = useState<string>("");
+
   const [allTags, setAllTags] = useState<TagInfo[] | null>(null);
   const [word, setWord] = useState<string>("");
-  const [tagResult, setTagResult] = useState<Array<TagInfo | undefined> | null>(
-    [
-      {
-        id: 1,
-        tagName: "kk",
-        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
-      },
-      {
-        id: 1,
-        tagName: "kk",
-        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
-      },
-      ,
-      {
-        id: 1,
-        tagName: "kk",
-        detail: "dkdkdkdkdkddkdkkdkdkddkkdkdkd",
-      },
-    ]
-  );
+  const [tagResult, setTagResult] = useState<Array<TagInfo | undefined>>([]);
   const [userTags, setUserTags] = useState<Array<TagInfo | undefined>>([]);
-  const [nickname, setNickname] = useState<string | null>(
-    userInfo ? userInfo.nickname : ""
-  );
+
+  const [nickname, setNickname] = useState<string | null>(null);
   const [image, setImage] = useState<string | undefined>(
     userInfo ? userInfo.image : ""
   );
@@ -56,6 +37,7 @@ export function SignUpDetail() {
       .get(`${process.env.REACT_APP_SERVER_HOST}/tags/allTags`)
       .then((res) => {
         setAllTags(res.data.data);
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -63,13 +45,17 @@ export function SignUpDetail() {
   };
 
   const searchTag = (word: string) => {
+    console.log(allTags);
+    console.log(word);
     if (allTags) {
-      let result = allTags.map((t) => {
-        if (t.tagName.includes(word)) {
-          return t;
-        }
-      });
-      setTagResult(result);
+      setTagResult(
+        allTags.filter(
+          (v) => ((v.tagName as unknown) as string).search(word) !== -1
+        )
+      );
+      console.log(
+        allTags.filter((v) => ((v.tagName as unknown) as string) === word)
+      );
     }
   };
 
@@ -144,6 +130,7 @@ export function SignUpDetail() {
         <input
           className={styles.input}
           type="text"
+          value={nickname ? nickname : ""}
           onChange={(e) => setNickname(e.target.value)}
         />
         <div className={styles.imageSettingBox}>
@@ -200,10 +187,14 @@ export function SignUpDetail() {
             value={word}
             type="text"
             className={styles.tagInput}
-            onChange={(e) => setWord(e.target.value)}
+            onChange={(e) => {
+              setWord(e.target.value);
+              console.log(e.target.value);
+            }}
             onKeyUp={(e) => {
               if (e.key === " ") {
                 searchTag(word);
+                console.log(word);
                 setWord("");
               }
             }}
@@ -211,7 +202,7 @@ export function SignUpDetail() {
         </div>
         <div
           className={`${
-            tagResult ? styles.tagSearchResultBox : styles.noneResult
+            tagResult.length > 0 ? styles.tagSearchResultBox : styles.noneResult
           }`}
         >
           {tagResult
@@ -222,7 +213,7 @@ export function SignUpDetail() {
                       key={i}
                       onClick={() => {
                         setUserTags([...userTags, t]);
-                        setTagResult(null);
+                        setTagResult([]);
                       }}
                       className={styles.tagWrapper}
                     >

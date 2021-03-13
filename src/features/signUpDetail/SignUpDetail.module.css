@@ -92,7 +92,7 @@
   background-color: transparent;
   min-height: 30px;
   height: fit-content;
-  width: fit-content;
+  width: 100%;
 }
 
 .tagInput:focus {
