@@ -96,6 +96,7 @@ export const googleLoginAsync = (token: any): AppThunk => (dispatch) => {
 export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
+  let token = "";
   axios
     .post(
       `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
@@ -107,25 +108,39 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
       }
     )
     .then((res) => {
-      const { email } = res.data;
-      const data = JSON.stringify({
-        email,
-      });
+      let token = res.data.accessToken;
       axios
-        .post(`${process.env.REACT_APP_SERVER_HOST}/sign/`, data, {
-          headers: { "Content-Type": "application/json" },
+        .get("https://github.com/login/oauth/user", {
+          headers: {
+            authorization: `token ${res.data.accessToken.split(" ")[2]}`,
+          },
         })
-        .then((name) => {
+        .then((res) => {
+          const { email } = res.data;
+          const data = JSON.stringify({
+            email,
+          });
           axios
-            .get(
-              `${process.env.REACT_APP_SERVER_HOST}/users/myInfo?nickname=${name}`
-            )
-            .then((res: any) => {
-              dispatch(login(res.data.data));
-              localStorage.setItem("user", res.data.data);
+            .post(`${process.env.REACT_APP_SERVER_HOST}/sign/`, data, {
+              headers: { "Content-Type": "application/json" },
             })
-            .catch((error) => {
-              console.log(error);
+            .then((name) => {
+              axios
+                .get(
+                  `${process.env.REACT_APP_SERVER_HOST}/users/myInfo?nickname=${name}`,
+                  {
+                    headers: {
+                      authorization: token,
+                    },
+                  }
+                )
+                .then((res: any) => {
+                  dispatch(login(res.data.data));
+                  localStorage.setItem("user", res.data.data);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
             });
         });
     });

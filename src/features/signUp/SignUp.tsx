@@ -42,14 +42,17 @@ export function SignUp() {
 
   //GitHub login
   const githubSignup = () => {
+    console.log("signupBtn");
     const gitHubClientId = "aa59a944d3292ef1c420";
-    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}`;
+    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/`;
     window.location.assign(GITHUB_LOGIN_URL);
   };
   useEffect(() => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get("code");
+    console.log(authorizationCode);
     if (authorizationCode) {
+      console.log("signup auth code");
       dispatch(gitHubSignUp(authorizationCode));
       history.push("/signupDetail");
     }
