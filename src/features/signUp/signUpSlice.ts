@@ -6,6 +6,8 @@ import { login } from "../signIn/signInSlice";
 export const gitHubSignUp = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
+  let token = "";
+  console.log(authorizationCode);
   axios
     .post(
       `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
@@ -17,11 +19,15 @@ export const gitHubSignUp = (authorizationCode: any): AppThunk => (
       }
     )
     .then((res) => {
+      let token = res.data.accessToken;
+      let accessToken = res.data.accessToken.split(" ")[2];
+      console.log("token::    " + token + "     ,authtoken:   " + accessToken);
       axios
-        .get("https://github.com/login/oauth/user", {
+        .get("https://api.github.com/user", {
           headers: {
-            authorization: `token ${res.data.accessToken}`,
+            authorization: `token ${accessToken}`,
           },
+          withCredentials: true,
         })
         .then((res) => {
           const { name, location, avatar_url, email } = res.data;
@@ -38,7 +44,12 @@ export const gitHubSignUp = (authorizationCode: any): AppThunk => (
             .then((name) => {
               axios
                 .get(
-                  `${process.env.REACT_APP_SERVER_HOST}/users/myInfo?nickname=${name}`
+                  `${process.env.REACT_APP_SERVER_HOST}/users/myInfo?nickname=${name}`,
+                  {
+                    headers: {
+                      authorization: token,
+                    },
+                  }
                 )
                 .then((res: any) => {
                   dispatch(login(res.data.data));

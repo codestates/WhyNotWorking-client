@@ -38,6 +38,7 @@ export function SignIn() {
 
   //GitHub login
   const githubLogin = () => {
+    console.log("loginBtn");
     const gitHubClientId = "aa59a944d3292ef1c420";
     const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}`;
     window.location.assign(GITHUB_LOGIN_URL);
@@ -46,6 +47,7 @@ export function SignIn() {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get("code");
     if (authorizationCode) {
+      console.log("with auth code");
       dispatch(gitHubLoginAsync(authorizationCode));
       history.push("/");
     }
