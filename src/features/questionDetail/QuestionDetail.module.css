@@ -1,0 +1,322 @@
+.container,
+.headerTop,
+.titleBox,
+.postBox,
+.content,
+.recommendBox,
+.contentBox,
+.tags,
+.upDown,
+.upDownNumber,
+.headerBottom > ul,
+.headerBottom li,
+.tags li,
+.editBox,
+.contentUtilsBox,
+.userBox,
+.main,
+.mainRight,
+.postButtonBox,
+.answerCount,
+.askBox,
+.askButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 1051px;
+  padding: 24px;
+  /* height: 100%; */
+
+  /* justify-content: flex-start; */
+
+  flex-direction: column;
+}
+.headerTop {
+  width: 100%;
+  height: 80px;
+}
+
+.header {
+  width: 100%;
+}
+
+.titleBox {
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  height: 72px;
+  margin-bottom: 8px;
+
+  font-size: 27px;
+  text-align: left;
+}
+
+.askBox {
+  min-width: 100px;
+  height: 80px;
+
+  margin-left: 12px;
+}
+
+.askButton {
+  background-color: rgb(0, 149, 255);
+  color: white;
+
+  width: 100%;
+  height: 38px;
+
+  padding: 2px 10px 2px 10px;
+
+  border: none;
+  border-radius: 3px;
+
+  font-size: 0.9rem;
+
+  outline: none;
+}
+
+.editBox > li {
+  cursor: pointer;
+}
+
+.askButton:hover {
+  background-color: rgb(1, 104, 177);
+}
+
+.headerBottom {
+  width: 100%;
+  height: 25px;
+
+  padding-bottom: 8px;
+  border-bottom: 1px solid silver;
+
+  margin-bottom: 16px;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  /* border: 1px solid black; */
+}
+
+.mainLeft {
+  min-width: 727px;
+  max-width: 727px;
+  height: 100%;
+
+  /* border: 1px solid black; */
+
+  /* background-color: yellow; */
+}
+
+.postBox {
+  width: 100%;
+  align-items: flex-start;
+  /* height: 700px; */
+}
+
+.recommendBox {
+  min-width: 36px;
+  height: 100%;
+  padding-right: 16px;
+
+  justify-content: flex-start;
+
+  flex-direction: column;
+
+  /* background-color: violet; */
+}
+
+.contentBox {
+  width: 100%;
+  height: 100%;
+
+  flex-direction: column;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.tagsBox {
+  width: 100%;
+  height: 24px;
+
+  margin-top: 24px;
+
+  /* background-color: aquamarine; */
+}
+
+.tags {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tags li {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 4.8px 6px 4.8px 6px;
+
+  background-color: rgb(225, 236, 244);
+  color: rgb(57, 115, 157);
+
+  font-size: 0.7rem;
+
+  border-radius: 1px;
+
+  margin: 2px;
+}
+
+.editorBox {
+  margin-top: 24px;
+  width: 100%;
+  height: 100%;
+
+  /* background-color: blue; */
+}
+
+.upDown {
+  width: 36px;
+  height: 36px;
+
+  font-size: 3rem;
+  color: silver;
+
+  cursor: pointer;
+}
+
+.upDownNumber {
+  width: 100%;
+  margin-right: 4px;
+}
+
+.headerBottom li {
+  height: 17px;
+  margin-bottom: 8px;
+  margin-right: 16px;
+}
+
+.headerBottom > ul {
+  justify-content: flex-start;
+}
+
+.headerBottom li span:first-child {
+  color: silver;
+  margin-right: 8px;
+}
+
+.contentUtilsBox {
+  padding-top: 4px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  height: 75px;
+  width: 100%;
+
+  justify-content: space-between;
+}
+
+.contentUtilsBox li {
+  list-style: none;
+}
+
+.editBox {
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+}
+
+.editBox li {
+  margin-right: 10px;
+  height: 100%;
+  color: grey;
+}
+
+.editBox a,
+li {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userBox {
+  width: 200px;
+  height: 67px;
+
+  background-color: rgb(222, 233, 236);
+}
+
+.userBox {
+  justify-content: flex-start;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  margin: 10px;
+}
+
+.mainRight {
+  height: 500px;
+  width: 100%;
+
+  margin-left: 20px;
+
+  background-color: aliceblue;
+
+  /* justify-content: flex-start; */
+  align-items: flex-start;
+  /* border: 1px solid black; */
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+
+  text-align: left;
+}
+
+.postButtonBox {
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+
+  justify-content: flex-start;
+}
+
+.postButton {
+  height: 100%;
+
+  background-color: royalblue;
+  color: white;
+
+  border: none;
+
+  border-radius: 5px;
+
+  padding: 10px;
+}
+
+.answerCount {
+  font-size: 1.1rem;
+
+  font-weight: bold;
+  justify-content: flex-start;
+
+  margin-top: 15px;
+  margin-bottom: 30px;
+}

@@ -1,0 +1,104 @@
+.container {
+  display: flex;
+  height: 78px;
+  width: 100%;
+  padding: 12px 8px;
+  background-color: #fdf7e3;
+  border-bottom: 1px solid #eff0f1;
+  box-sizing: border-box;
+}
+.countBox {
+  display: flex;
+  flex-direction: row;
+  width: 173px;
+  height: 54px;
+  padding-right: 8px;
+  box-sizing: content-box;
+}
+.countBox > div {
+  display: inline-block;
+  box-sizing: inherit;
+  width: 38px;
+  height: 38px;
+  padding: 6px;
+  margin-right: 3px;
+  font-size: 11px;
+  color: #848d95;
+}
+
+.count {
+  height: 22px;
+  font-size: 1rem;
+  /* font-weight: 400; */
+}
+.summaryBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+}
+.title {
+  height: 20px;
+}
+.title > a {
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  color: #0077cc;
+  cursor: pointer;
+}
+
+.title :hover,
+.infoBox > a:hover {
+  color: #0095ff;
+}
+.wrapper {
+  display: flex;
+
+  justify-content: space-between;
+  height: 25px;
+}
+.tag {
+  background-color: #e1ecf4;
+  color: #39739d;
+  border-color: #00000000;
+  border-radius: 3px;
+  margin: 4px 4px 4px 0px;
+  padding: 4px;
+  text-decoration: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tag:hover {
+  color: #2c5777;
+  background-color: #d1e5f1;
+}
+.infoBox {
+  display: flex;
+  flex-direction: row;
+  text-align: right;
+  font-size: 12px;
+  height: 100%;
+}
+
+.infoBox > div {
+  color: #9199a1;
+  margin-right: 3px;
+  padding: 4px;
+}
+
+.infoBox > a {
+  color: #0077cc;
+  text-decoration: none;
+  margin-right: 3px;
+  padding: 4px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.tagBox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

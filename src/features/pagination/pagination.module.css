@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  padding: 24px;
+}
+.listWrapper {
+  display: flex;
+}
+.btn {
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin: 0 3px;
+  border: 1px solid #d6d9dc;
+  font-size: 13px;
+  min-width: 7.3px;
+  cursor: pointer;
+  color: black;
+}
+
+.btn:hover {
+  background-color: #d6d9dc;
+}
+.pageSelected {
+  border-color: transparent !important;
+  background-color: #f48024;
+  color: #ffffff;
+  margin-right: 6px;
+}
+.pageSelected:hover {
+  background-color: #f48024 !important;
+}
+
+.ellipsis {
+  border: transparent !important;
+  cursor: unset !important;
+}
+
+.ellipsis:hover {
+  background-color: transparent !important;
+}
