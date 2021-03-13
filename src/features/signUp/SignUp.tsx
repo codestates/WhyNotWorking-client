@@ -49,8 +49,8 @@ export function SignUp() {
   //GitHub login
   const githubSignup = () => {
     console.log("signupBtn");
-    const gitHubClientId = "4113fd776c8f004574c6";
-    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=http://localhost:3000/signup`;
+    const gitHubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/signup`;
 
     window.location.href = GITHUB_LOGIN_URL;
   };
