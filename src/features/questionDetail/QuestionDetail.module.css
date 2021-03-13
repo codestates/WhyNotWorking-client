@@ -16,7 +16,8 @@
 .userBox,
 .main,
 .mainRight,
-.postButtonBox {
+.postButtonBox,
+.answerCount {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -284,4 +285,14 @@
   border-radius: 5px;
 
   padding: 10px;
+}
+
+.answerCount {
+  font-size: 1.1rem;
+
+  font-weight: bold;
+  justify-content: flex-start;
+
+  margin-top: 15px;
+  margin-bottom: 30px;
 }

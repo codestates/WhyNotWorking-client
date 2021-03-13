@@ -22,6 +22,12 @@
   align-items: center;
 }
 
+.container {
+  border-bottom: 1px solid silver;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
 .headerTop {
   width: 100%;
   height: 80px;

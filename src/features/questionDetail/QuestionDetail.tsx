@@ -272,6 +272,9 @@ export function QuestionDetail() {
               </div>
             </div>
           </div>
+          <div className={styles.answerCount}>
+            {post?.answer.length} Answers
+          </div>
           {post?.answer.map((v, i) => (
             <Answer
               answer={v}
