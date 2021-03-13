@@ -6,7 +6,9 @@
 .menu_avatar,
 .menu_item,
 .icon,
-.avatarLink {
+.avatarLink,
+.loginBox,
+.signUpBox {
   display: flex;
   justify-content: center;
   align-items: center;
