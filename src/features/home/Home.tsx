@@ -9,17 +9,8 @@ import styles from "./Home.module.css";
 export function Home() {
   let match = useRouteMatch();
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const authorizationCode = url.searchParams.get("code");
-    console.log(authorizationCode);
-    if (authorizationCode) {
-      console.log("signup auth code");
-      dispatch(gitHubSignUp(authorizationCode));
-      history.push("/signupDetail");
-    }
     dispatch(setCurrentPage(match.path));
   }, [dispatch, match]);
 
