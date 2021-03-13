@@ -23,7 +23,7 @@
 }
 
 .container {
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid rgb(239, 240, 241);
   padding-top: 16px;
   padding-bottom: 16px;
 }
@@ -73,7 +73,7 @@
   height: 25px;
 
   padding-bottom: 8px;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid rgb(239, 240, 241);
 
   margin-bottom: 16px;
 }
@@ -219,13 +219,20 @@
 }
 
 .editBox {
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .editBox li {
   margin-right: 10px;
   color: grey;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
 }
 
 .userBox {

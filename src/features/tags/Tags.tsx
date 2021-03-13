@@ -22,7 +22,7 @@ export function Tags() {
   let match = useRouteMatch();
   let query = useQuery();
   const dispatch = useDispatch();
-  const [tags, setTags] = useState<TagInfo[]>();
+  const [tags, setTags] = useState<TagInfo[]>([]);
   const [count, setCount] = useState<number>();
 
   const getTagsByPage = (page: number) => {
@@ -33,6 +33,8 @@ export function Tags() {
         "Content-Type": "application/json",
       },
     }).then((res) => {
+      console.log(res.data.data);
+
       setTags(res.data.data);
     });
   };
@@ -54,7 +56,7 @@ export function Tags() {
     dispatch(setCurrentPage(match.path));
     getTagsByPage(currentPage);
     getTagsCount();
-  }, [dispatch, match]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -74,17 +76,15 @@ export function Tags() {
           placeholder="&#xf002; Filter by tag name"
         ></input>
         <div className={styles.filterBox}>
-          <div className={styles.popular}>Popular</div>
+          {/* <div className={styles.popular}>Popular</div>
           <div className={styles.name}>Name</div>
-          <div className={styles.new}>New</div>
+          <div className={styles.new}>New</div> */}
         </div>
       </div>
       <div className={styles.listBox}>
-        {tags
-          ? tags.map((t, i) => {
-              <Tag key={i} tagInfo={t} />;
-            })
-          : ""}
+        {tags.map((v, i) => (
+          <Tag tagInfo={v} key={i} />
+        ))}
       </div>
       <div className={styles.paginationBox}>
         <Pagination count={count} path={"tags"} />

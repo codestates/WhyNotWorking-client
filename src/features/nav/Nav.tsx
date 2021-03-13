@@ -12,7 +12,7 @@ export function Nav() {
       <Link to="/" className={styles.logo_container}>
         <div className={styles.logo} title="logo"></div>
       </Link>
-      <div className={styles.product_container}>Products</div>
+      <div className={styles.product_container}></div>
       <div className={styles.search_container}>
         <Search></Search>
       </div>

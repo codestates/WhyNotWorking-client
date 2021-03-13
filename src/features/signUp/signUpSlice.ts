@@ -6,11 +6,9 @@ import { login } from "../signIn/signInSlice";
 export const gitHubSignUp = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
-  let token = "";
-  console.log(authorizationCode);
   axios
     .post(
-      `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
+      `${process.env.REACT_APP_SERVER_HOST}/login/githubToken`,
       {
         authorizationCode,
       },
@@ -19,41 +17,43 @@ export const gitHubSignUp = (authorizationCode: any): AppThunk => (
       }
     )
     .then((res) => {
-      let token = res.data.accessToken;
-      let accessToken = res.data.accessToken.split(" ")[2];
-      console.log("token::    " + token + "     ,authtoken:   " + accessToken);
+      let accessToken = res.data.accessToken;
       axios
         .get("https://api.github.com/user", {
           headers: {
-            authorization: `token ${accessToken}`,
+            Authorization: `token ${accessToken}`,
           },
-          withCredentials: true,
+          withCredentials: false,
         })
         .then((res) => {
-          const { name, location, avatar_url, email } = res.data;
+          console.log(res, "ksjdlksjdlkajdlkaj");
+
+          const { name, location, avatar_url, id } = res.data;
+
           const data = JSON.stringify({
             nickname: name,
             location,
             image: avatar_url,
-            email,
+            email: id,
           });
           axios
-            .post(`${process.env.REACT_APP_SERVER_HOST}/sign/`, data, {
-              headers: { "Content-Type": "application/json" },
-            })
-            .then((name) => {
+            .post(
+              `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin`,
+              data,
+              {
+                headers: { "Content-Type": "application/json" },
+              }
+            )
+            .then((response) => {
               axios
-                .get(
-                  `${process.env.REACT_APP_SERVER_HOST}/users/myInfo?nickname=${name}`,
-                  {
-                    headers: {
-                      authorization: token,
-                    },
-                  }
-                )
+                .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`, {
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: response.data.accessToken,
+                  },
+                })
                 .then((res: any) => {
                   dispatch(login(res.data.data));
-                  localStorage.setItem("user", res.data.data);
                 })
                 .catch((error) => {
                   console.log(error);

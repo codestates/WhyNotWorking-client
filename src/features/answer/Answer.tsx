@@ -96,7 +96,7 @@ export function Answer({ answer, deleteAnswer, postVote }: AnswerProps) {
           </div>
           <div className={styles.contentUtilsBox}>
             <ul className={styles.editBox}>
-              <li>Share</li>
+              <li>Share 🚧</li>
               <li
                 onClick={(e) => {
                   setIsEdit(!isEdit);
@@ -113,7 +113,11 @@ export function Answer({ answer, deleteAnswer, postVote }: AnswerProps) {
               </li>
             </ul>
             <div className={styles.userBox}>
-              <img src={avatar} alt="userImage" className={styles.avatar} />
+              <img
+                src={answer.user.image}
+                alt="userImage"
+                className={styles.avatar}
+              />
               <div className={styles.username}>{answer?.user.nickname}</div>
             </div>
           </div>

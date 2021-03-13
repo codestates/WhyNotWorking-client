@@ -9,10 +9,10 @@ export function Tag({ tagInfo }: { tagInfo: TagInfo }) {
         <div>{tagInfo.tagName}</div>
       </div>
       <div className={styles.description}>{tagInfo.detail}</div>
-      {/* <div className={styles.infoBox}>
-        <div>2179275 questions</div>
-        <div>944 asked today, 5379 this week</div>
-      </div> */}
+      <div className={styles.infoBox}>
+        <div>{tagInfo.postCount} questions</div>
+        {/* <div>944 asked today, 5379 this week</div> */}
+      </div>
     </div>
   );
 }

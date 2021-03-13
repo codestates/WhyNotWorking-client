@@ -33,10 +33,13 @@ export const signInSlice = createSlice({
       state.user = null;
       state.isLogin = false;
     },
+    setUser: (state, action: PayloadAction<UserInfo>) => {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { login, logout } = signInSlice.actions;
+export const { login, logout, setUser } = signInSlice.actions;
 
 export const selectUserInfo = (state: RootState) => state.signIn.user;
 export const selectIsLogin = (state: RootState) => state.signIn.isLogin;
@@ -96,7 +99,6 @@ export const googleLoginAsync = (token: any): AppThunk => (dispatch) => {
 export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
   dispatch
 ) => {
-  let token = "";
   axios
     .post(
       `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
@@ -136,7 +138,6 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
                 )
                 .then((res: any) => {
                   dispatch(login(res.data.data));
-                  localStorage.setItem("user", res.data.data);
                 })
                 .catch((error) => {
                   console.log(error);

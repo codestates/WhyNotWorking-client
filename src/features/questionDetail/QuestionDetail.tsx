@@ -186,7 +186,9 @@ export function QuestionDetail() {
         <div className={styles.headerTop}>
           <div className={styles.titleBox}>{post?.title}</div>
           <div className={styles.askBox}>
-            <button className={styles.askButton}>Ask Question</button>
+            <Link to={"/askPage"} className={styles.askButton}>
+              Ask Question
+            </Link>
           </div>
         </div>
         <div className={styles.headerBottom}>
@@ -253,7 +255,7 @@ export function QuestionDetail() {
               </div>
               <div className={styles.contentUtilsBox}>
                 <ul className={styles.editBox}>
-                  <li>Share</li>
+                  <li>Share 🚧</li>
                   <Link to={`edit/${postId}`}>
                     <li>Edit</li>
                   </Link>

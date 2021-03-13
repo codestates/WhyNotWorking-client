@@ -34,7 +34,7 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      setPosts(response.data.data);
+      setPosts(response.data.data.reverse());
     });
   };
 
@@ -73,7 +73,8 @@ export function QuestionList() {
                 <div className={styles.btn}>Ask Question</div>
               </Link>
             </div>
-            <div className={styles.filterWrapper}>
+
+            {/* <div className={styles.filterWrapper}>
               <div className={styles.newest}>Newest</div>
               <div className={styles.active}>Active</div>
               <div className={styles.bountied}>Bountied</div>
@@ -85,7 +86,6 @@ export function QuestionList() {
                   icon={faCaretDown}
                 ></FontAwesomeIcon>
               </div>
-
               <div className={styles.customFilter}>
                 <FontAwesomeIcon
                   className={styles.icon}
@@ -93,7 +93,7 @@ export function QuestionList() {
                 ></FontAwesomeIcon>
                 Filter
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={styles.postList}>

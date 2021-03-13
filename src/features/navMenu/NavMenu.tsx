@@ -70,11 +70,13 @@ export function NavMenu() {
           <li className={styles.menu_item}>
             <div className={styles.icon}>
               <FontAwesomeIcon icon={faQuestionCircle}></FontAwesomeIcon>
+              🚧
             </div>
           </li>
           <li className={styles.menu_item}>
             <div className={styles.icon}>
               <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
+              🚧
             </div>
           </li>
         </ol>

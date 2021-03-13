@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUpDetail.module.css";
-import { login, selectUserInfo } from "../signIn/signInSlice";
+import { login, selectUserInfo, setUser } from "../signIn/signInSlice";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -86,35 +86,31 @@ export function SignUpDetail() {
         "Content-Type": "multipart/form-data",
       },
       data: formData,
-    })
-      .then(() => {
-        const tagIdArr = userTags.map((t) => {
-          if (t) return t.id;
-        });
-        if (tagIdArr.length > 0) {
-          axios({
-            method: "post",
-            url: `${process.env.REACT_APP_SERVER_HOST}/userTags/`,
-            headers: {
-              "Content-Type": "application/json",
-            },
-            data: {
-              userId: userInfo ? userInfo.id : "",
-              tagId: tagIdArr,
-            },
-          });
-        }
-      })
-      .then(() => {
-        axios
-          .get(`${process.env.REACT_APP_SERVER_HOST}/users/myInfo`)
-          .then(() => {
-            history.push("/");
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }).then((res) => {
+      dispatch(setUser(res.data.data));
+      history.push("/");
+      // const tagIdArr = userTags.map((t) => {
+      //   if (t) return t.id;
+      // });
+      // if (tagIdArr.length > 0) {
+      //   axios({
+      //     method: "post",
+      //     url: `${process.env.REACT_APP_SERVER_HOST}/userTags/`,
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     data: {
+      //       userId: userInfo ? userInfo.id : "",
+      //       tagId: tagIdArr,
+      //     },
+      //   }).then(() => {
+      //     history.push("/");
+      //   });
+
+      // } else {
+      //   history.push("/");
+      // }
+    });
   };
 
   return (
@@ -151,7 +147,7 @@ export function SignUpDetail() {
             ></input>
           </div>
         </div>
-        <div className={styles.head}>Technology tags that interest you</div>
+        <div className={styles.head}>Technology tags that interest you 🚧</div>
         <p>
           Picking tags will help us show you much more relevant questions and
           answers
@@ -198,6 +194,7 @@ export function SignUpDetail() {
                 setWord("");
               }
             }}
+            disabled
           ></input>
         </div>
         <div
