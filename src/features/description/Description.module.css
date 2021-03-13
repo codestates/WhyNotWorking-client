@@ -1,0 +1,86 @@
+.container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 10px;
+  font-family: "RIDIBatang";
+}
+.container > div {
+  width: fit-content;
+  height: 500px;
+  padding: 10px;
+  margin: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: inherit;
+}
+
+.menu {
+  margin-bottom: 5px;
+  width: 160px;
+  height: 50px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.main {
+  width: 100% !important;
+}
+
+.arrow {
+  width: 9px;
+  height: 9px;
+  /* background-color: white; */
+
+  transform: translateY(-50%) translateX(-50%) rotate(45deg);
+  position: absolute;
+  bottom: 20px;
+}
+
+.a,
+.b,
+.c {
+  right: 1px;
+}
+
+.selected > .arrow {
+  background-color: white;
+}
+
+.selected > .a,
+.selected > .b,
+.selected > .c {
+  border-top: 1px solid #bfc4c7;
+  border-right: 1px solid #bfc4c7;
+}
+
+.selected > .d,
+.selected > .f,
+.selected > .e {
+  border-bottom: 1px solid #bfc4c7;
+  border-left: 1px solid #bfc4c7;
+}
+
+.selected > .menu {
+  box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
+    0 1px 4px rgb(0 0 0 / 10%);
+}
+
+.wrapper:hover .menu {
+  box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
+    0 1px 4px rgb(0 0 0 / 10%);
+}
+
+.wrapper {
+  width: 170px;
+  display: flex;
+  position: relative;
+}
