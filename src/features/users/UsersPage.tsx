@@ -73,9 +73,9 @@ export function Users() {
           placeholder="&#xf002; Filter by user"
         ></input>
         <div className={styles.filterBox}>
-          <div className={styles.popular}>New users</div>
+          {/* <div className={styles.popular}>New users</div>
           <div className={styles.name}>questions</div>
-          <div className={styles.new}>answers</div>
+          <div className={styles.new}>answers</div> */}
         </div>
       </div>
       <div className={styles.listBox}>

@@ -5,12 +5,7 @@ import "./App.css";
 import { useSelector, useDispatch } from "react-redux";
 import { closeNotification, selectNav } from "./features/nav/navSlice";
 import { QuestionList } from "./features/questionList/QuestionList";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { SignIn } from "./features/signIn/SignIn";
 import { QuestionDetail } from "./features/questionDetail/QuestionDetail";
 import { Tags } from "./features/tags/Tags";

@@ -3,8 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUp.module.css";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
-import { loginAsync, googleLoginAsync } from "../signIn/signInSlice";
+import { useHistory, Link, useRouteMatch } from "react-router-dom";
+import {
+  loginAsync,
+  googleLoginAsync,
+  selectIsLogin,
+} from "../signIn/signInSlice";
 import { gitHubSignUp } from "./signUpSlice";
 import { GoogleLoginButton } from "ts-react-google-login-component";
 import FacebookLogin from "react-facebook-login";
@@ -14,6 +18,8 @@ export function SignUp() {
   const [password, setPassword] = useState<string | null>(null);
   const [nickname, setNickname] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const isLogin = useSelector(selectIsLogin);
+  let match = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -43,23 +49,49 @@ export function SignUp() {
   //GitHub login
   const githubSignup = () => {
     console.log("signupBtn");
-    const gitHubClientId = "aa59a944d3292ef1c420";
-    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/`;
-    window.location.assign(GITHUB_LOGIN_URL);
+    const gitHubClientId = "4113fd776c8f004574c6";
+    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=http://localhost:3000/signup`;
+
+    window.location.href = GITHUB_LOGIN_URL;
   };
+
   useEffect(() => {
+    if (isLogin) history.push("/signupDetail");
+
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get("code");
-    console.log(authorizationCode);
+
     if (authorizationCode) {
-      console.log("signup auth code");
+      console.log(authorizationCode);
       dispatch(gitHubSignUp(authorizationCode));
-      history.push("/signupDetail");
     }
-  });
+  }, [isLogin]);
 
   // todo : redux 방식으로 수정
   const signUpSubmit = () => {
+    if (!nickname || !password || !email) {
+      alert("정보를 모두 기입해주세요.");
+      return;
+    }
+
+    const emailPattern = new RegExp(
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+
+    const passwordPattern = new RegExp(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    );
+
+    if (!emailPattern.test(email)) {
+      alert("올바른 이메일 형식을 기입해주세요.");
+      return;
+    }
+
+    if (!passwordPattern.test(password)) {
+      alert("최소 8자리 문자열과 최소 1개의 문자, 숫자가 포함되어야 합니다.");
+      return;
+    }
+
     const data = JSON.stringify({
       password,
       email,
@@ -234,7 +266,7 @@ export function SignUp() {
             <>
               <input
                 className={styles.invalidInput}
-                type="text"
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="&#xf06a;"
               />
@@ -243,14 +275,15 @@ export function SignUp() {
           ) : (
             <input
               className={styles.input}
-              type="text"
+              type="email"
               onChange={(e) => setEmail(e.target.value)}
             />
           )}
           <div>Password</div>
           <input
             className={styles.input}
-            type="text"
+            type="password"
+            placeholder={"최소 8자리 문자와 숫자"}
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className={styles.btn} onClick={signUpSubmit}>

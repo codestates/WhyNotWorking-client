@@ -6,6 +6,8 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { matchPath, useRouteMatch } from "react-router-dom";
+import { setUser } from "../signIn/signInSlice";
+import { useDispatch } from "react-redux";
 
 interface SettingProps extends MenuProps {
   userId: string;
@@ -26,6 +28,7 @@ export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
   const [preview, setPreview] = useState<string | undefined>();
   const [saved, setSaved] = useState(false);
   const [sameName, setSameName] = useState<Boolean>(false);
+  const dispatch = useDispatch();
 
   const getUserInfoById = () => {
     axios
@@ -67,6 +70,7 @@ export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
           setSameName(true);
         } else {
           setSaved(true);
+          dispatch(setUser(res.data.data));
         }
       })
       .catch((error) => {
