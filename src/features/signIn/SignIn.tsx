@@ -9,6 +9,7 @@ import {
 } from "./signInSlice";
 import { useHistory, Link } from "react-router-dom";
 import { GoogleLoginButton } from "ts-react-google-login-component";
+import { gitHubSignUp } from "../signUp/signUpSlice";
 
 export function SignIn() {
   const [email, setEmail] = useState<string>("");
@@ -39,16 +40,17 @@ export function SignIn() {
   //GitHub login
   const githubLogin = () => {
     console.log("loginBtn");
-    const gitHubClientId = "aa59a944d3292ef1c420";
-    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}`;
-    window.location.assign(GITHUB_LOGIN_URL);
+    const gitHubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+    const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/signin/`;
+    // window.location.assign(GITHUB_LOGIN_URL);
+    window.location.href = GITHUB_LOGIN_URL;
   };
   useEffect(() => {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get("code");
     if (authorizationCode) {
       console.log("with auth code");
-      dispatch(gitHubLoginAsync(authorizationCode));
+      dispatch(gitHubSignUp(authorizationCode));
       history.push("/");
     }
   });
@@ -134,7 +136,7 @@ export function SignIn() {
           />
           <div>Password</div>
           <input
-            type="text"
+            type="password"
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
           />
@@ -142,7 +144,6 @@ export function SignIn() {
             className={styles.btn}
             onClick={() => {
               dispatch(loginAsync({ email, password }));
-              history.push("/");
             }}
           >
             Log in

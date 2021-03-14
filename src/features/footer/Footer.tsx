@@ -58,14 +58,18 @@ export function Footer() {
           <img src={logo} alt="logo" className={styles.logoImg} />
         </div>
         <div className={styles.listBox}>
-          {footerData.map((v) => (
-            <ul className={styles.list}>
+          {footerData.map((v, i) => (
+            <ul className={styles.list} key={i}>
               <li className={styles.listTitle}>{v.title}</li>
-              {v.content.map((v) =>
+              {v.content.map((v, i) =>
                 v.innerLink ? (
-                  <Link to={v.innerLink}>{v.name}</Link>
+                  <Link to={v.innerLink} key={i}>
+                    {v.name}
+                  </Link>
                 ) : (
-                  <a href={v.outerLink}>{v.name}</a>
+                  <a href={v.outerLink} key={i}>
+                    {v.name}
+                  </a>
                 )
               )}
             </ul>

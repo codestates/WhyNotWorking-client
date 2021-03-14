@@ -291,3 +291,15 @@
   border-radius: 5px;
   border: none;
 }
+
+.notChoose {
+  cursor: pointer;
+  color: lightgray;
+  font-size: 1.4rem;
+}
+
+.choose {
+  cursor: pointer;
+  color: green;
+  font-size: 1.4rem;
+}
