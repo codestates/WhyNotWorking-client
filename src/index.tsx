@@ -31,6 +31,10 @@ axios.interceptors.response.use(
     if (error.response?.data.message === "auth error") {
       window.location.href = `${process.env.REACT_APP_CLIENT_HOST}/signup`;
     }
+
+    if (error.response?.data.message === "Such email already exists") {
+      alert("중복된 이메일입니다.");
+    }
     // Do something with response error
     return Promise.reject(error);
   }

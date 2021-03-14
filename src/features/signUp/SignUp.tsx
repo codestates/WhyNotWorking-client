@@ -48,7 +48,6 @@ export function SignUp() {
 
   //GitHub login
   const githubSignup = () => {
-    console.log("signupBtn");
     const gitHubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
     const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/signup`;
 
@@ -62,7 +61,6 @@ export function SignUp() {
     const authorizationCode = url.searchParams.get("code");
 
     if (authorizationCode) {
-      console.log(authorizationCode);
       dispatch(gitHubSignUp(authorizationCode));
     }
   }, [isLogin]);
