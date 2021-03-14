@@ -37,7 +37,6 @@ export function SignUpDetail() {
       .get(`${process.env.REACT_APP_SERVER_HOST}/tags/allTags`)
       .then((res) => {
         setAllTags(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -45,16 +44,11 @@ export function SignUpDetail() {
   };
 
   const searchTag = (word: string) => {
-    console.log(allTags);
-    console.log(word);
     if (allTags) {
       setTagResult(
         allTags.filter(
           (v) => ((v.tagName as unknown) as string).search(word) !== -1
         )
-      );
-      console.log(
-        allTags.filter((v) => ((v.tagName as unknown) as string) === word)
       );
     }
   };
@@ -70,7 +64,6 @@ export function SignUpDetail() {
       setPreview(`${reader.result}`);
     };
     let url = reader.readAsDataURL(fileInput.current.files[0]);
-    console.log(image);
   };
 
   const updateSubmit = () => {
@@ -185,12 +178,11 @@ export function SignUpDetail() {
             className={styles.tagInput}
             onChange={(e) => {
               setWord(e.target.value);
-              console.log(e.target.value);
             }}
             onKeyUp={(e) => {
               if (e.key === " ") {
                 searchTag(word);
-                console.log(word);
+
                 setWord("");
               }
             }}
