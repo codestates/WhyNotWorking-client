@@ -49,9 +49,7 @@ export function SignIn() {
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get("code");
     if (authorizationCode) {
-      console.log("with auth code");
       dispatch(gitHubSignUp(authorizationCode));
-      history.push("/");
     }
   });
 
