@@ -2,7 +2,7 @@ import styles from "./QuestionDetail.module.css";
 import avatar from "../../assets/images/avatar.jpg";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MDEditor from "@uiw/react-md-editor";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
@@ -166,10 +166,35 @@ export function QuestionDetail() {
       .then(() => {
         getPost();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((error: AxiosError) => {
+        if (error.response?.data.message === "You have already voted") {
+          alert("추천과 비추천은 게시물당 1회만 가능합니다.");
+        }
       });
   };
+
+  const postChoose = (answerId: number) => {
+    const url = `${process.env.REACT_APP_SERVER_HOST}/answers/toggleChoose`;
+    axios({
+      method: "get",
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: {
+        id: answerId,
+      },
+    })
+      .then(() => {
+        getPost();
+      })
+      .catch((e: AxiosError) => {
+        if (e.response?.data.message === "already closed post") {
+          alert("이미 채택된 질문입니다.");
+        }
+      });
+  };
+
   useEffect(() => {
     dispatch(setCurrentPage("/questions"));
     postView();
@@ -294,7 +319,9 @@ export function QuestionDetail() {
               answer={v}
               key={i}
               postVote={postVote}
+              postChoose={postChoose}
               deleteAnswer={deleteAnswer}
+              isOwner={post.userId === userInfo?.id}
             />
           ))}
           <div className={styles.editorBox}>

@@ -26,8 +26,6 @@ export const gitHubSignUp = (authorizationCode: any): AppThunk => (
           withCredentials: false,
         })
         .then((res) => {
-          console.log(res, "ksjdlksjdlkajdlkaj");
-
           const { name, location, avatar_url, id } = res.data;
 
           const data = JSON.stringify({

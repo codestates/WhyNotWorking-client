@@ -8,6 +8,7 @@ interface PostProps {
 }
 
 export interface UserInterface {
+  id?: number;
   nickname: string;
   image: string;
 }
@@ -32,7 +33,7 @@ export interface PostInterface {
   title: string;
   updatedAt: string;
   user: UserInterface;
-  userId: string;
+  userId: number;
   views: number;
   votes: number;
 }
