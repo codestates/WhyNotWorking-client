@@ -34,7 +34,7 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      setPosts(response.data.data.reverse());
+      setPosts(response.data.data);
     });
   };
 
