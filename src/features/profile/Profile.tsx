@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useRouteMatch,
-  Link,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useRouteMatch, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styles from "./Profile.module.css";
 import { MenuProps } from "../activity/Activity";
 import { UserInfo, selectUserInfo } from "../signIn/signInSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { Post, PostInterface } from "../post/Post";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { PostInterface } from "../post/Post";
 import { AnswerInfo } from "../mypage/MyPage";
 import { PostSummary } from "../postSummary/PostSummary";
 import axios from "axios";
@@ -44,7 +35,7 @@ export function Profile({
   userId,
 }: ProfileProps) {
   const match = useRouteMatch();
-  // const { userId } = useParams<{ userId: string }>();
+
   const myInfo = useSelector(selectUserInfo);
   const [userData, setUserData] = useState<UserInfo | null>(null);
   const [sortedPosts, setSortedPosts] = useState<NewPost[] | null>(null);
