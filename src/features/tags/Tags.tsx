@@ -56,6 +56,7 @@ export function Tags() {
     dispatch(setCurrentPage(match.path));
     getTagsByPage(currentPage);
     getTagsCount();
+    window.scrollTo(0, 0);
   }, []);
 
   return (

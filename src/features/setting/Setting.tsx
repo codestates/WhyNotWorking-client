@@ -5,7 +5,6 @@ import { Editor } from "../editor/Editor";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { matchPath, useRouteMatch } from "react-router-dom";
 import { setUser } from "../signIn/signInSlice";
 import { useDispatch } from "react-redux";
 
@@ -14,7 +13,6 @@ interface SettingProps extends MenuProps {
 }
 
 export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
-  const match = useRouteMatch();
   const [nickname, setNickname] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(
     userInfo ? userInfo.location : ""
@@ -85,7 +83,6 @@ export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
     reader.onloadend = () => {
       setPreview(`${reader.result}`);
     };
-    let url = reader.readAsDataURL(fileInput.current.files[0]);
   };
 
   useEffect(() => {

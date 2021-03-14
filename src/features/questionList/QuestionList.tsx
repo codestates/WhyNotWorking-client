@@ -34,7 +34,7 @@ export function QuestionList() {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      setPosts(response.data.data.reverse());
+      setPosts(response.data.data);
     });
   };
 
@@ -56,6 +56,7 @@ export function QuestionList() {
 
     getPostbyPage(currentPage);
     getCount();
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, match]);
 
