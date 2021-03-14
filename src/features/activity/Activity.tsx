@@ -9,7 +9,7 @@ import { PostSummary } from "../postSummary/PostSummary";
 
 export interface MenuProps {
   setCurPage: (page: string) => void;
-  userInfo: UserInfo | null;
+  userInfo?: UserInfo | null;
 }
 
 interface ActivityProps extends MenuProps {
