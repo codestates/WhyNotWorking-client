@@ -57,6 +57,7 @@ export function Users() {
     dispatch(setCurrentPage(match.path));
     getUsersByPage(currentPage);
     getUsersCount();
+    window.scrollTo(0, 0);
   }, [dispatch, match]);
 
   return (
