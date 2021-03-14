@@ -5,15 +5,17 @@ import { Editor } from "../editor/Editor";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { setUser } from "../signIn/signInSlice";
-import { useDispatch } from "react-redux";
+import { selectUserInfo, setUser } from "../signIn/signInSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 interface SettingProps extends MenuProps {
   userId: string;
 }
 
-export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
+export function Setting({ setCurPage, userId }: SettingProps) {
   const [nickname, setNickname] = useState<string | null>(null);
+  const userInfo = useSelector(selectUserInfo);
+
   const [location, setLocation] = useState<string | null>(
     userInfo ? userInfo.location : ""
   );
@@ -83,10 +85,10 @@ export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
     reader.onloadend = () => {
       setPreview(`${reader.result}`);
     };
+    reader.readAsDataURL(fileInput.current.files[0]);
   };
 
   useEffect(() => {
-    console.log(nickname);
     setCurPage("setting");
     getUserInfoById();
   }, []);
@@ -98,7 +100,7 @@ export function Setting({ setCurPage, userInfo, userId }: SettingProps) {
         <div className={styles.imgSetting}>
           <div className={styles.midHead}>Public information</div>
           <div className={styles.imgBox}>
-            <img className={styles.img} src={preview} alt="profile picture" />
+            <img className={styles.img} src={preview} alt="profile " />
             <label htmlFor="fileInput" className={styles.profileBtn}>
               Change picture
             </label>

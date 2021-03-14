@@ -130,7 +130,7 @@ export function MyPage() {
               questions={questions}
               setCurPage={setCurPage}
               answers={answers}
-              userInfo={userInfo}
+              userInfo={myInfo}
             />
           ) : (
             <Activity
@@ -141,11 +141,7 @@ export function MyPage() {
             />
           )
         ) : (
-          <Setting
-            userInfo={userInfo}
-            setCurPage={setCurPage}
-            userId={userId}
-          />
+          <Setting setCurPage={setCurPage} userId={userId} />
         )}
       </div>
     </div>
