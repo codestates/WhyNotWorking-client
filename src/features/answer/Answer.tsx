@@ -80,20 +80,17 @@ export function Answer({
           >
             <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
           </div>
-          {isOwner ? (
-            <div
-              className={
-                answer.choose === true ? styles.choose : styles.notChoose
-              }
-              onClick={() => {
-                postChoose(answer.id);
-              }}
-            >
-              <FontAwesomeIcon icon={faCheck} />
-            </div>
-          ) : (
-            ""
-          )}
+
+          <div
+            className={
+              answer.choose === true ? styles.choose : styles.notChoose
+            }
+            onClick={() => {
+              if (isOwner) postChoose(answer.id);
+            }}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+          </div>
         </div>
         <div className={styles.contentBox}>
           <div className={styles.content}>

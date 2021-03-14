@@ -5,7 +5,7 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import dotenv from "dotenv";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
@@ -21,17 +21,16 @@ if (process.env.NODE_ENV === "development") {
 
 axios.interceptors.response.use(
   function (response) {
-    // Do something with response data
-
-    console.log(response.data.accessToken);
-
     if (response.data.accessToken !== undefined) {
       localStorage.setItem("user", response.data.accessToken);
     }
 
     return response;
   },
-  function (error) {
+  function (error: AxiosError) {
+    if (error.response?.data.message === "auth error") {
+      window.location.href = `${process.env.REACT_APP_CLIENT_HOST}/signup`;
+    }
     // Do something with response error
     return Promise.reject(error);
   }
