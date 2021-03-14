@@ -17,11 +17,24 @@ export function Home() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}></div>
+      <div className={styles.title}>
+        <h1 className={styles.titleMessage}>We &lt;3 Capybara</h1>
+        <div className={styles.titleSummary}>Stack overflow build products that empower<br></br>developers and connect them to solutions that<br></br>enable productivity, growth, and discovery.</div>
+      </div>
       <div className={styles.head}>
         Questions are everywhere, answers are on Queue Overflow
       </div>
       <Description />
+      <div className={styles.login}>
+        <div className={styles.loginTitle}>If you want to use all the features,<br></br>Follow the steps below</div>
+        <div className={styles.loginImage1}>
+          <div className={styles.image1}></div>
+          <div className={styles.imageText1}>ㅎㅇ</div>
+        </div>
+        <div className={styles.loginImage2}>
+
+        </div>
+      </div>
     </div>
   );
 }
