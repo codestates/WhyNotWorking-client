@@ -1,21 +1,41 @@
-import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretUp,
+  faCaretDown,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MDEditor from "@uiw/react-md-editor";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AnswerInterface, PostInterface } from "../post/Post";
 import styles from "./Answer.module.css";
 import avatar from "../../assets/images/avatar.jpg";
 import { voteType } from "../questionDetail/QuestionDetail";
 import axios from "axios";
+import { cleanup } from "@testing-library/react";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "../signIn/signInSlice";
 interface AnswerProps {
   answer: AnswerInterface;
   deleteAnswer: (id: number) => void;
   postVote: (type: voteType, obj: PostInterface | AnswerInterface) => void;
+  postChoose: (answerId: number) => void;
+  isOwner: boolean;
 }
 
-export function Answer({ answer, deleteAnswer, postVote }: AnswerProps) {
+export function Answer({
+  answer,
+  deleteAnswer,
+  postVote,
+  postChoose,
+  isOwner,
+}: AnswerProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [inputValue, setInputValue] = useState<string | undefined>(answer.body);
+  const userInfo = useSelector(selectUserInfo);
+
+  useEffect(() => {
+    console.log(isOwner, "1232131");
+  }, []);
 
   const patchAnswer = () => {
     const data = JSON.stringify({
@@ -60,6 +80,20 @@ export function Answer({ answer, deleteAnswer, postVote }: AnswerProps) {
           >
             <FontAwesomeIcon icon={faCaretDown}></FontAwesomeIcon>
           </div>
+          {isOwner ? (
+            <div
+              className={
+                answer.choose === true ? styles.choose : styles.notChoose
+              }
+              onClick={() => {
+                postChoose(answer.id);
+              }}
+            >
+              <FontAwesomeIcon icon={faCheck} />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles.contentBox}>
           <div className={styles.content}>
@@ -97,20 +131,28 @@ export function Answer({ answer, deleteAnswer, postVote }: AnswerProps) {
           <div className={styles.contentUtilsBox}>
             <ul className={styles.editBox}>
               <li>Share 🚧</li>
-              <li
-                onClick={(e) => {
-                  setIsEdit(!isEdit);
-                }}
-              >
-                Edit
-              </li>
-              <li
-                onClick={() => {
-                  deleteAnswer(answer.id);
-                }}
-              >
-                Delete
-              </li>
+              {userInfo?.id === answer.user.id ? (
+                <li
+                  onClick={(e) => {
+                    setIsEdit(!isEdit);
+                  }}
+                >
+                  Edit
+                </li>
+              ) : (
+                ""
+              )}
+              {userInfo?.id === answer.user.id ? (
+                <li
+                  onClick={() => {
+                    deleteAnswer(answer.id);
+                  }}
+                >
+                  Delete
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
             <div className={styles.userBox}>
               <img

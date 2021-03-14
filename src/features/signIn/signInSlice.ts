@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { AppThunk, RootState } from "../../app/store";
 
 export interface UserInfo {
@@ -8,7 +8,7 @@ export interface UserInfo {
   image: string | undefined;
   location: string | null;
   nickname: string | null;
-  id: number | null;
+  id: number;
 }
 
 interface SignInState {
@@ -74,9 +74,10 @@ export const loginAsync = (userInfo: {
           console.log(e);
         });
     })
-    .catch((error) => {
-      console.log(error);
-      // alert("회원정보가 일치하지 않습니다.");
+    .catch((error: AxiosError) => {
+      if (error.response?.data.message === "no such user") {
+        alert("올바른 유저 정보를 입력하세요");
+      }
     });
 };
 
@@ -101,7 +102,7 @@ export const gitHubLoginAsync = (authorizationCode: any): AppThunk => (
 ) => {
   axios
     .post(
-      `${process.env.REACT_APP_SERVER_HOST}/login/githubLogin/`,
+      `${process.env.REACT_APP_SERVER_HOST}/login/githubToken/`,
       {
         authorizationCode,
       },
