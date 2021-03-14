@@ -72,14 +72,13 @@ export function MyPage() {
   };
 
   useEffect(() => {
-    console.log(userId);
     let currentPage = (query.get("page") as unknown) as string;
     setRoute(currentPage);
     dispatch(setCurrentPage("/users"));
     getQuestions();
     getAnswers();
     getUserInfoById();
-  }, [userId, route]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -127,13 +126,11 @@ export function MyPage() {
         {route !== "setting" ? (
           route !== "activity" ? (
             <Profile
-              userInfo={userInfo}
-              setCurPage={setCurPage}
-              aCount={aCount}
-              qCount={qCount}
-              questions={questions}
-              answers={answers}
               userId={userId}
+              questions={questions}
+              setCurPage={setCurPage}
+              answers={answers}
+              userInfo={userInfo}
             />
           ) : (
             <Activity
