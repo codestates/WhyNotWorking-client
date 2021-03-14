@@ -10,16 +10,59 @@
 .title {
   width: 100%;
   height: 400px;
-  background-image: url("https://i.imgur.com/6TBOfAC.png");
+  background-image: url("./1.svg");
+  background-color: #ffcf10;
   background-size: contain;
   background-repeat: no-repeat;
 }
-.container {
-  width: 100%;
-  height: 2000px;
 
-  /* background-color: blanchedalmond; */
+.titleMessage {
+  margin-top: 128px;
+  margin-left: 10px;
+  margin-bottom: 17px;
 }
+
+.titleSummary {
+  font-size: 1.2rem;
+}
+
+.login {
+  width: 100%;
+  height: 1500px;
+  background-color: #2b2d6e;
+  background-image: url("./2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
+}
+
+.loginImage1 {
+  height: 500px;
+  margin-top: 80px;
+  padding-left: 130px;
+  display: flex;
+}
+
+.image1 {
+  flex: 3 1 0;
+  height: 500px;
+  background-image: url("./3.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.imageText1 {
+  flex: 7 1 0;
+  height: 500px;
+  align-items: center;
+}
+
+.loginTitle {
+  margin-top: 70px;
+  font-size: 1.7rem;
+  color: white;
+}
+
 
 .head {
   width: 100%;
@@ -27,5 +70,4 @@
   font-weight: 800;
   background-color: white;
   padding-top: 100px;
-  font-family: "Roboto Slab Bold", serif;
 }
