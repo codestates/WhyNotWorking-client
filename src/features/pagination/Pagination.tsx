@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./pagination.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 export function Pagination({
   count,
@@ -9,6 +13,7 @@ export function Pagination({
   count: number | undefined;
   path: string;
 }) {
+  const query = useQuery();
   const [lastPage, setLastPage] = useState<number>(0);
   const [curPage, setCurPage] = useState(1);
   const [pageList, setPageList] = useState<number[]>([]);
@@ -55,7 +60,9 @@ export function Pagination({
   };
 
   useEffect(() => {
-    console.log(count);
+    const currentPage = (query.get("page") as unknown) as number;
+    console.log(currentPage);
+    setCurPage(currentPage);
     if (count) {
       if (path === "questions") {
         getPageList(1, Math.ceil(count / 15));
@@ -100,7 +107,7 @@ export function Pagination({
             <Link key={i} to={`/${path}?page=${p}`} className={styles.link}>
               <div
                 className={`${styles.btn} ${
-                  curPage === p ? styles.pageSelected : ""
+                  Number(curPage) === p ? styles.pageSelected : ""
                 }`}
                 onClick={() => {
                   setCurPage(p);
