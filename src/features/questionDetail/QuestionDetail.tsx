@@ -3,7 +3,7 @@ import avatar from "../../assets/images/avatar.jpg";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory, Link } from "react-router-dom";
 import { PostInterface, AnswerInterface } from "../post/Post";
@@ -174,7 +174,7 @@ export function QuestionDetail() {
     dispatch(setCurrentPage("/questions"));
     postView();
     getPost();
-
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
@@ -256,16 +256,24 @@ export function QuestionDetail() {
               <div className={styles.contentUtilsBox}>
                 <ul className={styles.editBox}>
                   <li>Share 🚧</li>
-                  <Link to={`edit/${postId}`}>
-                    <li>Edit</li>
-                  </Link>
-                  <li
-                    onClick={() => {
-                      deletePost();
-                    }}
-                  >
-                    Delete
-                  </li>
+                  {post?.userId === userInfo?.id ? (
+                    <Link to={`edit/${postId}`}>
+                      <li>Edit</li>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+                  {post?.userId === userInfo?.id ? (
+                    <li
+                      onClick={() => {
+                        deletePost();
+                      }}
+                    >
+                      Delete
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </ul>
                 <div className={styles.userBox}>
                   <img

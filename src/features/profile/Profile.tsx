@@ -81,6 +81,7 @@ export function Profile({
     setCurPage("profile");
     getUserInfoById();
     getSortedPosts();
+    window.scrollTo(0, 0);
   }, [userId]);
 
   return (

@@ -12,6 +12,7 @@ export function Home() {
 
   useEffect(() => {
     dispatch(setCurrentPage(match.path));
+    window.scrollTo(0, 0);
   }, [dispatch, match]);
 
   return (
