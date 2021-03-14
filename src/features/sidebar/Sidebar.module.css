@@ -23,6 +23,10 @@
   list-style: none;
 }
 
+.container *:link {
+  color: rgb(83, 90, 96);
+}
+
 .container *:visited {
   color: rgb(83, 90, 96);
 }
