@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   useRouteMatch,
   Link,
-  useHistory,
   useLocation,
   useParams,
 } from "react-router-dom";
@@ -30,6 +27,10 @@ export interface AnswerInfo {
   post: { title: string };
 }
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export function MyPage() {
   const match = useRouteMatch();
   const myInfo = useSelector(selectUserInfo);
@@ -41,6 +42,8 @@ export function MyPage() {
   const [aCount, setAcount] = useState(0);
   const [curPage, setCurPage] = useState("profile");
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const query = useQuery();
+  const [route, setRoute] = useState("profile");
 
   const getQuestions = () => {
     axios
@@ -70,83 +73,84 @@ export function MyPage() {
 
   useEffect(() => {
     console.log(userId);
+    let currentPage = (query.get("page") as unknown) as string;
+    setRoute(currentPage);
     dispatch(setCurrentPage("/users"));
     getQuestions();
     getAnswers();
     getUserInfoById();
-  }, [userId]);
+  }, [userId, route]);
 
   return (
-    <Router>
-      <div className={styles.container}>
-        <div className={styles.menuBox}>
-          <Link to={`${match.url}`}>
-            <div
-              className={`${styles.menu} ${
-                curPage === "profile" ? styles.selected : ""
-              }`}
-            >
-              Profile
-            </div>
-          </Link>
-          <Link to={`${match.url}/activity`}>
-            <div
-              className={`${styles.menu} ${
-                curPage === "activity" ? styles.selected : ""
-              }`}
-            >
-              Activity
-            </div>
-          </Link>
-          {myInfo ? (
-            Number(userId) === myInfo.id ? (
-              <Link to={`${match.url}/setting`}>
-                <div
-                  className={`${styles.menu} ${
-                    curPage === "setting" ? styles.selected : ""
-                  }`}
-                >
-                  Edit profile
-                </div>
-              </Link>
-            ) : (
-              ""
-            )
+    <div className={styles.container}>
+      <div className={styles.menuBox}>
+        <Link to={`${match.url}?page=profile`}>
+          <div
+            className={`${styles.menu} ${
+              curPage === "profile" ? styles.selected : ""
+            }`}
+            onClick={() => setRoute("profile")}
+          >
+            Profile
+          </div>
+        </Link>
+        <Link to={`${match.url}?page=activity`}>
+          <div
+            className={`${styles.menu} ${
+              curPage === "activity" ? styles.selected : ""
+            }`}
+            onClick={() => setRoute("activity")}
+          >
+            Activity
+          </div>
+        </Link>
+        {myInfo ? (
+          Number(userId) === myInfo.id ? (
+            <Link to={`${match.url}?page=setting`}>
+              <div
+                className={`${styles.menu} ${
+                  curPage === "setting" ? styles.selected : ""
+                }`}
+                onClick={() => setRoute("setting")}
+              >
+                Edit profile
+              </div>
+            </Link>
           ) : (
             ""
-          )}
-        </div>
-        <div>
-          <Switch>
-            <Route exact path={`${match.path}`}>
-              <Profile
-                userInfo={userInfo}
-                setCurPage={setCurPage}
-                aCount={aCount}
-                qCount={qCount}
-                questions={questions}
-                answers={answers}
-                userId={userId}
-              />
-            </Route>
-            <Route exact path={`${match.path}/activity`}>
-              <Activity
-                userInfo={userInfo}
-                setCurPage={setCurPage}
-                questions={questions}
-                answers={answers}
-              />
-            </Route>
-            <Route exact path={`${match.path}/setting`}>
-              <Setting
-                userInfo={userInfo}
-                setCurPage={setCurPage}
-                userId={userId}
-              />
-            </Route>
-          </Switch>
-        </div>
+          )
+        ) : (
+          ""
+        )}
       </div>
-    </Router>
+      <div>
+        {route !== "setting" ? (
+          route !== "activity" ? (
+            <Profile
+              userInfo={userInfo}
+              setCurPage={setCurPage}
+              aCount={aCount}
+              qCount={qCount}
+              questions={questions}
+              answers={answers}
+              userId={userId}
+            />
+          ) : (
+            <Activity
+              userInfo={userInfo}
+              setCurPage={setCurPage}
+              questions={questions}
+              answers={answers}
+            />
+          )
+        ) : (
+          <Setting
+            userInfo={userInfo}
+            setCurPage={setCurPage}
+            userId={userId}
+          />
+        )}
+      </div>
+    </div>
   );
 }
