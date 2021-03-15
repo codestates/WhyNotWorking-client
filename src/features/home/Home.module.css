@@ -36,6 +36,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position-y: center;
+
   position: relative;
 }
 
@@ -114,7 +115,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px;
+
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .signUpBtn {
   width: 170px;
