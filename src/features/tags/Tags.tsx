@@ -72,10 +72,10 @@ export function Tags() {
           href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
           rel="stylesheet"
         ></link>
-        <input
+        {/* <input
           className={styles.input}
           placeholder="&#xf002; Filter by tag name"
-        ></input>
+        ></input> */}
         <div className={styles.filterBox}>
           {/* <div className={styles.popular}>Popular</div>
           <div className={styles.name}>Name</div>

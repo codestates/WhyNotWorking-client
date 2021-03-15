@@ -25,15 +25,10 @@ export function Home() {
           and discovery.
         </div>
       </div>
-      <div className={styles.head}>
+      {/* <div className={styles.head}>
         Questions are everywhere, answers are on Queue Overflow
-      </div>
-      <Description />
-      <div className={styles.btnBox}>
-        <Link to="/signup">
-          <div className={styles.signUpBtn}>Create an account</div>
-        </Link>
-      </div>
+      </div> */}
+      {/* <Description /> */}
       <div className={styles.login}>
         <div className={styles.loginTitle}>
           If you want to use all the features,<br></br>Follow the steps below

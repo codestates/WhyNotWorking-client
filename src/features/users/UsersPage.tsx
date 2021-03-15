@@ -15,6 +15,7 @@ export interface UserInfo {
   image: string;
   location: string;
   tag: { tagName: string }[];
+  createdAt?: string;
 }
 
 function useQuery() {
@@ -69,10 +70,10 @@ export function Users() {
           href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
           rel="stylesheet"
         ></link>
-        <input
+        {/* <input
           className={styles.input}
           placeholder="&#xf002; Filter by user"
-        ></input>
+        ></input> */}
         <div className={styles.filterBox}>
           {/* <div className={styles.popular}>New users</div>
           <div className={styles.name}>questions</div>

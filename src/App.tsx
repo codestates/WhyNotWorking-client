@@ -16,7 +16,7 @@ import { AskPage } from "./features/askPage/AskPage";
 import { SignUpDetail } from "./features/signUpDetail/SignUpDetail";
 import { Footer } from "./features/footer/Footer";
 import { MyPage } from "./features/mypage/MyPage";
-import { login, loginAsync } from "./features/signIn/signInSlice";
+import { login } from "./features/signIn/signInSlice";
 import axios from "axios";
 
 function App() {
@@ -45,6 +45,7 @@ function App() {
     if (token) {
       stayLogin(token);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -122,7 +123,7 @@ function App() {
             <Route exact path="/">
               <div className="main_content">
                 <div className="left_content">
-                  <Sidebar></Sidebar>
+                  <Sidebar />
                 </div>
                 <div className="center_content">
                   <Home />
