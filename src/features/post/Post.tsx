@@ -41,6 +41,8 @@ export interface PostInterface {
 export function Post({ post }: PostProps) {
   const timeAgo = new TimeAgo("en-US");
 
+  // console.log(post.answer.filter((v) => v.choose).length);
+
   return (
     <div className={styles.container}>
       <div className={styles.countBox}>
@@ -50,7 +52,13 @@ export function Post({ post }: PostProps) {
           </div>
           <div>votes</div>
         </div>
-        <div className={styles.answer}>
+        <div
+          className={
+            post.answer.filter((v) => v.choose).length === 1
+              ? styles.choosed
+              : ""
+          }
+        >
           {/*unanswered,answered,answered-accepted */}
           <div className={styles.count}>
             <span>{post.answer.length}</span>
