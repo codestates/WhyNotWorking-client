@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./questionList.module.css";
 import { Post } from "../post/Post";
-import { faCaretDown, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "../pagination/Pagination";
-import { useDispatch, useSelector } from "react-redux";
-import { getCountAsync, getPostsAsync, selectCount } from "./qLSlice";
-
+import { useDispatch } from "react-redux";
 import { useLocation, useRouteMatch } from "react-router-dom";
 import { setCurrentPage } from "../sidebar/sidebarSlice";
 import axios from "axios";

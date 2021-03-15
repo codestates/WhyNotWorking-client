@@ -39,7 +39,6 @@ export function SignIn() {
 
   //GitHub login
   const githubLogin = () => {
-    console.log("loginBtn");
     const gitHubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
     const GITHUB_LOGIN_URL = `https://github.com/login/oauth/authorize?client_id=${gitHubClientId}&redirect_uri=${process.env.REACT_APP_CLIENT_HOST}/signin/`;
     // window.location.assign(GITHUB_LOGIN_URL);
@@ -56,11 +55,6 @@ export function SignIn() {
   useEffect(() => {
     if (isLogin) history.push("/");
   }, [isLogin, history]);
-
-  //Facebook login
-  const responseFacebook = (response: any) => {
-    console.log(response);
-  };
 
   return (
     <div className={styles.container}>

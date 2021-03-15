@@ -61,7 +61,6 @@ export function Pagination({
 
   useEffect(() => {
     const currentPage = (query.get("page") as unknown) as number;
-    console.log(currentPage);
     setCurPage(currentPage);
     if (count) {
       if (path === "questions") {
