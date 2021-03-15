@@ -32,6 +32,7 @@ export function Description() {
   return (
     <div className={styles.container}>
       <div className={styles.menuBox}>
+        <div className={styles.rocket}></div>
         <div
           className={`${styles.wrapper} ${
             clicked === "a" ? styles.selected : ""
@@ -67,6 +68,7 @@ export function Description() {
         <img src={imageSwitch()} alt="움짤" className={styles.webp} />
       </div>
       <div className={styles.menuBox}>
+        <div className={styles.astro}></div>
         <div
           className={`${styles.wrapper} ${
             clicked === "d" ? styles.selected : ""
