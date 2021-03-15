@@ -67,8 +67,8 @@ export function Pagination({
         getPageList(1, Math.ceil(count / 15));
         setLastPage(Math.ceil(count / 15));
       } else {
-        getPageList(1, Math.ceil(count / 3));
-        setLastPage(Math.ceil(count / 3));
+        getPageList(1, Math.ceil(count / 36));
+        setLastPage(Math.ceil(count / 36));
       }
     }
   }, [count]);

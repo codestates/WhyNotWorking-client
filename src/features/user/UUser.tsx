@@ -3,11 +3,14 @@ import styles from "./User.module.css";
 import { UserInfo } from "../users/UsersPage";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import TimeAgo from "javascript-time-ago";
 interface UserProps {
   userInfo: UserInfo;
 }
 
 export function User({ userInfo }: UserProps) {
+  const timeAgo = new TimeAgo("en-US");
+
   return (
     <div className={styles.container}>
       <div className={styles.imgBox}>
@@ -19,7 +22,11 @@ export function User({ userInfo }: UserProps) {
         <div className={styles.name}>{userInfo.nickname}</div>
         <div className={styles.info}>
           <div className={styles.region}>{userInfo.nickname}</div>
-          <div className={styles.createdDate}>one day</div>
+          <div className={styles.createdDate}>
+            {userInfo.createdAt
+              ? timeAgo.format(new Date(userInfo?.createdAt))
+              : ""}
+          </div>
         </div>
         <div className={styles.tags}>
           {userInfo
