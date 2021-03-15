@@ -8,7 +8,7 @@ interface PostProps {
 }
 
 export interface UserInterface {
-  id?: number;
+  id: number;
   nickname: string;
   image: string;
 }
@@ -81,9 +81,7 @@ export function Post({ post }: PostProps) {
               asked{" "}
               {post?.createdAt ? timeAgo.format(new Date(post?.createdAt)) : ""}
             </div>
-            <a href="https://stackoverflow.com/users/15279516/soripk">
-              {post.user.nickname}
-            </a>
+            <Link to={`/users/${post.user.id}`}>{post.user.nickname}</Link>
           </div>
         </div>
       </div>
