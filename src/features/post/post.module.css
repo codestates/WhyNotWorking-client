@@ -102,3 +102,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.choosed {
+  background-color: rgb(94, 186, 125);
+  border-radius: 10%;
+}
+
+.choosed * {
+  color: white;
+}
