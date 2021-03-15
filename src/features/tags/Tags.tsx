@@ -33,8 +33,6 @@ export function Tags() {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      console.log(res.data.data);
-
       setTags(res.data.data);
     });
   };
@@ -57,7 +55,7 @@ export function Tags() {
     getTagsByPage(currentPage);
     getTagsCount();
     window.scrollTo(0, 0);
-  }, []);
+  }, [dispatch, match]);
 
   return (
     <div className={styles.container}>
