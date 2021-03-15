@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import styles from "./Activity.module.css";
 import { UserInfo } from "../signIn/signInSlice";
 import { PostInterface } from "../post/Post";

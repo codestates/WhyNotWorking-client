@@ -61,15 +61,14 @@ export function Pagination({
 
   useEffect(() => {
     const currentPage = (query.get("page") as unknown) as number;
-    console.log(currentPage);
     setCurPage(currentPage);
     if (count) {
       if (path === "questions") {
         getPageList(1, Math.ceil(count / 15));
         setLastPage(Math.ceil(count / 15));
       } else {
-        getPageList(1, Math.ceil(count / 36));
-        setLastPage(Math.ceil(count / 36));
+        getPageList(1, Math.ceil(count / 3));
+        setLastPage(Math.ceil(count / 3));
       }
     }
   }, [count]);
