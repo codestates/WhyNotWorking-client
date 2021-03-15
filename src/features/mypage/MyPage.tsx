@@ -130,7 +130,7 @@ export function MyPage() {
               questions={questions}
               setCurPage={setCurPage}
               answers={answers}
-              userInfo={myInfo}
+              userInfo={userInfo ? userInfo : myInfo}
             />
           ) : (
             <Activity
