@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "./SignUp.module.css";
-import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { useHistory, Link, useRouteMatch } from "react-router-dom";
 import {
@@ -11,7 +10,6 @@ import {
 } from "../signIn/signInSlice";
 import { gitHubSignUp } from "./signUpSlice";
 import { GoogleLoginButton } from "ts-react-google-login-component";
-import FacebookLogin from "react-facebook-login";
 
 export function SignUp() {
   const [email, setEmail] = useState<string | null>(null);
@@ -39,9 +37,7 @@ export function SignUp() {
 
   const responseGoogle = (googleUser: any): void => {
     const id_token = googleUser.getAuthResponse(true).id_token;
-    // const googleId = googleUser.getId();
-    // console.log({ googleId });
-    // console.log({ accessToken: id_token });
+
     dispatch(googleLoginAsync(id_token));
     history.push("/signupDetail");
   };
