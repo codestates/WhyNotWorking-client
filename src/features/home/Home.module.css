@@ -104,8 +104,10 @@
   width: 100%;
   font-size: 35px;
   font-weight: 800;
-  background-color: white;
-  padding-top: 100px;
+  /* background-color: white; */
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #ffcf10;
 }
 
 .btnBox {
