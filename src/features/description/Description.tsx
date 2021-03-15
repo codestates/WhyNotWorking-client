@@ -13,17 +13,17 @@ export function Description() {
   const imageSwitch = () => {
     switch (clicked) {
       case "a":
-        return image1;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp1.webp";
       case "b":
-        return image2;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp2.webp";
       case "c":
-        return image3;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp3.webp";
       case "d":
-        return image4;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp4.webp";
       case "e":
-        return image5;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp5.webp";
       case "f":
-        return image6;
+        return "https://moviebara.s3.ap-northeast-2.amazonaws.com/webp/webp6.webp";
       default:
         break;
     }
