@@ -42,6 +42,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("user");
+
     if (token) {
       stayLogin(token);
     }
