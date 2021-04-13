@@ -79,7 +79,7 @@ export function Pagination({
     <div className={styles.container}>
       <div className={styles.prevBtnWrapper}>
         {curPage > 1 ? (
-          <Link to={`/${path}?page=${curPage - 1}`} className={styles.link}>
+          <Link to={`/${path}?page=${+curPage - 1}`} className={styles.link}>
             <div
               className={styles.btn}
               onClick={() => {
