@@ -83,8 +83,8 @@ export function Pagination({
             <div
               className={styles.btn}
               onClick={() => {
-                setCurPage(curPage - 1);
-                getPageList(curPage - 1, lastPage);
+                setCurPage(+curPage - 1);
+                getPageList(+curPage - 1, lastPage);
               }}
             >
               Prev
@@ -125,8 +125,8 @@ export function Pagination({
             <div
               className={styles.btn}
               onClick={() => {
-                setCurPage(curPage + 1);
-                getPageList(curPage + 1, lastPage);
+                setCurPage(+curPage + 1);
+                getPageList(+curPage + 1, lastPage);
               }}
             >
               Next
